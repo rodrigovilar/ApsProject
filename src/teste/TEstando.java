@@ -10,5 +10,8 @@ public class TEstando {
 	public void test() {
 		fail("Not yet implefegfgfgmented");
 	}
+	public void imprime(){
+		System.out.println("ligeirinho é fraco");
+	}
 
 }
