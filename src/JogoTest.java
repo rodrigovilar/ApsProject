@@ -1,6 +1,12 @@
+import org.junit.Assert;
+import org.junit.Test;
+
 
 public class JogoTest {
 	
-	//TODO
+	@Test
+	public void criarJogo(){
+		Assert.assertTrue("Menu iniciado",jogo.iniciarMenu());
+	}
 
 }
