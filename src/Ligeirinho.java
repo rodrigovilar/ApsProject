@@ -6,6 +6,6 @@ public class Ligeirinho {
 	}
 	
 	public void indetificadorDeHomossexual() {
-		System.out.println("Jonas Mendonça Encontrado, STATUS: VIADO");
+		System.out.println("ligeirinho e bia");
 	}
 }
