@@ -5,8 +5,12 @@ public class Ligeirinho {
 		System.out.println("ligeirinho e fraco");
 	}
 	
-	public void indetificadorDeHomossexual() {
-		System.out.println("ligeirinho e bia");
+	public void impressao(){
+		System.out.println("testando 123");
+	}
+	
+	public void getM(){
+		System.out.println("M");
 	}
 	
 	public String quemEOCara(){
