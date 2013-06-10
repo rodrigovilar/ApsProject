@@ -1,6 +1,12 @@
+import org.junit.Before;
+
 
 public class JogoTest {
 	
-	//TODO
+	
+	@Before
+	public void iniciandoTest(){
+		jogo = new Jogo();
+	}
 
 }
