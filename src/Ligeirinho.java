@@ -8,4 +8,8 @@ public class Ligeirinho {
 	public void indetificadorDeHomossexual() {
 		System.out.println("ligeirinho e bia");
 	}
+	
+	public String quemEOCara(){
+		return "josue";
+	}
 }
