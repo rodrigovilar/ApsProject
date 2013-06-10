@@ -6,6 +6,7 @@ public class JogoTest {
 	
 	@Test
 	public void criarJogo(){
+		Object jogo;
 		Assert.assertTrue("Menu iniciado",jogo.iniciarMenu());
 	}
 
