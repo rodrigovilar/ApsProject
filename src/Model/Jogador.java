@@ -11,4 +11,7 @@ public class Jogador {
 		score = 10;
 		id++;
 	}
+	public String getNome() {
+		return nome;
+	}
 }
