@@ -6,4 +6,9 @@ public class Tiro {
 	public int getQuantidadeDeBalas() {
 		return quantidadeDeBalas;
 	}
+	
+	public void setQuantidadeDeBalas(int quantidadeDeBalas) {
+		this.quantidadeDeBalas = quantidadeDeBalas;
+	}
+	
 }
