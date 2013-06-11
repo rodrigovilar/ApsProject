@@ -22,5 +22,9 @@ public class Canhao {
 	public void setPosicaoY(int posicaoY) {
 		this.posicaoY = posicaoY;
 	}
+	
+	public Tiro getTiro() {
+		return tiro;
+	}
 
 }
