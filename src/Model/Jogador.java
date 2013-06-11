@@ -20,4 +20,7 @@ public class Jogador {
 	public int getId() {
 		return id;
 	}
+	public static void incrementarScore(){
+		score++;
+	}
 }
