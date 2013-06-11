@@ -26,4 +26,7 @@ public class Jogador {
 	public static void decrementarScore(){
 		score--;
 	}
+	public int getScore() {
+		return score;
+	}
 }
