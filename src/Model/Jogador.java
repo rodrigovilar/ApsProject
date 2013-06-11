@@ -1,5 +1,7 @@
 package Model;
 
+import Canhao;
+
 
 public class Jogador {
 	private String nome;
@@ -28,5 +30,8 @@ public class Jogador {
 	}
 	public int getScore() {
 		return score;
+	}
+	public Canhao getCanhao() {
+		return canhao;
 	}
 }
