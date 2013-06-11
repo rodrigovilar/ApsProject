@@ -34,4 +34,7 @@ public class Jogador {
 	public Canhao getCanhao() {
 		return canhao;
 	}
+	public void setCanhao(Canhao canhao){
+		this.canhao = canhao;
+	}
 }
