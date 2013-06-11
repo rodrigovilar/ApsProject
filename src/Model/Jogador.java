@@ -1,5 +1,6 @@
 package Model;
 
+import BalasEsgotadasException;
 import Canhao;
 
 
@@ -36,5 +37,8 @@ public class Jogador {
 	}
 	public void setCanhao(Canhao canhao){
 		this.canhao = canhao;
+	}
+	public void atirar() throws BalasEsgotadasException{
+		this.canhao.getTiro().diminuirQuantidadeDeBalas();
 	}
 }
