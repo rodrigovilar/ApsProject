@@ -9,4 +9,7 @@ public class Problema {
 	public int getId() {
 		return id;
 	}
+	public Problema() {
+		id++;
+	}
 }
