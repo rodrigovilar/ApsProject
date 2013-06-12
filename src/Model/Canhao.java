@@ -26,5 +26,9 @@ public class Canhao {
 	public Tiro getTiro() {
 		return tiro;
 	}
+	
+	public void setTiro(Tiro tiro) {
+		this.tiro = tiro;
+	}
 
 }
