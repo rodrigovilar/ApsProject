@@ -84,6 +84,11 @@ public class Jogo {
 	public void gerarBalao(Problema problema){
 		gerenciadorProblema.gerarBaloes(problema);
 	}
+	
+	public boolean verificarSeRespostaEstaEmBaloes(int resposta){
+		return gerenciadorProblema.verificarSeRespostaCorretaEmBalao(resposta);
+	}
+
 
 
 
