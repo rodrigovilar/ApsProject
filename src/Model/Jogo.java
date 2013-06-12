@@ -92,11 +92,9 @@ public class Jogo {
 	public int verificarQuantidadeDeBaloesGerados() {
 		return gerenciadorProblema.getQuantidadeDeBaloesGerados();
 	}
-
-
-
-
-
-
-
+	
+	public void estourarBalao(int resposta) throws ObjetoInexistenteException {
+		gerenciadorProblema.estourarBalao(resposta);
+		
+	}
 }
