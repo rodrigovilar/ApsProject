@@ -53,6 +53,11 @@ public class Jogo {
 	public ArrayList<Problema> listarProblemas() {
 		return gerenciadorProblema.listarProblemas();
 	}
+	
+	public void removerProblema(Problema problema_1) throws ObjetoInexistenteException {
+		gerenciadorProblema.removerProblema(problema_1);
+		
+	}
 
 
 
