@@ -37,6 +37,11 @@ public class Jogo {
 	public ArrayList<Professor> listarProfessores() {
 		return gerenciadorProfessor.listarProfessores();
 	}
+	
+	public void removerProfessor(Professor professor) throws ObjetoInexistenteException {
+		gerenciadorProfessor.removerProfessor(professor);
+	}
+
 
 
 
