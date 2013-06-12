@@ -22,5 +22,16 @@ public class JogoTest {
 	public void verificarListaInicialDeProfessores(){
 		Assert.assertEquals("Esse teste espera que a lista inicial de professores seja igual a zero", 0, jogo.getQuantidadeDeProfessoresCadastrados());
 	}
+	@Test
+	public void cadastrarProfessor() throws ObjetoJaExistenteException, ObjetoInexistenteException{
+		Professor professor = new Professor();
+		professor.setNome("professor_1");
+		professor.setSenha("12344");
+		jogo.cadastrarProfesssor(professor);
+		ArrayList<Professor> professoresCadastrados = jogo.listarProfessores();
+		Assert.assertEquals("Esse teste espera que possua apenas um jogador cadastrado", 1, jogo.getQuantidadeDeProfessoresCadastrados());
+		Professor professorSalvo = professoresCadastrados.get(0);
+		Assert.assertEquals("Esse teste espera que o jogador cadastrado seja igual ao jogador salvo na lista",professor, professorSalvo);
+	}
 
 }
