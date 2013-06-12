@@ -33,5 +33,17 @@ public class JogoTest {
 		Professor professorSalvo = professoresCadastrados.get(0);
 		Assert.assertEquals("Esse teste espera que o jogador cadastrado seja igual ao jogador salvo na lista",professor, professorSalvo);
 	}
+	@Test(expected=ObjetoJaExistenteException.class)
+	public void cadastrarProfessorJaCadastrado() throws ObjetoJaExistenteException, ObjetoInexistenteException{
+
+		Professor professor_1 = new Professor();
+		professor_1.setNome("professor_1");
+		professor_1.setSenha("22244");
+		jogo.cadastrarProfesssor(professor_1);
+		
+		Professor professor_2 = new Professor();
+		professor_2.setNome("professor_1");
+		jogo.cadastrarProfesssor(professor_2);
+	}
 
 }
