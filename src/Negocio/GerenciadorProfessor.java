@@ -32,4 +32,8 @@ public class GerenciadorProfessor {
 	public int getQuantidadeDeProfessoresCadastrados(){
 		return professores.size();
 	}
+	
+	public ArrayList<Professor> listarProfessores(){
+		return professores;
+	}
 }
