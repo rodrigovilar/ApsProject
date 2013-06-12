@@ -1,5 +1,8 @@
 package Model;
 
+
+import Excecao.BalasEsgotadasException;
+
 public class Jogador {
 	private String nome;
 	private int id = 0;
