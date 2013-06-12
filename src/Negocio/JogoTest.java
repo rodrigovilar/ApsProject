@@ -121,4 +121,13 @@ public class JogoTest {
 		jogo.removerJogador(jogador_1);
 		Assert.assertEquals("Esse teste espera que a quantidade de jogadores seja igual a 0", 0, jogo.getQuantidadeDeJogadoresCadastrados());
 	}
+	
+	@Test(expected=ObjetoInexistenteException.class)
+	public void removerMesmoJogadorDuasVezes() throws ObjetoJaExistenteException, ObjetoInexistenteException{
+		Jogador jogador_1 = new Jogador();
+		jogador_1.setNome("jogador_1");
+		jogo.cadastrarJogador(jogador_1);
+		jogo.removerJogador(jogador_1);
+		jogo.removerJogador(jogador_1);
+	}
 }
