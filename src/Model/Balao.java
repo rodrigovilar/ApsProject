@@ -11,5 +11,8 @@ public class Balao {
 	public void setConteudo(int conteudo) {
 		this.conteudo = conteudo;
 	}
+	public int getId() {
+		return id;
+	}
 
 }
