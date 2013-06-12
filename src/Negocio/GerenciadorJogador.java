@@ -28,4 +28,7 @@ public class GerenciadorJogador {
 	public int getQuantidadeDeJogadoresCadastrados(){
 		return jogadores.size();
 	}
+	public ArrayList<Jogador> listarJogadores(){
+		return jogadores;
+	}
 }
