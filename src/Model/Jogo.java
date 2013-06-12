@@ -32,7 +32,10 @@ public class Jogo {
 	
 	public void cadastrarProfesssor(Professor professor) throws ObjetoJaExistenteException, ObjetoInexistenteException {
 		gerenciadorProfessor.cadastrarProfessor(professor);
-		
+	}
+	
+	public ArrayList<Professor> listarProfessores() {
+		return gerenciadorProfessor.listarProfessores();
 	}
 
 
