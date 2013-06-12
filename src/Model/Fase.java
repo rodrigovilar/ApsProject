@@ -20,5 +20,8 @@ public class Fase {
 	public void setNivel(int nivel) {
 		this.nivel = nivel;
 	}
+	public boolean isLiberado() {
+		return liberado;
+	}
 	
 }
