@@ -70,4 +70,18 @@ public class JogoTest {
 		jogo.removerProfessor(professor);
 		jogo.removerProfessor(professor);
 	}
+	
+	@Test(expected=ObjetoInexistenteException.class)
+	public void removerProfessorInexistente() throws ObjetoJaExistenteException, ObjetoInexistenteException{
+		Professor professor = new Professor();
+		professor.setNome("professor_1");
+		professor.setSenha("5555");
+		jogo.cadastrarProfesssor(professor);
+		
+		Professor professor_2 = new Professor();
+		professor_2.setNome("professor_2");
+		professor_2.setSenha("66666");
+		
+		jogo.removerProfessor(professor_2);
+	}
 }
