@@ -1,5 +1,9 @@
 package Excecao;
 
-public class BalasEsgotadasException {
+@SuppressWarnings("serial")
+public class BalasEsgotadasException extends Exception{
 
+	public BalasEsgotadasException(String msg){
+		super(msg);
+	}
 }
