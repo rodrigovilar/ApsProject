@@ -77,6 +77,9 @@ public class Jogo {
 		gerenciadorFase.inserirJogadorNaFaseDisponivel(jogador);
 	}
 	
+	public boolean isVerificarJogadorNaFase(Jogador jogador){
+		return gerenciadorFase.isVerificarJogadorNaFaseDisponivel(jogador);
+	}
 
 
 
