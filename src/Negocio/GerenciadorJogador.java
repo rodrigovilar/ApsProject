@@ -24,4 +24,8 @@ public class GerenciadorJogador {
 		}
 		return false;
 	}
+	
+	public int getQuantidadeDeJogadoresCadastrados(){
+		return jogadores.size();
+	}
 }
