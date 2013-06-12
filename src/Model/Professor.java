@@ -9,5 +9,9 @@ public class Professor {
 	public Professor(){
 		id++;
 	}
+	
+	public String getNome() {
+		return nome;
+	}
 
 }
