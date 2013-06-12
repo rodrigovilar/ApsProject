@@ -84,4 +84,9 @@ public class JogoTest {
 		
 		jogo.removerProfessor(professor_2);
 	}
+	
+	@Test
+	public void verificarListaInicialDeJogadores(){//Verifica se a lista inicial de jogadores est vazia
+		Assert.assertEquals("Esse teste espera que a lista inicial de jogadores seja igual a zero" ,0, jogo.getQuantidadeDeJogadoresCadastrados());
+	}
 }
