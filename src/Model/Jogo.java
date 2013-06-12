@@ -13,6 +13,11 @@ public class Jogo {
 	public int getQuantidadeDeJogadoresCadastrados() {
 		return gerenciadorJogador.getQuantidadeDeJogadoresCadastrados();
 	}
+	
+	public void cadastrarJogador(Jogador jogador) throws ObjetoJaExistenteException {
+		gerenciadorJogador.cadastrarJogador(jogador);
+	}
+
 
 
 }
