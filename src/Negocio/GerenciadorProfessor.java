@@ -28,4 +28,8 @@ public class GerenciadorProfessor {
 		}
 		return false;
 	}
+	
+	public int getQuantidadeDeProfessoresCadastrados(){
+		return professores.size();
+	}
 }
