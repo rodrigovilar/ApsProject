@@ -41,6 +41,10 @@ public class Jogo {
 	public void removerProfessor(Professor professor) throws ObjetoInexistenteException {
 		gerenciadorProfessor.removerProfessor(professor);
 	}
+	
+	public void cadastrarProblema(Problema problema) throws ObjetoJaExistenteException, ObjetoInexistenteException {
+		gerenciadorProblema.cadastrarProblema(problema);
+	}
 
 
 
