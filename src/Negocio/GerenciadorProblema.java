@@ -47,4 +47,7 @@ public class GerenciadorProblema {
 	public int getQuantidadeDeProblemasCadastrados(){
 		return problemas.size();
 	}
+	public ArrayList<Problema> listarProblemas(){
+		return problemas;
+	}
 }
