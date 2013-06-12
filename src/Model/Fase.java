@@ -31,5 +31,8 @@ public class Fase {
 	public Jogador getJogador() {
 		return jogador;
 	}
+	public void criarJogador(Jogador jogador) {
+		this.jogador = jogador;
+	}
 	
 }
