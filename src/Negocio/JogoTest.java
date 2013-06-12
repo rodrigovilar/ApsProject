@@ -60,4 +60,14 @@ public class JogoTest {
 		jogo.removerProfessor(professor);
 		Assert.assertEquals("Esse teste espera que a quantidade de jogadores seja igual a 0", 0, jogo.getQuantidadeDeProfessoresCadastrados());
 	}
+	
+	@Test(expected=ObjetoInexistenteException.class)
+	public void removerMesmoProfessorDuasVezes() throws ObjetoJaExistenteException, ObjetoInexistenteException{
+		Professor professor = new Professor();
+		professor.setNome("professor_1");
+		professor.setSenha("44444");
+		jogo.cadastrarProfesssor(professor);
+		jogo.removerProfessor(professor);
+		jogo.removerProfessor(professor);
+	}
 }
