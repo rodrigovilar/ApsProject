@@ -230,6 +230,289 @@ public class JogoTest {
 		jogo.removerProblema(problema_1);
 	}
 	
+	@Test
+	public void verficarScoreInicial() throws ObjetoJaExistenteException{
+		Jogador jogador = new Jogador();
+		jogador.setNome("Jonnathann Silva Finizola");
+		jogo.cadastrarJogador(jogador);
+		Assert.assertEquals(10, jogo.listarJogadores().get(0).getScore());
+	}
+	
+	@Test
+	public void inserirJogadorNaFaseDisponivel() throws ObjetoJaExistenteException{
+		Jogador jogador = new Jogador();
+		jogador.setNome("Jonnathann Silva Finizola");
+		jogo.cadastrarJogador(jogador);
+		
+		ArrayList<Jogador> jogadores = jogo.listarJogadores();
+		
+		jogo.gerarTodasAsFases();
+		
+		jogo.inserirJogadorNaFase(jogadores.get(0));
+		ArrayList<Fase> fases = jogo.listarFases();
+		
+		Assert.assertEquals(jogador, fases.get(0).getJogador());
+	}
+	
+	@Test
+	public void verificarPosicaoInicialDoCanhao() throws ObjetoJaExistenteException{
+		Jogador jogador = new Jogador();
+		jogador.setNome("Jonnathann Silva Finizola");
+		
+		Canhao canhao = new Canhao();
+		jogador.setCanhao(canhao);
+		jogo.cadastrarJogador(jogador);
+		
+		jogo.gerarTodasAsFases();
+		jogo.inserirJogadorNaFase(jogador);
+		ArrayList<Fase> fases = jogo.listarFases();
+		
+		Assert.assertEquals(250, fases.get(0).getJogador().getCanhao().getPosicaoX());
+		Assert.assertEquals(500, fases.get(0).getJogador().getCanhao().getPosicaoY());
+	}
+	
+	@Test
+	public void verificarSeJogadorControlaPosicaoCanhao() throws ObjetoJaExistenteException{
+		Jogador jogador = new Jogador();
+		jogador.setNome("Jonnathann Silva Finizola");
+		
+		Canhao canhao = new Canhao();
+		jogador.setCanhao(canhao);
+		jogador.getCanhao().setPosicaoX(100);
+		jogador.getCanhao().setPosicaoY(50);
+		
+		jogo.cadastrarJogador(jogador);
+		
+		jogo.gerarTodasAsFases();
+		jogo.inserirJogadorNaFase(jogador);
+		ArrayList<Fase> fases = jogo.listarFases();
+		
+		Assert.assertEquals(100, fases.get(0).getJogador().getCanhao().getPosicaoX());
+		Assert.assertEquals(50, fases.get(0).getJogador().getCanhao().getPosicaoY());
+	}
+	
+	@Test
+	public void verificarSeCanhaoDoJogadorPossuiTodosOsTiros() throws ObjetoJaExistenteException{
+		Jogador jogador = new Jogador();
+		jogador.setNome("Jonnathann Silva Finizola");
+		
+		Canhao canhao = new Canhao();
+		Tiro tiro = new Tiro();
+		canhao.setTiro(tiro);
+		jogador.setCanhao(canhao);
+		
+		jogo.cadastrarJogador(jogador);
+		jogo.gerarTodasAsFases();
+		jogo.inserirJogadorNaFase(jogador);
+		ArrayList<Fase> fases = jogo.listarFases();
+		Assert.assertEquals(10, fases.get(0).getJogador().getCanhao().getTiro().getQuantidadeDeBalas());
+	}
+	
+	@Test
+	public void verificarSeJogadorAtiraComCanhao() throws ObjetoJaExistenteException, BalasEsgotadasException{
+		Jogador jogador = new Jogador();
+		jogador.setNome("Jonnathann Silva Finizola");
+		
+		Canhao canhao = new Canhao();
+		Tiro tiro = new Tiro();
+		canhao.setTiro(tiro);
+		jogador.setCanhao(canhao);
+		jogo.cadastrarJogador(jogador);
+		jogo.gerarTodasAsFases();
+		jogo.inserirJogadorNaFase(jogador);
+		ArrayList<Fase> fases = jogo.listarFases();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		Assert.assertEquals(7, fases.get(0).getJogador().getCanhao().getTiro().getQuantidadeDeBalas());
+	}
+	
+	@Test(expected=BalasEsgotadasException.class)
+	public void verificarSeBalasEsgostaram() throws ObjetoJaExistenteException, BalasEsgotadasException{
+		Jogador jogador = new Jogador();
+		jogador.setNome("Jonnathann Silva Finizola");
+		
+		Canhao canhao = new Canhao();
+		Tiro tiro = new Tiro();
+		canhao.setTiro(tiro);
+		jogador.setCanhao(canhao);
+		jogo.cadastrarJogador(jogador);
+		jogo.gerarTodasAsFases();
+		jogo.inserirJogadorNaFase(jogador);
+		
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+	}
+	
+	@Test
+	public void verificarPossivelRespostaCorretaEmBaloes() throws ObjetoJaExistenteException, ObjetoInexistenteException{
+		Professor professor = new Professor();
+		professor.setNome("professor");
+		professor.setSenha("12345");
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+		
+		Problema problema_1 = new Problema();
+		problema_1.setQuestao("problema_1");
+		problema_1.setResposta(15);
+		jogo.cadastrarProblema(problema_1);
+		
+		jogo.gerarBalao(problema_1);
+		Assert.assertEquals(true,jogo.verificarSeRespostaEstaEmBaloes(15) );
+	}	
+	
+	@Test
+	public void verificarQuantidadeDeBaloesGerados() throws ObjetoJaExistenteException, ObjetoInexistenteException{
+		Professor professor = new Professor();
+		professor.setNome("professor");
+		professor.setSenha("12345");
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+		
+		Problema problema_1 = new Problema();
+		problema_1.setQuestao("problema_1");
+		problema_1.setResposta(15);
+		jogo.cadastrarProblema(problema_1);
+		
+		jogo.gerarBalao(problema_1);
+		Assert.assertEquals(10,jogo.verificarQuantidadeDeBaloesGerados());
+	}
+	
+	@Test
+	public void verificarSeBalaoEstoura() throws ObjetoJaExistenteException, ObjetoInexistenteException{
+		Professor professor = new Professor();
+		professor.setNome("professor");
+		professor.setSenha("12345");
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+		
+		Problema problema_1 = new Problema();
+		problema_1.setQuestao("problema_1");
+		problema_1.setResposta(15);
+		jogo.cadastrarProblema(problema_1);
+		
+		jogo.gerarBalao(problema_1);
+		
+		Jogador jogador = new Jogador();
+		jogador.setNome("Jonnathann Silva Finizola");
+		
+		Canhao canhao = new Canhao();
+		Tiro tiro = new Tiro();
+		canhao.setTiro(tiro);
+		jogador.setCanhao(canhao);
+		
+		jogo.cadastrarJogador(jogador);
+		jogo.gerarTodasAsFases();
+		jogo.inserirJogadorNaFase(jogador);
+		
+		jogo.estourarBalao(15);
+		Assert.assertFalse(jogo.verificarSeRespostaEstaEmBaloes(15));
+	}
+	
+	@Test
+	public void estourarBalaoInexistente() throws ObjetoJaExistenteException, ObjetoInexistenteException{
+		Professor professor = new Professor();
+		professor.setNome("professor");
+		professor.setSenha("12345");
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+		
+		Problema problema_1 = new Problema();
+		problema_1.setQuestao("problema_1");
+		problema_1.setResposta(15);
+		jogo.cadastrarProblema(problema_1);
+		
+		jogo.gerarBalao(problema_1);
+		
+		Jogador jogador = new Jogador();
+		jogador.setNome("Jonnathann Silva Finizola");
+		
+		Canhao canhao = new Canhao();
+		Tiro tiro = new Tiro();
+		canhao.setTiro(tiro);
+		jogador.setCanhao(canhao);
+		
+		jogo.cadastrarJogador(jogador);
+		jogo.gerarTodasAsFases();
+		jogo.inserirJogadorNaFase(jogador);
+		
+		jogo.estourarBalao(52);
+		
+		Assert.assertEquals(10, jogo.verificarQuantidadeDeBaloesGerados());
+	}
+	
+	@Test
+	public void verificarSeJogadorMarcaPontoAoAcertarQuestao() throws ObjetoJaExistenteException, ObjetoInexistenteException{
+		Professor professor = new Professor();
+		professor.setNome("professor");
+		professor.setSenha("12345");
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+		
+		Problema problema_1 = new Problema();
+		problema_1.setQuestao("problema_1");
+		problema_1.setResposta(15);
+		jogo.cadastrarProblema(problema_1);
+		
+		jogo.gerarBalao(problema_1);
+		
+		Jogador jogador = new Jogador();
+		jogador.setNome("Jonnathann Silva Finizola");
+		
+		Canhao canhao = new Canhao();
+		Tiro tiro = new Tiro();
+		canhao.setTiro(tiro);
+		jogador.setCanhao(canhao);
+		
+		jogo.cadastrarJogador(jogador);
+		jogo.gerarTodasAsFases();
+		jogo.inserirJogadorNaFase(jogador);
+		
+		jogo.estourarBalao(15);
+		Assert.assertEquals(11, jogador.getScore());
+	}
+	
+	@Test
+	public void verificarSeJogadorPerdePontoAoErrarQuestao() throws ObjetoJaExistenteException, ObjetoInexistenteException{
+		Professor professor = new Professor();
+		professor.setNome("professor");
+		professor.setSenha("12345");
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+		
+		Problema problema_1 = new Problema();
+		problema_1.setQuestao("problema_1");
+		problema_1.setResposta(15);
+		jogo.cadastrarProblema(problema_1);
+		
+		jogo.gerarBalao(problema_1);
+		
+		Jogador jogador = new Jogador();
+		jogador.setNome("Jonnathann Silva Finizola");
+		
+		Canhao canhao = new Canhao();
+		Tiro tiro = new Tiro();
+		canhao.setTiro(tiro);
+		jogador.setCanhao(canhao);
+		
+		jogo.cadastrarJogador(jogador);
+		jogo.gerarTodasAsFases();
+		jogo.inserirJogadorNaFase(jogador);
+		
+		jogo.estourarBalao(15);
+		Assert.assertEquals(11, jogador.getScore());
+	}
+	
+	
 	@Test(expected=ObjetoInexistenteException.class)//Tenta remover jogador inexistente e lana um execeo
 	public void removerProblemaInexistente() throws ObjetoJaExistenteException, ObjetoInexistenteException{
 		Professor professor = new Professor();
