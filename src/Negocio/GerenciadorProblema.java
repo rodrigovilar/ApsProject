@@ -11,6 +11,15 @@ public class GerenciadorProblema {
 		this.professoresCadastrados = professoresCadastrados;
 		
 	}
+	public void cadastrarProblema(Problema problema) throws ObjetoJaExistenteException, ObjetoInexistenteException {
+		if(!autenticarProfessor()){
+			throw new ObjetoInexistenteException("Para cadastrar o problema, o professor deve est logado");
+		}
+		if(buscarProblema(problema)){
+			throw new ObjetoJaExistenteException("Esse problema j existe");
+		}
+		problemas.add(problema);
+	}
 	
 
 }
