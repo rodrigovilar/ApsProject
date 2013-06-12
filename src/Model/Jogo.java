@@ -58,6 +58,12 @@ public class Jogo {
 		gerenciadorProblema.removerProblema(problema_1);
 		
 	}
+	
+	public void loginProfessor(Professor professor) {
+		gerenciadorProblema.loginProfessor(professor, gerenciadorProfessor.listarProfessores());
+		
+	}
+
 
 
 
