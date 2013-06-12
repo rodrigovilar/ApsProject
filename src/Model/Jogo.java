@@ -45,6 +45,11 @@ public class Jogo {
 	public void cadastrarProblema(Problema problema) throws ObjetoJaExistenteException, ObjetoInexistenteException {
 		gerenciadorProblema.cadastrarProblema(problema);
 	}
+	
+	public int getQuantidadeDeProblemasCadastrados() {
+		return gerenciadorProblema.getQuantidadeDeProblemasCadastrados();
+	}
+
 
 
 
