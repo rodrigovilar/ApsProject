@@ -17,6 +17,10 @@ public class Jogo {
 	public void cadastrarJogador(Jogador jogador) throws ObjetoJaExistenteException {
 		gerenciadorJogador.cadastrarJogador(jogador);
 	}
+	
+	public void removerJogador(Jogador jogador) throws ObjetoInexistenteException{
+		gerenciadorJogador.removerJogador(jogador);
+	}
 
 
 
