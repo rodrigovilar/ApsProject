@@ -10,4 +10,10 @@ public class GerenciadorJogador {
 		}
 		jogadores.add(jogador);
 	}
+	public void removerJogador(Jogador jogador) throws ObjetoInexistenteException{
+		if(!buscarJogador(jogador)){
+			throw new ObjetoInexistenteException("Esse jogador não existe");
+		}
+		jogadores.remove(jogador);
+	}
 }
