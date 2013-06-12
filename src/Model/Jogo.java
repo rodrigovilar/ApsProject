@@ -1,5 +1,6 @@
 package Model;
 
+import Excecao.ObjetoJaExistenteException;
 import Negocio.GerenciadorJogador;
 import Negocio.GerenciadorProblema;
 import Negocio.GerenciadorProfessor;
