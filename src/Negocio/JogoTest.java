@@ -213,4 +213,20 @@ public class JogoTest {
 		jogo.removerProblema(problema_1);
 		Assert.assertEquals("Esse teste espera que a quantidade de jogadores seja igual a 0", 0, jogo.getQuantidadeDeProblemasCadastrados());
 	}
+	
+	@Test(expected=ObjetoInexistenteException.class)//Tenta remover o mesmo problema duas vezes, com isso lanando duas vezes a exceco
+	public void removerMesmoProblemaDuasVezes() throws ObjetoJaExistenteException, ObjetoInexistenteException{
+		Professor professor = new Professor();
+		professor.setNome("professor");
+		professor.setSenha("12345");
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+		
+		Problema problema_1 = new Problema();
+		problema_1.setQuestao("problema_1");
+		problema_1.setResposta(8);
+		jogo.cadastrarProblema(problema_1);
+		jogo.removerProblema(problema_1);
+		jogo.removerProblema(problema_1);
+	}
 }
