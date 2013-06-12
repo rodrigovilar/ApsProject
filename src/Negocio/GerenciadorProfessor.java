@@ -13,4 +13,10 @@ public class GerenciadorProfessor {
 		}
 		professores.add(professor);
 	}
+	public void removerProfessor(Professor professor) throws ObjetoInexistenteException{
+		if(!buscarProfessor(professor)){
+			throw new ObjetoInexistenteException("Esse professor não existe");
+		}
+		professores.remove(professor);
+	}
 }
