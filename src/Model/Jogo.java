@@ -25,6 +25,10 @@ public class Jogo {
 	public ArrayList<Jogador> listarJogadores(){
 		return gerenciadorJogador.listarJogadores();
 	}
+	
+	public int getQuantidadeDeProfessoresCadastrados() {
+		return gerenciadorProfessor.getQuantidadeDeProfessoresCadastrados();
+	}
 
 
 
