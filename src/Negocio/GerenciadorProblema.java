@@ -5,5 +5,12 @@ public class GerenciadorProblema {
 	private Professor professor;
 	ArrayList<Professor> professoresCadastrados;
 	private ArrayList<Balao> baloes= new ArrayList<Balao>();
+	
+	public void loginProfessor(Professor professor, ArrayList<Professor> professoresCadastrados){
+		this.professor = professor;
+		this.professoresCadastrados = professoresCadastrados;
+		
+	}
+	
 
 }
