@@ -63,6 +63,11 @@ public class Jogo {
 		gerenciadorProblema.loginProfessor(professor, gerenciadorProfessor.listarProfessores());
 		
 	}
+	
+	public void gerarTodasAsFases() {
+		gerenciadorFase.gerarTodasAsFases();
+		
+	}
 
 
 
