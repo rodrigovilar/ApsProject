@@ -21,6 +21,10 @@ public class Jogo {
 	public void removerJogador(Jogador jogador) throws ObjetoInexistenteException{
 		gerenciadorJogador.removerJogador(jogador);
 	}
+	
+	public ArrayList<Jogador> listarJogadores(){
+		return gerenciadorJogador.listarJogadores();
+	}
 
 
 
