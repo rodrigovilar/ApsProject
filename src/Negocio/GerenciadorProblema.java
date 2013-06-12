@@ -36,4 +36,12 @@ public class GerenciadorProblema {
 		}
 		problemas.remove(problema);
 	}
+	private boolean buscarProblema(Problema problema) {
+		for(Problema p:problemas){
+			if(p.getQuestao().equals(problema.getQuestao())){
+				return true;
+			}
+		}
+		return false;
+	}
 }
