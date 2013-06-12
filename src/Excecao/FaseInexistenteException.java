@@ -1,6 +1,7 @@
 package Excecao;
 
-public class FaseInexistenteException {
+@SuppressWarnings("serial")
+public class FaseInexistenteException extends Exception{
 	public FaseInexistenteException(String msg){
 		super(msg);
 	}
