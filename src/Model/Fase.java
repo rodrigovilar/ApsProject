@@ -8,4 +8,8 @@ public class Fase {
 	private int nivel;
 	private boolean liberado = false;
 	
+	public String getNome() {
+		return nome;
+	}
+	
 }
