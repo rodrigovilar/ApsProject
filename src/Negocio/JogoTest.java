@@ -196,4 +196,21 @@ public class JogoTest {
 		problema_2.setQuestao("problema_1");
 		jogo.cadastrarProblema(problema_2);
 	}
+	
+	@Test
+	public void removerProblemaCadastrado() throws ObjetoJaExistenteException, ObjetoInexistenteException{//Remove jogador cadastrado
+		Professor professor = new Professor();
+		professor.setNome("professor");
+		professor.setSenha("12345");
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+		
+		Problema problema_1 = new Problema();
+		problema_1.setQuestao("problema_1");
+		problema_1.setResposta(4);
+		jogo.cadastrarProblema(problema_1);
+		Assert.assertEquals("Esse teste espera que a quantidade de problemas seja igual a 1", 1, jogo.getQuantidadeDeProblemasCadastrados());
+		jogo.removerProblema(problema_1);
+		Assert.assertEquals("Esse teste espera que a quantidade de jogadores seja igual a 0", 0, jogo.getQuantidadeDeProblemasCadastrados());
+	}
 }
