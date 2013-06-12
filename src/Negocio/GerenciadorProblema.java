@@ -29,5 +29,11 @@ public class GerenciadorProblema {
 		}
 		return false;
 	}
-
+	
+	public void removerProblema(Problema problema) throws ObjetoInexistenteException{
+		if(!buscarProblema(problema)){
+			throw new ObjetoInexistenteException("Esse problema no existe");
+		}
+		problemas.remove(problema);
+	}
 }
