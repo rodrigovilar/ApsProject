@@ -18,5 +18,9 @@ public class JogoTest {
 	public void iniciarJogo(){//Veririca que o jogo nao terminou
 		Assert.assertFalse("O jogo iniciou acabado", jogo.jogoAcabou());
 	}
+	@Test
+	public void verificarListaInicialDeProfessores(){
+		Assert.assertEquals("Esse teste espera que a lista inicial de professores seja igual a zero", 0, jogo.getQuantidadeDeProfessoresCadastrados());
+	}
 
 }
