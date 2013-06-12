@@ -229,4 +229,24 @@ public class JogoTest {
 		jogo.removerProblema(problema_1);
 		jogo.removerProblema(problema_1);
 	}
+	
+	@Test(expected=ObjetoInexistenteException.class)//Tenta remover jogador inexistente e lana um execeo
+	public void removerProblemaInexistente() throws ObjetoJaExistenteException, ObjetoInexistenteException{
+		Professor professor = new Professor();
+		professor.setNome("professor");
+		professor.setSenha("12345");
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+		
+		Problema problema_1 = new Problema();
+		problema_1.setQuestao("problema_1");
+		problema_1.setResposta(9);
+		jogo.cadastrarProblema(problema_1);
+		
+		Problema problema_2 = new Problema();
+		problema_2.setQuestao("problema_2");
+		problema_2.setResposta(115);		
+		jogo.removerProblema(problema_2);
+	}
+	
 }
