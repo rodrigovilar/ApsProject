@@ -58,4 +58,21 @@ public class GerenciadorProblema {
 		}
 		return false;
 	}
+	public void gerarBaloes(Problema problema){
+		
+		Random random = new Random();
+		int posicao = random.nextInt(9);
+		for(int i = 0; i< 10; i++){
+			Balao b = new Balao();
+			if(i == posicao){
+				b.setResposta(problema.getResposta());
+				baloes.add(b);
+			}
+			else{
+				
+				b.setResposta(i);
+				baloes.add(b);
+			}
+		}
+	}
 }
