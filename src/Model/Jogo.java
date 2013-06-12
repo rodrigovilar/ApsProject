@@ -80,6 +80,10 @@ public class Jogo {
 	public boolean isVerificarJogadorNaFase(Jogador jogador){
 		return gerenciadorFase.isVerificarJogadorNaFaseDisponivel(jogador);
 	}
+	
+	public void gerarBalao(Problema problema){
+		gerenciadorProblema.gerarBaloes(problema);
+	}
 
 
 
