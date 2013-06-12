@@ -19,4 +19,13 @@ public class GerenciadorProfessor {
 		}
 		professores.remove(professor);
 	}
+	
+	private boolean buscarProfessor(Professor professor) {
+		for(Professor p:professores){
+			if(p.getNome().equals(professor.getNome())){
+				return true;
+			}
+		}
+		return false;
+	}
 }
