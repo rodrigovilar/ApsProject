@@ -68,6 +68,11 @@ public class Jogo {
 		gerenciadorFase.gerarTodasAsFases();
 		
 	}
+	
+	public ArrayList<Fase> listarFases() {
+		return gerenciadorFase.getFases();
+	}
+	
 
 
 
