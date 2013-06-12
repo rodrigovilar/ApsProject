@@ -78,5 +78,18 @@ public class GerenciadorProblema {
 	public int getQuantidadeDeBaloesGerados() {
 		return this.baloes.size();
 	}
+	public void estourarBalao(int resposta){
+		boolean encontrou = false;
+		for(int i = 0; i < baloes.size(); i++){
+			if(baloes.get(i).getResposta() == resposta){
+				baloes.remove(baloes.get(i));
+				Jogador.incrementarScore();
+				encontrou = true;
+			}
+		}
+		if(encontrou == false){
+			Jogador.decrementarScore();
+		}
+	}
 	
 }
