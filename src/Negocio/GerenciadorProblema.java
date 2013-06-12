@@ -1,5 +1,15 @@
 package Negocio;
 
+import java.util.ArrayList;
+import java.util.Random;
+
+import Excecao.ObjetoInexistenteException;
+import Excecao.ObjetoJaExistenteException;
+import Model.Balao;
+import Model.Jogador;
+import Model.Problema;
+import Model.Professor;
+
 public class GerenciadorProblema {
 	private ArrayList<Problema> problemas = new ArrayList<Problema>();
 	private Professor professor;

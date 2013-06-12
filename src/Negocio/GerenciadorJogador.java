@@ -1,18 +1,22 @@
 package Negocio;
 
 import java.util.ArrayList;
+
+import Excecao.ObjetoInexistenteException;
+import Excecao.ObjetoJaExistenteException;
+import Model.Jogador;
 public class GerenciadorJogador {
 	private ArrayList<Jogador> jogadores = new ArrayList<Jogador>();
 
 	public void cadastrarJogador(Jogador jogador) throws ObjetoJaExistenteException {
 		if(buscarJogador(jogador)){
-			throw new ObjetoJaExistenteException("Esse jogador já existe");
+			throw new ObjetoJaExistenteException("Esse jogador jï¿½ existe");
 		}
 		jogadores.add(jogador);
 	}
 	public void removerJogador(Jogador jogador) throws ObjetoInexistenteException{
 		if(!buscarJogador(jogador)){
-			throw new ObjetoInexistenteException("Esse jogador não existe");
+			throw new ObjetoInexistenteException("Esse jogador nï¿½o existe");
 		}
 		jogadores.remove(jogador);
 	}

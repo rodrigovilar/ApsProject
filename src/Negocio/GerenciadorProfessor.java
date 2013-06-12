@@ -1,21 +1,25 @@
 package Negocio;
 import java.util.ArrayList;
 
+import Excecao.ObjetoInexistenteException;
+import Excecao.ObjetoJaExistenteException;
+import Model.Professor;
+
 public class GerenciadorProfessor {
 	private ArrayList<Professor> professores = new ArrayList<Professor>();
 	
 	public void cadastrarProfessor(Professor professor) throws ObjetoJaExistenteException, ObjetoInexistenteException {
 		if(buscarProfessor(professor)){
-			throw new ObjetoJaExistenteException("Esse professor já existe");
+			throw new ObjetoJaExistenteException("Esse professor jï¿½ existe");
 		}
 		if(professor.getSenha() == null || professor.getSenha().length() < 4){
-			throw new ObjetoInexistenteException("Senha inválida");
+			throw new ObjetoInexistenteException("Senha invï¿½lida");
 		}
 		professores.add(professor);
 	}
 	public void removerProfessor(Professor professor) throws ObjetoInexistenteException{
 		if(!buscarProfessor(professor)){
-			throw new ObjetoInexistenteException("Esse professor não existe");
+			throw new ObjetoInexistenteException("Esse professor nï¿½o existe");
 		}
 		professores.remove(professor);
 	}

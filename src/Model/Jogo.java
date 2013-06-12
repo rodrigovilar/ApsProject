@@ -1,6 +1,10 @@
 package Model;
 
+import java.util.ArrayList;
+
+import Excecao.ObjetoInexistenteException;
 import Excecao.ObjetoJaExistenteException;
+import Negocio.GerenciadorFase;
 import Negocio.GerenciadorJogador;
 import Negocio.GerenciadorProblema;
 import Negocio.GerenciadorProfessor;

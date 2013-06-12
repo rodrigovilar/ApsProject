@@ -1,5 +1,11 @@
 package Negocio;
 
+import java.util.ArrayList;
+
+import Excecao.FaseInexistenteException;
+import Model.Fase;
+import Model.Jogador;
+
 public class GerenciadorFase {
 	
 private ArrayList<Fase> fases = new ArrayList<Fase>();
@@ -40,7 +46,7 @@ private ArrayList<Fase> fases = new ArrayList<Fase>();
 		for(int i = 1; i < numeroMaximoDeFases; i++){
 			Fase fase = new Fase();
 			fase.setNome("Fase: "+i);
-			fase.setNvel(i);
+			fase.setNivel(i);
 			fase.setLiberado(false);
 			fases.add(fase);
 		}

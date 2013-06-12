@@ -7,6 +7,17 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import Excecao.BalasEsgotadasException;
+import Excecao.ObjetoInexistenteException;
+import Excecao.ObjetoJaExistenteException;
+import Model.Canhao;
+import Model.Fase;
+import Model.Jogador;
+import Model.Jogo;
+import Model.Problema;
+import Model.Professor;
+import Model.Tiro;
+
 public class JogoTest {
 	private Jogo jogo;
 	
@@ -328,7 +339,7 @@ public class JogoTest {
 	}
 	
 	@Test(expected=BalasEsgotadasException.class)
-	public void verificarSeBalasEsgostaram() throws ObjetoJaExistenteException, BalasEsgotadasException{
+	public void verificarSeBalasEsgostaram() throws ObjetoJaExistenteException, BalasEsgotadasException{//verifica se balas esgotaram
 		Jogador jogador = new Jogador();
 		jogador.setNome("Jonnathann Silva Finizola");
 		

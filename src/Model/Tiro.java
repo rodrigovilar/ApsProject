@@ -1,5 +1,7 @@
 package Model;
 
+import Excecao.BalasEsgotadasException;
+
 public class Tiro {
 	private int quantidadeDeBalas = 10;
 
