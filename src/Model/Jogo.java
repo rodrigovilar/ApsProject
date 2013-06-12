@@ -73,6 +73,10 @@ public class Jogo {
 		return gerenciadorFase.getFases();
 	}
 	
+	public void inserirJogadorNaFase(Jogador jogador){
+		gerenciadorFase.inserirJogadorNaFaseDisponivel(jogador);
+	}
+	
 
 
 
