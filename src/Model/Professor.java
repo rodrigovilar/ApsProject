@@ -21,5 +21,9 @@ public class Professor {
 	public int getId() {
 		return id;
 	}
+	
+	public String getSenha() {
+		return senha;
+	}
 
 }
