@@ -89,4 +89,15 @@ public class JogoTest {
 	public void verificarListaInicialDeJogadores(){//Verifica se a lista inicial de jogadores est vazia
 		Assert.assertEquals("Esse teste espera que a lista inicial de jogadores seja igual a zero" ,0, jogo.getQuantidadeDeJogadoresCadastrados());
 	}
+	
+	@Test
+	public void cadastrarJogador() throws ObjetoJaExistenteException{//Cadastra e verifica se o jogador  cadastrado
+		Jogador jogador = new Jogador();
+		jogador.setNome("jogador_1");
+		jogo.cadastrarJogador(jogador);
+		ArrayList<Jogador> jogadoresCadastrados = jogo.listarJogadores();
+		Assert.assertEquals("Esse teste espera que possua apenas um jogador cadastrado", 1, jogadoresCadastrados.size());
+		Jogador jogadorSalvo = jogadoresCadastrados.get(0);
+		Assert.assertEquals("Esse teste espera que o jogador cadastrado seja igual ao jogador salvo na lista",jogador, jogadorSalvo);
+	}
 }
