@@ -17,4 +17,8 @@ public class Problema {
 	public String getQuestao() {
 		return questao;
 	}
+	
+	public void setQuestao(String questao) {
+		this.questao = questao;
+	}
 }
