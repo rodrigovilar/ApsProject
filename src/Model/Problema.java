@@ -21,4 +21,8 @@ public class Problema {
 	public void setQuestao(String questao) {
 		this.questao = questao;
 	}
+	
+	public int getResposta() {
+		return resposta;
+	}
 }
