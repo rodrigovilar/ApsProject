@@ -130,4 +130,18 @@ public class JogoTest {
 		jogo.removerJogador(jogador_1);
 		jogo.removerJogador(jogador_1);
 	}
+	
+	@Test(expected=ObjetoInexistenteException.class)//Tenta remover jogador inexistente e lana um execeo
+	public void removerJogadorInexistente() throws ObjetoJaExistenteException, ObjetoInexistenteException{
+		Jogador jogador_1 = new Jogador();
+		jogador_1.setNome("jogador_1");
+	
+		jogo.cadastrarJogador(jogador_1);
+		
+		Jogador jogador_2 = new Jogador();
+		jogador_2.setNome("jogador_2");
+		
+		
+		jogo.removerJogador(jogador_2);
+	}
 }
