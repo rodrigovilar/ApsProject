@@ -1,9 +1,5 @@
 package Model;
 
-import BalasEsgotadasException;
-import Canhao;
-
-
 public class Jogador {
 	private String nome;
 	private int id = 0;
