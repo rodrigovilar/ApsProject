@@ -20,6 +20,14 @@ public class GerenciadorProblema {
 		}
 		problemas.add(problema);
 	}
-	
+
+	private boolean autenticarProfessor(){
+		for(Professor p: professoresCadastrados){
+			if(professor.equals(p)){
+				return true;
+			}
+		}
+		return false;
+	}
 
 }
