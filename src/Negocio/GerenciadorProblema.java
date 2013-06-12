@@ -44,4 +44,7 @@ public class GerenciadorProblema {
 		}
 		return false;
 	}
+	public int getQuantidadeDeProblemasCadastrados(){
+		return problemas.size();
+	}
 }
