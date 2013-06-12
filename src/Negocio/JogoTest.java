@@ -178,4 +178,22 @@ public class JogoTest {
 		problema.setResposta(5);
 		jogo.cadastrarProblema(problema);
 	}
+	
+	@Test(expected=ObjetoJaExistenteException.class)//Tenta cadastrar problema j cadastrado, da  lanado a exceo
+	public void cadastrarProblemaJaCadastrado() throws ObjetoJaExistenteException, ObjetoInexistenteException{
+		Professor professor = new Professor();
+		professor.setNome("professor");
+		professor.setSenha("12345");
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+		
+		Problema problema_1 = new Problema();
+		problema_1.setQuestao("problema_1");
+		problema_1.setResposta(4);
+		jogo.cadastrarProblema(problema_1);
+		
+		Problema problema_2 = new Problema();
+		problema_2.setQuestao("problema_1");
+		jogo.cadastrarProblema(problema_2);
+	}
 }
