@@ -75,4 +75,8 @@ public class GerenciadorProblema {
 			}
 		}
 	}
+	public int getQuantidadeDeBaloesGerados() {
+		return this.baloes.size();
+	}
+	
 }
