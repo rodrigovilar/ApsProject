@@ -1,6 +1,7 @@
 package Model;
 
 import Negocio.GerenciadorJogador;
+import Negocio.GerenciadorProblema;
 import Negocio.GerenciadorProfessor;
 
 public class Jogo {
