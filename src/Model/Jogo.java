@@ -88,6 +88,10 @@ public class Jogo {
 	public boolean verificarSeRespostaEstaEmBaloes(int resposta){
 		return gerenciadorProblema.verificarSeRespostaCorretaEmBalao(resposta);
 	}
+	
+	public int verificarQuantidadeDeBaloesGerados() {
+		return gerenciadorProblema.getQuantidadeDeBaloesGerados();
+	}
 
 
 
