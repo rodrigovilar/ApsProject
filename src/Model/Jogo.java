@@ -29,6 +29,11 @@ public class Jogo {
 	public int getQuantidadeDeProfessoresCadastrados() {
 		return gerenciadorProfessor.getQuantidadeDeProfessoresCadastrados();
 	}
+	
+	public void cadastrarProfesssor(Professor professor) throws ObjetoJaExistenteException, ObjetoInexistenteException {
+		gerenciadorProfessor.cadastrarProfessor(professor);
+		
+	}
 
 
 
