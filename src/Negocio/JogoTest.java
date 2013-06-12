@@ -100,4 +100,15 @@ public class JogoTest {
 		Jogador jogadorSalvo = jogadoresCadastrados.get(0);
 		Assert.assertEquals("Esse teste espera que o jogador cadastrado seja igual ao jogador salvo na lista",jogador, jogadorSalvo);
 	}
+	
+	@Test(expected=ObjetoJaExistenteException.class)
+	public void cadastrarJogadorJaCadastrado() throws ObjetoJaExistenteException{//Cadastra duas vezes o mesmo jogador e lana uma exceo
+		Jogador jogador_1 = new Jogador();
+		jogador_1.setNome("jogador_1");
+		jogo.cadastrarJogador(jogador_1);
+		
+		Jogador jogador_2 = new Jogador();
+		jogador_2.setNome("jogador_1");
+		jogo.cadastrarJogador(jogador_2);
+	}
 }
