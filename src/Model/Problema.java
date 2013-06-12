@@ -25,4 +25,7 @@ public class Problema {
 	public int getResposta() {
 		return resposta;
 	}
+	public void setResposta(int resposta) {
+		this.resposta = resposta;
+	}
 }
