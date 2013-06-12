@@ -1,5 +1,7 @@
 package Excecao;
 
-public class ObjetoJaExistenteException {
-
+public class ObjetoJaExistenteException extends Exception {
+	public ObjetoJaExistenteException(String msg){
+		super(msg);
+	}
 }
