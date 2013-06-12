@@ -23,5 +23,9 @@ public class Fase {
 	public boolean isLiberado() {
 		return liberado;
 	}
+	public void setLiberado(boolean liberado) {
+		this.liberado = liberado;
+	}
+
 	
 }
