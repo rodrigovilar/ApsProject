@@ -164,4 +164,18 @@ public class JogoTest {
 		Assert.assertEquals("Esse teste espera que o problema cadastrado seja igual ao problema salvo na lista",problema, problemaSalvo);
 	}
 	
+	@Test(expected=ObjetoInexistenteException.class)
+	public void verificarCadastroDeProblemaComLoginInvalido() throws ObjetoJaExistenteException, ObjetoInexistenteException{
+		Professor professor = new Professor();
+		professor.setNome("professor");
+		professor.setSenha("123");
+		jogo.cadastrarProfesssor(professor);
+		
+		jogo.loginProfessor(professor);
+		
+		Problema problema = new Problema();
+		problema.setQuestao("questao");
+		problema.setResposta(5);
+		jogo.cadastrarProblema(problema);
+	}
 }
