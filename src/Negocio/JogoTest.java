@@ -144,4 +144,24 @@ public class JogoTest {
 		
 		jogo.removerJogador(jogador_2);
 	}
+	
+	@Test
+	public void cadastrarProblema() throws ObjetoJaExistenteException, ObjetoInexistenteException{
+		Professor professor = new Professor();
+		professor.setNome("professor");
+		professor.setSenha("12345");
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+		
+		Problema problema = new Problema();
+		problema.setQuestao("questao");
+		problema.setResposta(5);
+		jogo.cadastrarProblema(problema);
+
+		ArrayList<Problema> problemasCadastrados = jogo.listarProblemas();
+		Assert.assertEquals("Esse teste espera que possua apenas um problema cadastrado", 1, problemasCadastrados.size());
+		Problema problemaSalvo = problemasCadastrados.get(0);
+		Assert.assertEquals("Esse teste espera que o problema cadastrado seja igual ao problema salvo na lista",problema, problemaSalvo);
+	}
+	
 }
