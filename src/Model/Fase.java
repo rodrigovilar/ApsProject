@@ -14,5 +14,8 @@ public class Fase {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	public int getNivel() {
+		return nivel;
+	}
 	
 }
