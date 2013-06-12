@@ -9,5 +9,10 @@ public class Jogo {
 	public boolean jogoAcabou() {
 		return false;
 	}
+	
+	public int getQuantidadeDeJogadoresCadastrados() {
+		return gerenciadorJogador.getQuantidadeDeJogadoresCadastrados();
+	}
+
 
 }
