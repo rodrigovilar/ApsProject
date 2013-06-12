@@ -249,4 +249,10 @@ public class JogoTest {
 		jogo.removerProblema(problema_2);
 	}
 	
+	@Test
+	public void verificarSePrimeiraFaseEstaDisponivel(){
+		jogo.gerarTodasAsFases();
+		Assert.assertEquals(true, jogo.listarFases().get(0).isLiberado());
+	}
+	
 }
