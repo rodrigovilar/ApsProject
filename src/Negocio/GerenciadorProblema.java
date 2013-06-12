@@ -50,4 +50,12 @@ public class GerenciadorProblema {
 	public ArrayList<Problema> listarProblemas(){
 		return problemas;
 	}
+	public boolean verificarSeRespostaCorretaEmBalao(int resposta){
+		for(Balao b: baloes){
+			if(b.getResposta() == resposta){
+				return true;
+			}
+		}
+		return false;
+	}
 }
