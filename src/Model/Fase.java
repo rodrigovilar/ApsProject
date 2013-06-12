@@ -1,5 +1,7 @@
 package Model;
 
+import Jogador;
+
 
 public class Fase {
 
@@ -26,6 +28,8 @@ public class Fase {
 	public void setLiberado(boolean liberado) {
 		this.liberado = liberado;
 	}
-
+	public Jogador getJogador() {
+		return jogador;
+	}
 	
 }
