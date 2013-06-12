@@ -255,4 +255,13 @@ public class JogoTest {
 		Assert.assertEquals(true, jogo.listarFases().get(0).isLiberado());
 	}
 	
+	@Test
+	public void verificarFasesBloqueadas(){
+		jogo.gerarTodasAsFases();
+		Assert.assertEquals(false, jogo.listarFases().get(1).isLiberado());
+		Assert.assertEquals(false, jogo.listarFases().get(2).isLiberado());
+		Assert.assertEquals(false, jogo.listarFases().get(3).isLiberado());
+		Assert.assertEquals(false, jogo.listarFases().get(4).isLiberado());
+	}
+	
 }
