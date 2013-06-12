@@ -1,5 +1,9 @@
 package Model;
 
+import Negocio.GerenciadorJogador;
+import Negocio.GerenciadorProblema;
+import Negocio.GerenciadorProfessor;
+
 public class Jogo {
 	private GerenciadorJogador gerenciadorJogador = new GerenciadorJogador();
 	private GerenciadorProfessor gerenciadorProfessor = new GerenciadorProfessor();
