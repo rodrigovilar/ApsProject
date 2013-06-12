@@ -49,6 +49,10 @@ public class Jogo {
 	public int getQuantidadeDeProblemasCadastrados() {
 		return gerenciadorProblema.getQuantidadeDeProblemasCadastrados();
 	}
+	
+	public ArrayList<Problema> listarProblemas() {
+		return gerenciadorProblema.listarProblemas();
+	}
 
 
 
