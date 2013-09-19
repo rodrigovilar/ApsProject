@@ -242,11 +242,21 @@ public class JogoTest {
 	}
 	
 	@Test
-	public void verficarScoreInicial() throws ObjetoJaExistenteException{
+	public void verificarScoreInicial() throws ObjetoJaExistenteException{
 		Jogador jogador = new Jogador();
 		jogador.setNome("Jonnathann Silva Finizola");
 		jogo.cadastrarJogador(jogador);
 		Assert.assertEquals(10, jogo.listarJogadores().get(0).getScore());
+	}
+	
+	@Test
+	public void verificarIdDoJogadorCadastrado() throws ObjetoJaExistenteException{
+		Jogador jogador = new Jogador();
+		jogador.setNome("Jonas Mendonça Targino");
+		jogo.cadastrarJogador(jogador);
+		
+		ArrayList<Jogador> jogadores = jogo.listarJogadores();
+		Assert.assertEquals(1,jogadores.get(0).getId());
 	}
 	
 	@Test
