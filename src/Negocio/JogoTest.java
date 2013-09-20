@@ -13,7 +13,6 @@ import Excecao.ObjetoInexistenteException;
 import Excecao.ObjetoJaExistenteException;
 import Model.Canhao;
 import Model.Fase;
-import Model.Jogador;
 import Model.Jogo;
 import Model.Problema;
 import Model.Professor;
@@ -263,7 +262,7 @@ public class JogoTest {
 	@Test
 	public void inserirJogadorNaFaseDisponivel() throws ObjetoJaExistenteException, FaseInexistenteException{
 		Jogador jogador = new Jogador();
-		jogador.setNome("Jonnathann Silva Finizola");
+		jogador.setNome("Jonas Mendonça Targino");
 		jogo.cadastrarJogador(jogador);
 		
 		ArrayList<Jogador> jogadores = jogo.listarJogadores();
@@ -279,7 +278,7 @@ public class JogoTest {
 	@Test(expected=FaseInexistenteException.class)
 	public void FaseIndisponivel() throws ObjetoJaExistenteException, FaseInexistenteException{
 		Jogador jogador = new Jogador();
-		jogador.setNome("Jonnathann Silva Finizola");
+		jogador.setNome("Jonas Mendonça Targino");
 		jogo.cadastrarJogador(jogador);
 		
 		ArrayList<Jogador> jogadores = jogo.listarJogadores();
@@ -288,6 +287,14 @@ public class JogoTest {
 		ArrayList<Fase> fases = jogo.listarFases();
 		
 		Assert.assertEquals(jogador, fases.get(0).getJogador());
+	}
+	
+	@Test
+	public void verificarNumerosDeFasesGeradas() throws ObjetoJaExistenteException, FaseInexistenteException{
+		jogo.gerarTodasAsFases();
+		ArrayList<Fase> fases = jogo.listarFases();
+
+		Assert.assertEquals(5, fases.size());
 	}
 	
 	@Test
@@ -328,7 +335,7 @@ public class JogoTest {
 	}
 	
 	@Test
-	public void verificarSeCanhaoDoJogadorPossuiTodosOsTiros() throws ObjetoJaExistenteException, FaseInexistenteException{
+	public void verificarSeCanhaoDoJogadorQueNaoAtirouPossuiTodosOsTiros() throws ObjetoJaExistenteException, FaseInexistenteException{
 		Jogador jogador = new Jogador();
 		jogador.setNome("Jonnathann Silva Finizola");
 		

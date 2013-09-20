@@ -1,7 +1,8 @@
-package Model;
+package Negocio;
 
 
 import Excecao.BalasEsgotadasException;
+import Model.Canhao;
 
 public class Jogador {
 	private String nome;
