@@ -204,6 +204,7 @@ public class JogoTest {
 		professor.setSenha("1");
 		jogo.cadastrarProfesssor(professor);
 		jogo.loginProfessor(professor);
+		
 	}
 	
 	@Test(expected=ObjetoJaExistenteException.class)//Tenta cadastrar problema j cadastrado, da  lanado a exceo
@@ -576,6 +577,67 @@ public class JogoTest {
 		Assert.assertEquals(9, jogador.getScore());
 	}
 	
+	@Test
+	public void verificarSeJogadorPassaDeFaseAoFazer20Pontos() throws ObjetoJaExistenteException, ObjetoInexistenteException, FaseInexistenteException{
+		Professor professor = new Professor();
+		professor.setNome("professor");
+		professor.setSenha("12345");
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+		
+		Problema problema_1 = new Problema();
+		problema_1.setQuestao("problema_1");
+		problema_1.setResposta(1);
+		jogo.cadastrarProblema(problema_1);
+		
+		Problema problema_2= new Problema();
+		problema_2.setQuestao("problema_2");
+		problema_2.setResposta(2);
+		jogo.cadastrarProblema(problema_2);
+
+		Problema problema_3 = new Problema();
+		problema_3.setQuestao("problema_3");
+		problema_3.setResposta(3);
+		jogo.cadastrarProblema(problema_3);
+		
+		
+		Problema problema_4 = new Problema();
+		problema_4.setQuestao("problema_4");
+		problema_4.setResposta(4);
+		jogo.cadastrarProblema(problema_4);
+		
+		Problema problema_5 = new Problema();
+		problema_5.setQuestao("problema_5");
+		problema_5.setResposta(5);
+		jogo.cadastrarProblema(problema_5);
+		
+		
+		
+		Jogador jogador = new Jogador();
+		jogador.setNome("Jonas Mendonça");
+		
+		Canhao canhao = new Canhao();
+		Tiro tiro = new Tiro();
+		canhao.setTiro(tiro);
+		jogador.setCanhao(canhao);
+		
+		jogo.cadastrarJogador(jogador);
+		jogo.gerarFase();
+		jogo.inserirJogadorNaFase(jogador);
+		
+		jogo.gerarBalao(problema_5);
+		jogo.estourarBalao(5);
+		jogo.gerarBalao(problema_4);
+		jogo.estourarBalao(4);
+		jogo.gerarBalao(problema_3);
+		jogo.estourarBalao(3);
+		jogo.gerarBalao(problema_2);
+		jogo.estourarBalao(2);
+		jogo.gerarBalao(problema_1);
+		jogo.estourarBalao(1);
+		
+		Assert.assertTrue(jogo.listarFases().get(0).isLiberado());
+	}
 	
 	@Test(expected=ObjetoInexistenteException.class)//Tenta remover jogador inexistente e lana um execeo
 	public void removerProblemaInexistente() throws ObjetoJaExistenteException, ObjetoInexistenteException{
