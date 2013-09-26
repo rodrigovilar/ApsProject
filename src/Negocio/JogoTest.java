@@ -109,6 +109,15 @@ public class JogoTest {
 		ArrayList<Jogador> jogadoresCadastrados = jogo.listarJogadores();
 		Assert.assertEquals("Esse teste espera que possua apenas um jogador cadastrado", 1, jogadoresCadastrados.size());
 		Jogador jogadorSalvo = jogadoresCadastrados.get(0);
+		Assert.assertEquals("Esse teste espera que o jogador cadastrado seja igual ao jogador salvo na lista",jogador.getNome(), jogadorSalvo.getNome());
+	}
+	@Test
+	public void verificaSeNomeDoJogadorEstaCorreto() throws ObjetoJaExistenteException{//Verifica se o jogador cadastrado está com o nome certo
+		Jogador jogador = new Jogador();
+		jogador.setNome("jogador_1");
+		jogo.cadastrarJogador(jogador);
+		ArrayList<Jogador> jogadoresCadastrados = jogo.listarJogadores();
+		Jogador jogadorSalvo = jogadoresCadastrados.get(0);
 		Assert.assertEquals("Esse teste espera que o jogador cadastrado seja igual ao jogador salvo na lista",jogador, jogadorSalvo);
 	}
 	
@@ -361,6 +370,7 @@ public class JogoTest {
 		canhao.setTiro(tiro);
 		jogador.setCanhao(canhao);
 		jogo.cadastrarJogador(jogador);
+		
 		jogo.gerarTodasAsFases();
 		jogo.inserirJogadorNaFase(jogador);
 		ArrayList<Fase> fases = jogo.listarFases();
@@ -412,6 +422,11 @@ public class JogoTest {
 		jogo.gerarBalao(problema_1);
 		Assert.assertEquals(true,jogo.verificarSeRespostaEstaEmBaloes(15) );
 	}	
+	
+	@Test(expected = ObjetoInexistenteException.class)
+	public void verificarQuantidadeInicialDeBaloesGerados() throws ObjetoJaExistenteException, ObjetoInexistenteException{
+		Assert.assertEquals(0,jogo.verificarQuantidadeDeBaloesGerados());
+	}
 	
 	@Test
 	public void verificarQuantidadeDeBaloesGerados() throws ObjetoJaExistenteException, ObjetoInexistenteException{
@@ -494,7 +509,7 @@ public class JogoTest {
 	}
 	
 	@Test
-	public void verificarSeJogadorMarcaPontoAoAcertarQuestao() throws ObjetoJaExistenteException, ObjetoInexistenteException, FaseInexistenteException{
+	public void verificarSeJogadorMarcaScoreAoAcertarQuestao() throws ObjetoJaExistenteException, ObjetoInexistenteException, FaseInexistenteException{
 		Professor professor = new Professor();
 		professor.setNome("professor");
 		professor.setSenha("12345");
@@ -525,7 +540,7 @@ public class JogoTest {
 	}
 	
 	@Test
-	public void verificarSeJogadorPerdePontoAoErrarQuestao() throws ObjetoJaExistenteException, ObjetoInexistenteException, FaseInexistenteException{
+	public void verificarSeJogadorPerdeScoreAoErrarQuestao() throws ObjetoJaExistenteException, ObjetoInexistenteException, FaseInexistenteException{
 		Professor professor = new Professor();
 		professor.setNome("professor");
 		professor.setSenha("12345");
@@ -551,8 +566,8 @@ public class JogoTest {
 		jogo.gerarTodasAsFases();
 		jogo.inserirJogadorNaFase(jogador);
 		
-		jogo.estourarBalao(15);
-		Assert.assertEquals(11, jogador.getScore());
+		jogo.estourarBalao(52);
+		Assert.assertEquals(9, jogador.getScore());
 	}
 	
 	
