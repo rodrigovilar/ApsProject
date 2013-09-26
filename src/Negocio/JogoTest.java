@@ -188,15 +188,22 @@ public class JogoTest {
 	public void verificarCadastroDeProblemaComLoginInvalido() throws ObjetoJaExistenteException, ObjetoInexistenteException{
 		Professor professor = new Professor();
 		professor.setNome("professor");
-		professor.setSenha("123");
 		jogo.cadastrarProfesssor(professor);
-		
 		jogo.loginProfessor(professor);
 		
 		Problema problema = new Problema();
 		problema.setQuestao("questao");
 		problema.setResposta(5);
 		jogo.cadastrarProblema(problema);
+	}
+	
+	@Test(expected=ObjetoInexistenteException.class)
+	public void senhaComApenasUmDigitoImpossibilidadeDeAtribuicao() throws ObjetoJaExistenteException, ObjetoInexistenteException{
+		Professor professor = new Professor();
+		professor.setNome("professor");
+		professor.setSenha("1");
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
 	}
 	
 	@Test(expected=ObjetoJaExistenteException.class)//Tenta cadastrar problema j cadastrado, da  lanado a exceo
