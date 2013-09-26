@@ -596,6 +596,12 @@ public class JogoTest {
 	}
 	
 	@Test
+	public void verificarQuantidadeDeFases(){
+		jogo.gerarFase();
+		Assert.assertEquals(5,jogo.listarFases().size());
+	}
+	
+	@Test
 	public void verificarFasesBloqueadas(){
 		jogo.gerarFase();
 		Assert.assertEquals(false, jogo.listarFases().get(1).isLiberado());
@@ -609,5 +615,6 @@ public class JogoTest {
 		jogo.gerarFase();
 		jogo.verificarExistenciaDeFase(6);
 	}
+	
 	
 }
