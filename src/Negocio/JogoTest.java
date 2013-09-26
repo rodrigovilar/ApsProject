@@ -253,7 +253,6 @@ public class JogoTest {
 	@Test
 	public void verificarScoreInicial() throws ObjetoJaExistenteException{
 		Jogador jogador = new Jogador();
-		jogador.setNome("Jonnathann Silva Finizola");
 		jogo.cadastrarJogador(jogador);
 		Assert.assertEquals(10, jogo.listarJogadores().get(0).getScore());
 	}
@@ -276,7 +275,7 @@ public class JogoTest {
 		
 		ArrayList<Jogador> jogadores = jogo.listarJogadores();
 		
-		jogo.gerarTodasAsFases();
+		jogo.gerarFase();
 		
 		jogo.inserirJogadorNaFase(jogadores.get(0));
 		ArrayList<Fase> fases = jogo.listarFases();
@@ -300,7 +299,7 @@ public class JogoTest {
 	
 	@Test
 	public void verificarNumerosDeFasesGeradas() throws ObjetoJaExistenteException, FaseInexistenteException{
-		jogo.gerarTodasAsFases();
+		jogo.gerarFase();
 		ArrayList<Fase> fases = jogo.listarFases();
 
 		Assert.assertEquals(5, fases.size());
@@ -315,7 +314,7 @@ public class JogoTest {
 		jogador.setCanhao(canhao);
 		jogo.cadastrarJogador(jogador);
 		
-		jogo.gerarTodasAsFases();
+		jogo.gerarFase();
 		jogo.inserirJogadorNaFase(jogador);
 		ArrayList<Fase> fases = jogo.listarFases();
 		
@@ -335,7 +334,7 @@ public class JogoTest {
 		
 		jogo.cadastrarJogador(jogador);
 		
-		jogo.gerarTodasAsFases();
+		jogo.gerarFase();
 		jogo.inserirJogadorNaFase(jogador);
 		ArrayList<Fase> fases = jogo.listarFases();
 		
@@ -354,7 +353,7 @@ public class JogoTest {
 		jogador.setCanhao(canhao);
 		
 		jogo.cadastrarJogador(jogador);
-		jogo.gerarTodasAsFases();
+		jogo.gerarFase();
 		jogo.inserirJogadorNaFase(jogador);
 		ArrayList<Fase> fases = jogo.listarFases();
 		Assert.assertEquals(10, fases.get(0).getJogador().getCanhao().getTiro().getQuantidadeDeBalas());
@@ -371,7 +370,7 @@ public class JogoTest {
 		jogador.setCanhao(canhao);
 		jogo.cadastrarJogador(jogador);
 		
-		jogo.gerarTodasAsFases();
+		jogo.gerarFase();
 		jogo.inserirJogadorNaFase(jogador);
 		ArrayList<Fase> fases = jogo.listarFases();
 		jogador.atirar();
@@ -390,7 +389,7 @@ public class JogoTest {
 		canhao.setTiro(tiro);
 		jogador.setCanhao(canhao);
 		jogo.cadastrarJogador(jogador);
-		jogo.gerarTodasAsFases();
+		jogo.gerarFase();
 		jogo.inserirJogadorNaFase(jogador);
 		
 		jogador.atirar();
@@ -469,7 +468,7 @@ public class JogoTest {
 		jogador.setCanhao(canhao);
 		
 		jogo.cadastrarJogador(jogador);
-		jogo.gerarTodasAsFases();
+		jogo.gerarFase();
 		jogo.inserirJogadorNaFase(jogador);
 		
 		jogo.estourarBalao(15);
@@ -500,7 +499,7 @@ public class JogoTest {
 		jogador.setCanhao(canhao);
 		
 		jogo.cadastrarJogador(jogador);
-		jogo.gerarTodasAsFases();
+		jogo.gerarFase();
 		jogo.inserirJogadorNaFase(jogador);
 		
 		jogo.estourarBalao(52);
@@ -532,7 +531,7 @@ public class JogoTest {
 		jogador.setCanhao(canhao);
 		
 		jogo.cadastrarJogador(jogador);
-		jogo.gerarTodasAsFases();
+		jogo.gerarFase();
 		jogo.inserirJogadorNaFase(jogador);
 		
 		jogo.estourarBalao(15);
@@ -563,7 +562,7 @@ public class JogoTest {
 		jogador.setCanhao(canhao);
 		
 		jogo.cadastrarJogador(jogador);
-		jogo.gerarTodasAsFases();
+		jogo.gerarFase();
 		jogo.inserirJogadorNaFase(jogador);
 		
 		jogo.estourarBalao(52);
@@ -592,17 +591,23 @@ public class JogoTest {
 	
 	@Test
 	public void verificarSePrimeiraFaseEstaDisponivel(){
-		jogo.gerarTodasAsFases();
+		jogo.gerarFase();
 		Assert.assertEquals(true, jogo.listarFases().get(0).isLiberado());
 	}
 	
 	@Test
 	public void verificarFasesBloqueadas(){
-		jogo.gerarTodasAsFases();
+		jogo.gerarFase();
 		Assert.assertEquals(false, jogo.listarFases().get(1).isLiberado());
 		Assert.assertEquals(false, jogo.listarFases().get(2).isLiberado());
 		Assert.assertEquals(false, jogo.listarFases().get(3).isLiberado());
 		Assert.assertEquals(false, jogo.listarFases().get(4).isLiberado());
+	}
+	
+	@Test(expected=FaseInexistenteException.class)
+	public void faseInexisteException() throws FaseInexistenteException{
+		jogo.gerarFase();
+		jogo.verificarExistenciaDeFase(6);
 	}
 	
 }
