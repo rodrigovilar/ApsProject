@@ -1,20 +1,23 @@
 package Negocio;
 
+
+
 import java.util.ArrayList;
 import java.util.Random;
 
 import Excecao.ObjetoInexistenteException;
 import Excecao.ObjetoJaExistenteException;
 import Model.Balao;
-import Model.Jogador;
 import Model.Problema;
 import Model.Professor;
 
 public class GerenciadorProblema {
+	private int quantidadeDeBaloesEstourados = 0;
 	private ArrayList<Problema> problemas = new ArrayList<Problema>();
 	private Professor professor;
 	ArrayList<Professor> professoresCadastrados;
 	private ArrayList<Balao> baloes= new ArrayList<Balao>();
+	GerenciadorFase gf = new GerenciadorFase();
 	
 	public void loginProfessor(Professor professor, ArrayList<Professor> professoresCadastrados){
 		this.professor = professor;
@@ -71,7 +74,7 @@ public class GerenciadorProblema {
 	public void gerarBaloes(Problema problema){
 		
 		Random random = new Random();
-		int posicao = random.nextInt(9);
+		int posicao = random.nextInt(10);
 		for(int i = 0; i< 10; i++){
 			Balao b = new Balao();
 			if(i == posicao){
@@ -85,8 +88,13 @@ public class GerenciadorProblema {
 			}
 		}
 	}
-	public int getQuantidadeDeBaloesGerados() {
-		return this.baloes.size();
+	public int getQuantidadeDeBaloesGerados() throws ObjetoInexistenteException{
+		if(this.baloes.size() == 0){
+			throw new ObjetoInexistenteException("Nao existe nenhum balao");
+		}
+		else{
+			return this.baloes.size();
+		}
 	}
 	public void estourarBalao(int resposta){
 		boolean encontrou = false;
@@ -94,6 +102,11 @@ public class GerenciadorProblema {
 			if(baloes.get(i).getResposta() == resposta){
 				baloes.remove(baloes.get(i));
 				Jogador.incrementarScore();
+				if(Jogador.getScore() > 15){
+					gf.passarDeFase();
+				}
+				
+				
 				encontrou = true;
 			}
 		}

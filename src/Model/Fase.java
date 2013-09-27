@@ -1,5 +1,7 @@
 package Model;
 
+import Negocio.Jogador;
+
 
 
 

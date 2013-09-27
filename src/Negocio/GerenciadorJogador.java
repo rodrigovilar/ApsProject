@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import Excecao.ObjetoInexistenteException;
 import Excecao.ObjetoJaExistenteException;
-import Model.Jogador;
 public class GerenciadorJogador {
 	private ArrayList<Jogador> jogadores = new ArrayList<Jogador>();
+	
 
 	public void cadastrarJogador(Jogador jogador) throws ObjetoJaExistenteException {
 		if(buscarJogador(jogador)){

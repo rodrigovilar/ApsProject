@@ -2,12 +2,14 @@ package Model;
 
 import java.util.ArrayList;
 
+import Excecao.FaseInexistenteException;
 import Excecao.ObjetoInexistenteException;
 import Excecao.ObjetoJaExistenteException;
 import Negocio.GerenciadorFase;
 import Negocio.GerenciadorJogador;
 import Negocio.GerenciadorProblema;
 import Negocio.GerenciadorProfessor;
+import Negocio.Jogador;
 
 public class Jogo {
 	private GerenciadorJogador gerenciadorJogador = new GerenciadorJogador();
@@ -73,16 +75,19 @@ public class Jogo {
 		
 	}
 	
-	public void gerarTodasAsFases() {
-		gerenciadorFase.gerarTodasAsFases();
+	public void gerarFase() {
+		gerenciadorFase.gerarFase();
 		
+	}
+	public void verificarExistenciaDeFase(int fase) throws FaseInexistenteException{
+		gerenciadorFase.atualizarFase(fase);
 	}
 	
 	public ArrayList<Fase> listarFases() {
 		return gerenciadorFase.getFases();
 	}
 	
-	public void inserirJogadorNaFase(Jogador jogador){
+	public void inserirJogadorNaFase(Jogador jogador) throws FaseInexistenteException{
 		gerenciadorFase.inserirJogadorNaFaseDisponivel(jogador);
 	}
 	
@@ -98,7 +103,7 @@ public class Jogo {
 		return gerenciadorProblema.verificarSeRespostaCorretaEmBalao(resposta);
 	}
 	
-	public int verificarQuantidadeDeBaloesGerados() {
+	public int verificarQuantidadeDeBaloesGerados() throws ObjetoInexistenteException {
 		return gerenciadorProblema.getQuantidadeDeBaloesGerados();
 	}
 	

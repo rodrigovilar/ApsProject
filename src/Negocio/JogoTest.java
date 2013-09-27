@@ -635,7 +635,6 @@ public class JogoTest {
 		jogo.estourarBalao(2);
 		jogo.gerarBalao(problema_1);
 		jogo.estourarBalao(1);
-		
 		Assert.assertTrue(jogo.listarFases().get(0).isLiberado());
 	}
 	

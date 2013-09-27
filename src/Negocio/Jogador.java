@@ -3,12 +3,14 @@ package Negocio;
 
 import Excecao.BalasEsgotadasException;
 import Model.Canhao;
+import Model.Fase;
 
 public class Jogador {
 	private String nome;
 	private int id = 0;
 	private static int score = 10;
 	private Canhao canhao;
+	
 	
 	public Jogador(){
 		score = 10;
@@ -29,7 +31,8 @@ public class Jogador {
 	public static void decrementarScore(){
 		score--;
 	}
-	public int getScore() {
+	public static int getScore() {
+		
 		return score;
 	}
 	public Canhao getCanhao() {

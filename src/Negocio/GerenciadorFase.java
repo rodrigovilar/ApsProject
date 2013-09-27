@@ -4,13 +4,15 @@ import java.util.ArrayList;
 
 import Excecao.FaseInexistenteException;
 import Model.Fase;
-import Model.Jogador;
 
 public class GerenciadorFase {
 	
 private ArrayList<Fase> fases = new ArrayList<Fase>();
-	
-	public void inserirJogadorNaFaseDisponivel(Jogador jogador){
+
+	public void inserirJogadorNaFaseDisponivel(Jogador jogador) throws FaseInexistenteException{
+		if(fases.size() == 0){
+			throw new FaseInexistenteException("Fase inexistente");
+		}
 		for(Fase f:fases){
 			if(f.isLiberado()){
 				f.criarJogador(jogador);
@@ -25,6 +27,10 @@ private ArrayList<Fase> fases = new ArrayList<Fase>();
 		}
 		return false;
 	}
+	public void passarDeFase(){
+		
+		fase
+	}
 	
 	public void atualizarFase(int indice) throws FaseInexistenteException{
 		if(indice <= 0 || indice > 5){
@@ -38,7 +44,7 @@ private ArrayList<Fase> fases = new ArrayList<Fase>();
 		return fases;
 	}
 	
-	public void gerarTodasAsFases(){
+	public void gerarFase(){
 		int numeroMaximoDeFases = 5;
 		Fase fase0 = new Fase();
 		fase0.setLiberado(true);
@@ -50,5 +56,6 @@ private ArrayList<Fase> fases = new ArrayList<Fase>();
 			fase.setLiberado(false);
 			fases.add(fase);
 		}
+		
 	}
 }
