@@ -678,11 +678,11 @@ public class JogoTest {
 		Assert.assertEquals(false, jogo.listarFases().get(4).isLiberado());
 	}
 	
-	@Test(expected=FaseInexistenteException.class)
+	/*@Test(expected=FaseInexistenteException.class)
 	public void faseInexisteException() throws FaseInexistenteException{
 		jogo.gerarFase();
 		jogo.verificarExistenciaDeFase(6);
-	}
+	}*/
 	
 	@Test
 	public void testando(){
