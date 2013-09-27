@@ -684,5 +684,10 @@ public class JogoTest {
 		jogo.verificarExistenciaDeFase(6);
 	}
 	
+	@Test
+	public void testando(){
+		//Verificar inicio na fase
+	}
+	
 	
 }
