@@ -29,7 +29,6 @@ private ArrayList<Fase> fases = new ArrayList<Fase>();
 	}
 	public void passarDeFase(){
 		
-		fase
 	}
 	
 	public void atualizarFase(int indice) throws FaseInexistenteException{
