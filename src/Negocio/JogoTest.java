@@ -43,9 +43,9 @@ public class JogoTest {
 		professor.setSenha("12344");
 		jogo.cadastrarProfesssor(professor);
 		ArrayList<Professor> professoresCadastrados = jogo.listarProfessores();
-		Assert.assertEquals("Esse teste espera que possua apenas um jogador cadastrado", 1, jogo.getQuantidadeDeProfessoresCadastrados());
+		Assert.assertEquals("Esse teste espera que possua apenas um professor cadastrado", 1, jogo.getQuantidadeDeProfessoresCadastrados());
 		Professor professorSalvo = professoresCadastrados.get(0);
-		Assert.assertEquals("Esse teste espera que o jogador cadastrado seja igual ao jogador salvo na lista",professor, professorSalvo);
+		Assert.assertEquals("Esse teste espera que o professor cadastrado seja igual ao jogador salvo na lista",professor, professorSalvo);
 	}
 	
 	@Test(expected=ObjetoJaExistenteException.class)
@@ -64,7 +64,7 @@ public class JogoTest {
 	@Test
 	public void removerProfessor() throws ObjetoInexistenteException, ObjetoJaExistenteException {
 		Professor professor = new Professor();
-		professor.setNome("professor_1");
+		professor.setNome("professor_7");
 		professor.setSenha("33344");
 		jogo.cadastrarProfesssor(professor);
 		Assert.assertEquals("Esse teste espera que possua apenas um jogador cadastrado", 1, jogo.getQuantidadeDeProfessoresCadastrados());
@@ -687,6 +687,11 @@ public class JogoTest {
 	@Test
 	public void testando(){
 		//Verificar inicio na fase
+	}
+	
+	@Test
+	public void comecar(){
+		//vamos começar os testes aqui
 	}
 	
 	
