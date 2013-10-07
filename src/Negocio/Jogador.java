@@ -3,27 +3,21 @@ package Negocio;
 
 import Excecao.BalasEsgotadasException;
 import Model.Canhao;
-import Model.Fase;
+import Model.Usuario;
 
-public class Jogador {
-	private String nome;
-	private int id = 0;
+@SuppressWarnings("serial")
+public class Jogador extends Usuario{
 	private static int score = 10;
 	private Canhao canhao;
-	
-	
 	public Jogador(){
 		score = 10;
+		int id = super.getId();
 		id++;
+		super.setId(id);
+		super.setTipo("jogador");
 	}
-	public String getNome() {
-		return nome;
-	}
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	public int getId() {
-		return id;
+	public static void setScoreInicial(){
+		score = 10;
 	}
 	public static void incrementarScore(){
 		score++;
@@ -42,6 +36,6 @@ public class Jogador {
 		this.canhao = canhao;
 	}
 	public void atirar() throws BalasEsgotadasException{
-		this.canhao.getTiro().diminuirQuantidadeDeBalas();
+		this.canhao.getMunicao().diminuirQuantidadeDeBalas();
 	}
 }

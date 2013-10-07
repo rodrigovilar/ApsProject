@@ -1,33 +1,28 @@
 package Model;
 
-public class Professor {
-	
-	private String nome;
-	private int id = 0;
-	private String senha;
-	
-	public Professor(){
-		id++;
-	}
-	
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Professor extends Usuario  implements Serializable { //
+	/*private String nome;
 	public String getNome() {
 		return nome;
 	}
-	
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	public int getId() {
-		return id;
+	public int getID() {
+		return ID;
 	}
-	
-	public String getSenha() {
-		return senha;
+	public void setID(int iD) {
+		ID = iD;
 	}
-	
-	public void setSenha(String senha) {
-		this.senha = senha;
+	private int ID;*/
+	public Professor(){
+		int id = super.getId();
+		id++;
+		super.setId(id);
+		super.setTipo("professor");
 	}
 
 }

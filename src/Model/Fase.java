@@ -2,9 +2,6 @@ package Model;
 
 import Negocio.Jogador;
 
-
-
-
 public class Fase {
 
 	private Jogador jogador;
