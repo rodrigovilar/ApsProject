@@ -1,114 +1,140 @@
 package Model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
-import Excecao.FaseInexistenteException;
+import Excecao.FaseNaoDisponivelException;
+import Excecao.LoginInexistenteException;
 import Excecao.ObjetoInexistenteException;
-import Excecao.ObjetoJaExistenteException;
-import Negocio.GerenciadorFase;
 import Negocio.GerenciadorJogador;
 import Negocio.GerenciadorProblema;
 import Negocio.GerenciadorProfessor;
 import Negocio.Jogador;
 
+
 public class Jogo {
 	private GerenciadorJogador gerenciadorJogador = new GerenciadorJogador();
-	private GerenciadorProfessor gerenciadorProfessor = new GerenciadorProfessor();
-	private GerenciadorProblema gerenciadorProblema = new GerenciadorProblema();
-	private GerenciadorFase gerenciadorFase = new GerenciadorFase();
+	private GerenciadorProfessor gerenciadorProfessor;
+	private boolean isJogoAcabou = false;
 	
-	public boolean jogoAcabou() {
-		return false;
+	public Jogo() throws IOException{
+		gerenciadorProfessor = new GerenciadorProfessor();
 	}
 	
-	public int getQuantidadeDeJogadoresCadastrados() {
+	public void loginJogador(Jogador jogador) throws IOException, Exception{
+		if(gerenciadorProfessor.getGerenciadorProblema().getGerenciadorFase().getIsFaseLiberada()){
+			throw new LoginInexistenteException("Login não permitido, jogador logado!");
+		}
+		if(gerenciadorJogador.loginJogador(jogador)){
+			gerenciadorProfessor.getGerenciadorProblema().getGerenciadorFase().gerarFase();
+		}
+		
+	}
+	
+	public void loginProfessor(Professor professor) throws Exception{
+		if(gerenciadorProfessor.getGerenciadorProblema().getIsLogado()){
+			throw new LoginInexistenteException("Login não permitido, professor logado!");
+		}
+		if(gerenciadorProfessor.loginProfessor(professor)){
+			gerenciadorProfessor.getGerenciadorProblema().setIsProfessorLogado(true);
+		}
+	}
+	
+	public boolean jogoAcabou() {
+		return isJogoAcabou;
+	}
+	
+	public void fimDeJogo(Jogador jogador) throws IOException, Exception{
+		for(Jogador j: gerenciadorJogador.listarJogadores()){
+			if(j.getNome().equals(jogador.getNome()) && (jogador.getCanhao().getMunicao().getQuantidadeDeBalas() == 0)){
+				isJogoAcabou = true;
+			}
+		}
+	}
+	
+	public int getQuantidadeDeJogadoresCadastrados() throws IOException, Exception {
 		return gerenciadorJogador.getQuantidadeDeJogadoresCadastrados();
 	}
 	
-	public void cadastrarJogador(Jogador jogador) throws ObjetoJaExistenteException {
+	public void cadastrarJogador(Jogador jogador) throws IOException, Exception {
 		gerenciadorJogador.cadastrarJogador(jogador);
 	}
 	
-	public void removerJogador(Jogador jogador) throws ObjetoInexistenteException{
+	public void removerJogador(Jogador jogador) throws Exception{
 		gerenciadorJogador.removerJogador(jogador);
 	}
 	
-	public ArrayList<Jogador> listarJogadores(){
+	public ArrayList<Jogador> listarJogadores() throws IOException, Exception{
 		return gerenciadorJogador.listarJogadores();
 	}
 	
-	public int getQuantidadeDeProfessoresCadastrados() {
+	public int getQuantidadeDeProfessoresCadastrados() throws Exception {
 		return gerenciadorProfessor.getQuantidadeDeProfessoresCadastrados();
 	}
 	
-	public void cadastrarProfesssor(Professor professor) throws ObjetoJaExistenteException, ObjetoInexistenteException {
+	public void cadastrarProfesssor(Professor professor) throws Exception {
 		gerenciadorProfessor.cadastrarProfessor(professor);
 	}
 	
-	public ArrayList<Professor> listarProfessores() {
+	public ArrayList<Professor> listarProfessores() throws Exception {
 		return gerenciadorProfessor.listarProfessores();
 	}
 	
-	public void removerProfessor(Professor professor) throws ObjetoInexistenteException {
+	public void removerProfessor(Professor professor) throws Exception {
 		gerenciadorProfessor.removerProfessor(professor);
 	}
 	
-	public void cadastrarProblema(Problema problema) throws ObjetoJaExistenteException, ObjetoInexistenteException {
-		gerenciadorProblema.cadastrarProblema(problema);
+	public void cadastrarProblema(Problema problema) throws Exception {
+		gerenciadorProfessor.getGerenciadorProblema().cadastrarProblema(problema);
 	}
 	
-	public int getQuantidadeDeProblemasCadastrados() {
-		return gerenciadorProblema.getQuantidadeDeProblemasCadastrados();
+	public int getQuantidadeDeProblemasCadastrados() throws IOException, Exception {
+		return gerenciadorProfessor.getGerenciadorProblema().getQuantidadeDeProblemasCadastrados();
 	}
 	
-	public ArrayList<Problema> listarProblemas() {
-		return gerenciadorProblema.listarProblemas();
+	public ArrayList<Problema> listarProblemas() throws IOException, Exception {
+		return gerenciadorProfessor.getGerenciadorProblema().listarProblemas();
 	}
 	
-	public void removerProblema(Problema problema_1) throws ObjetoInexistenteException {
-		gerenciadorProblema.removerProblema(problema_1);
+	public void removerProblema(Problema problema_1) throws IOException, Exception {
+		gerenciadorProfessor.getGerenciadorProblema().removerProblema(problema_1);
 		
 	}
 	
-	public void loginProfessor(Professor professor) {
-		gerenciadorProblema.loginProfessor(professor, gerenciadorProfessor.listarProfessores());
-		
-	}
-	
-	public void gerarFase() {
-		gerenciadorFase.gerarFase();
-		
-	}
-	public void verificarExistenciaDeFase(int fase) throws FaseInexistenteException{
-		gerenciadorFase.atualizarFase(fase);
+	public void verificarExistenciaDeFase(int fase) throws FaseNaoDisponivelException{
+		gerenciadorProfessor.getGerenciadorProblema().getGerenciadorFase().atualizarFase(fase);
 	}
 	
 	public ArrayList<Fase> listarFases() {
-		return gerenciadorFase.getFases();
+		return gerenciadorProfessor.getGerenciadorProblema().getGerenciadorFase().getFases();
 	}
 	
-	public void inserirJogadorNaFase(Jogador jogador) throws FaseInexistenteException{
-		gerenciadorFase.inserirJogadorNaFaseDisponivel(jogador);
+	public void inserirJogadorNaFase(Jogador jogador, Fase fase) throws FaseNaoDisponivelException{
+		gerenciadorProfessor.getGerenciadorProblema().getGerenciadorFase().inserirJogadorNaFase(jogador, fase);
 	}
 	
 	public boolean isVerificarJogadorNaFase(Jogador jogador){
-		return gerenciadorFase.isVerificarJogadorNaFaseDisponivel(jogador);
+		return gerenciadorProfessor.getGerenciadorProblema().getGerenciadorFase().isVerificarJogadorNaFaseDisponivel(jogador);
 	}
 	
 	public void gerarBalao(Problema problema){
-		gerenciadorProblema.gerarBaloes(problema);
+		gerenciadorProfessor.getGerenciadorProblema().gerarBaloes(problema);
 	}
 	
 	public boolean verificarSeRespostaEstaEmBaloes(int resposta){
-		return gerenciadorProblema.verificarSeRespostaCorretaEmBalao(resposta);
+		return gerenciadorProfessor.getGerenciadorProblema().verificarSeRespostaCorretaEmBalao(resposta);
 	}
 	
 	public int verificarQuantidadeDeBaloesGerados() throws ObjetoInexistenteException {
-		return gerenciadorProblema.getQuantidadeDeBaloesGerados();
+		return gerenciadorProfessor.getGerenciadorProblema().getQuantidadeDeBaloesGerados();
 	}
 	
-	public void estourarBalao(int resposta) throws ObjetoInexistenteException {
-		gerenciadorProblema.estourarBalao(resposta);
+	public void estourarBalao(int resposta) throws ObjetoInexistenteException, FaseNaoDisponivelException {
+		gerenciadorProfessor.getGerenciadorProblema().estourarBalao(resposta);
 		
+	}
+
+	public boolean isGameOver() {
+		return gerenciadorJogador.isGameOver();
 	}
 }

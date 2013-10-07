@@ -1,21 +1,24 @@
 package Model;
 
-public class Canhao {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Canhao implements Serializable{
 	
 	//Atributos 
-	private Tiro tiro; //Referencia do tipo Tiro(referente a classe Tiro)
-	private int posicaoX = 250;//Posição X do canhao em relação a tela
-	private int posicaoY = 500;//Posição Y do canhao em relação a tela
+	private Municao municao; //Referencia do tipo Tiro(referente a classe Tiro)
+	private int posicaoX = 250;//PosiÔøΩ‚Äπo X do canhao em relaÔøΩ‚Äπo a tela
+	private int posicaoY = 500;//PosiÔøΩ‚Äπo Y do canhao em relaÔøΩ‚Äπo a tela
 	
-	public int getPosicaoX() {//Método que recupera atributo privado posicaoX
+	public int getPosicaoX() {//M≈Ωtodo que recupera atributo privado posicaoX
 		return posicaoX;
 	}
 	
-	public void setPosicaoX(int posicaoX) {//Método que muda o valor do atributo posicaoX
+	public void setPosicaoX(int posicaoX) {//M≈Ωtodo que muda o valor do atributo posicaoX
 		this.posicaoX = posicaoX;
 	}
 	
-	public int getPosicaoY() {//Método que recupera atributo privado posicaoY
+	public int getPosicaoY() {//M≈Ωtodo que recupera atributo privado posicaoY
 		return posicaoY;
 	}
 	
@@ -23,12 +26,12 @@ public class Canhao {
 		this.posicaoY = posicaoY;
 	}
 	
-	public Tiro getTiro() {
-		return tiro;
+	public Municao getMunicao() {
+		return municao;
 	}
 	
-	public void setTiro(Tiro tiro) {
-		this.tiro = tiro;
+	public void setMunicao(Municao tiro) {
+		this.municao = tiro;
 	}
 
 }
