@@ -14,7 +14,6 @@ import Negocio.Jogador;
 
 
 public class Jogo {
-	
 	private GerenciadorJogador gerenciadorJogador = new GerenciadorJogador();
 	private GerenciadorProfessor gerenciadorProfessor = new GerenciadorProfessor();
 	private boolean isJogoAcabou = false;
@@ -100,5 +99,40 @@ public class Jogo {
 		
 	}
 	
+	public void verificarExistenciaDeFase(int fase) throws FaseNaoDisponivelException{
+		gerenciadorProfessor.getGerenciadorProblema().getGerenciadorFase().atualizarFase(fase);
+	}
 	
+	public ArrayList<Fase> listarFases() {
+		return gerenciadorProfessor.getGerenciadorProblema().getGerenciadorFase().getFases();
+	}
+	
+	public void inserirJogadorNaFase(Jogador jogador, Fase fase) throws FaseNaoDisponivelException{
+		gerenciadorProfessor.getGerenciadorProblema().getGerenciadorFase().inserirJogadorNaFase(jogador, fase);
+	}
+	
+	public boolean isVerificarJogadorNaFase(Jogador jogador){
+		return gerenciadorProfessor.getGerenciadorProblema().getGerenciadorFase().isVerificarJogadorNaFaseDisponivel(jogador);
+	}
+	
+	public void gerarBalao(Problema problema){
+		gerenciadorProfessor.getGerenciadorProblema().gerarBaloes(problema);
+	}
+	
+	public boolean verificarSeRespostaEstaEmBaloes(int resposta){
+		return gerenciadorProfessor.getGerenciadorProblema().verificarSeRespostaCorretaEmBalao(resposta);
+	}
+	
+	public int verificarQuantidadeDeBaloesGerados() throws ObjetoInexistenteException {
+		return gerenciadorProfessor.getGerenciadorProblema().getQuantidadeDeBaloesGerados();
+	}
+	
+	public void estourarBalao(int resposta) throws ObjetoInexistenteException, FaseNaoDisponivelException {
+		gerenciadorProfessor.getGerenciadorProblema().estourarBalao(resposta);
+		
+	}
+
+	public boolean isGameOver() {
+		return gerenciadorJogador.isGameOver();
+	}
 }
