@@ -391,10 +391,8 @@ public class JogoTest {
 		jogo.inserirJogadorNaFase(jogador, fase);
 		ArrayList<Fase> fases = jogo.listarFases();
 
-		Assert.assertEquals(250, fases.get(0).getJogador().getCanhao()
-				.getPosicaoX());
-		Assert.assertEquals(500, fases.get(0).getJogador().getCanhao()
-				.getPosicaoY());
+		Assert.assertEquals(250, fases.get(0).getJogador().getCanhao().getPosicaoX());
+		Assert.assertEquals(500, fases.get(0).getJogador().getCanhao().getPosicaoY());
 	}
 
 	@Test

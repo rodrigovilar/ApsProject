@@ -4,7 +4,10 @@ import Negocio.Jogador;
 
 public class Fase {
 
-	
+	private Jogador jogador;
+	private String nome;
+	private int nivel;
+	private boolean liberado = false;
 	
 	public String getNome() {
 		return nome;
