@@ -1086,7 +1086,12 @@ public class JogoTest {
 	}
 
 
-	
+	private Jogador instanciarJogador() {
+		Jogador jogador = new Jogador();
+		jogador.setNome("jonas");
+		return jogador;
+	}
+
 	private Problema instanciarProblema() {
 		Problema problema = new Problema();
 		problema.setQuestao("questao 1");
