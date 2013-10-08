@@ -28,7 +28,7 @@ public class GerenciadorProfessor {
 			throw new ObjetoInexistenteException("Senha inv�lida");
 		}
 		professores.add(professor);
-		//Persistencia.escreverNoArquivo(professor);
+		
 	}
 	
 	public void removerProfessor(Professor professor) throws ObjetoInexistenteException{
