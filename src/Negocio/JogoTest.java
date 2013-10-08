@@ -755,14 +755,7 @@ public class JogoTest {
 		Assert.assertEquals(true, jogo.listarFases().get(0).isLiberado());
 	}
 
-	@Test
-	public void verificarQuantidadeDeFases() throws ObjetoJaExistenteException,
-			JogadorNaoLogadoException, LoginInexistenteException {
-		Jogador jogador = instanciarJogador();
-		jogo.cadastrarJogador(jogador);
-		jogo.loginJogador(jogador);
-		Assert.assertEquals(5, jogo.listarFases().size());
-	}
+	
 
 	@Test
 	public void verificarFasesBloqueadas() throws ObjetoJaExistenteException,
