@@ -17,12 +17,7 @@ public class GerenciadorJogador {
 		}
 		jogadores.add(jogador);
 	}
-	public void removerJogador(Jogador jogador) throws ObjetoInexistenteException{
-		if(!buscarJogador(jogador)){
-			throw new ObjetoInexistenteException("Esse jogador n�o existe");
-		}
-		jogadores.remove(jogador);
-	}
+	
 	private boolean buscarJogador(Jogador jogador) {
 		for(Jogador j:jogadores){
 			if(j.getNome().equals(jogador.getNome()) ){
