@@ -21,12 +21,7 @@ public class Fase {
 	public void setNivel(int nivel) {
 		this.nivel = nivel;
 	}
-	public boolean isLiberado() {
-		return liberado;
-	}
-	public void setLiberado(boolean liberado) {
-		this.liberado = liberado;
-	}
+	
 	public Jogador getJogador() {
 		return jogador;
 	}
