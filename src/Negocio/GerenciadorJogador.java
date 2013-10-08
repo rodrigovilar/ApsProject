@@ -23,14 +23,7 @@ public class GerenciadorJogador {
 		}
 		jogadores.remove(jogador);
 	}
-	private boolean buscarJogador(Jogador jogador) {
-		for(Jogador j:jogadores){
-			if(j.getNome().equals(jogador.getNome()) ){
-				return true;
-			}
-		}
-		return false;
-	}
+	
 	public int getQuantidadeDeJogadoresCadastrados(){
 		return jogadores.size();
 	}
