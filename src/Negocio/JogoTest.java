@@ -987,63 +987,62 @@ public class JogoTest {
 		p1.setNome("processador");
 		p1.setSenha("console");
 		jogo.cadastrarProfesssor(p1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.loginProfessor(p1);
+		jogo.loginProfessor(p1);
 
 		Problema p2 = this.instanciarProblema();
 		p2.setQuestao("problema_1");
 		p2.setResposta(1);
-		novoJogo.cadastrarProblema(p2);
+		jogo.cadastrarProblema(p2);
 
 		Problema p3 = this.instanciarProblema();
 		p3.setQuestao("problema_2");
 		p3.setResposta(2);
-		novoJogo.cadastrarProblema(p3);
+		jogo.cadastrarProblema(p3);
 
 		Problema p4 = this.instanciarProblema();
 		p4.setQuestao("problema_3");
 		p4.setResposta(3);
-		novoJogo.cadastrarProblema(p4);
+		jogo.cadastrarProblema(p4);
 
 		Problema p5 = this.instanciarProblema();
 		p5.setQuestao("problema_4");
 		p5.setResposta(4);
-		novoJogo.cadastrarProblema(p5);
+		jogo.cadastrarProblema(p5);
 
 		Problema p6 = this.instanciarProblema();
 		p6.setQuestao("problema_5");
 		p6.setResposta(5);
-		novoJogo.cadastrarProblema(p6);
+		jogo.cadastrarProblema(p6);
 		
 		Problema p7 = this.instanciarProblema();
 		p7.setQuestao("problema_6");
 		p7.setResposta(6);
-		novoJogo.cadastrarProblema(p7);
+		jogo.cadastrarProblema(p7);
 
 		Problema p8 = this.instanciarProblema();
 		p8.setQuestao("problema_7");
 		p8.setResposta(7);
-		novoJogo.cadastrarProblema(p8);
+		jogo.cadastrarProblema(p8);
 
 		Problema p9= this.instanciarProblema();
 		p9.setQuestao("problema_8");
 		p9.setResposta(8);
-		novoJogo.cadastrarProblema(p9);
+		jogo.cadastrarProblema(p9);
 
 		Problema p10 = this.instanciarProblema();
 		p10.setQuestao("problema_9");
 		p10.setResposta(9);
-		novoJogo.cadastrarProblema(p10);
+		jogo.cadastrarProblema(p10);
 		
 		Problema p11 = this.instanciarProblema();
 		p11.setQuestao("problema_10");
 		p11.setResposta(10);
-		novoJogo.cadastrarProblema(p11);
+		jogo.cadastrarProblema(p11);
 		
 		Problema p12 = this.instanciarProblema();
 		p12.setQuestao("problema_11");
 		p12.setResposta(12);
-		novoJogo.cadastrarProblema(p12);
+		jogo.cadastrarProblema(p12);
 				
 		Jogador j1 = instanciarJogador();
 		j1.setNome("danado");
@@ -1054,32 +1053,32 @@ public class JogoTest {
 		canhao.setMunicao(municao);
 		j1.setCanhao(canhao);
 
-		novoJogo.cadastrarJogador(j1);
-		novoJogo.loginJogador(j1);
+		jogo.cadastrarJogador(j1);
+		jogo.loginJogador(j1);
 
-		novoJogo.gerarBalao(p6);
-		novoJogo.estourarBalao(31);
-		novoJogo.gerarBalao(p5);
-		novoJogo.estourarBalao(18);
-		novoJogo.gerarBalao(p4);
-		novoJogo.estourarBalao(34);
-		novoJogo.gerarBalao(p3);
-		novoJogo.estourarBalao(23);
-		novoJogo.gerarBalao(p2);
-		novoJogo.estourarBalao(67);
+		jogo.gerarBalao(p6);
+		jogo.estourarBalao(31);
+		jogo.gerarBalao(p5);
+		jogo.estourarBalao(18);
+		jogo.gerarBalao(p4);
+		jogo.estourarBalao(34);
+		jogo.gerarBalao(p3);
+		jogo.estourarBalao(23);
+		jogo.gerarBalao(p2);
+		jogo.estourarBalao(67);
 		
-		novoJogo.gerarBalao(p11);
-		novoJogo.estourarBalao(14);
-		novoJogo.gerarBalao(p10);
-		novoJogo.estourarBalao(78);
-		novoJogo.gerarBalao(p9);
-		novoJogo.estourarBalao(56);
-		novoJogo.gerarBalao(p8);
-		novoJogo.estourarBalao(23);
-		novoJogo.gerarBalao(p7);
-		novoJogo.gerarBalao(p12);
-		novoJogo.estourarBalao(67);
-		Assert.assertTrue(novoJogo.isGameOver());
+		jogo.gerarBalao(p11);
+		jogo.estourarBalao(14);
+		jogo.gerarBalao(p10);
+		jogo.estourarBalao(78);
+		jogo.gerarBalao(p9);
+		jogo.estourarBalao(56);
+		jogo.gerarBalao(p8);
+		jogo.estourarBalao(23);
+		jogo.gerarBalao(p7);
+		jogo.gerarBalao(p12);
+		jogo.estourarBalao(67);
+		Assert.assertTrue(jogo.isGameOver());
 	}
 	
 	@Test
