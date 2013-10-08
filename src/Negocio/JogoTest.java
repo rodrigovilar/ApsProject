@@ -579,7 +579,35 @@ public class JogoTest {
 		Assert.assertEquals(10, jogo.verificarQuantidadeDeBaloesGerados());
 	}
 
-	
+	@Test
+	public void verificarSeBalaoEstoura() throws ObjetoJaExistenteException,
+			ObjetoInexistenteException, FaseNaoDisponivelException,
+			JogadorNaoLogadoException, LoginInexistenteException, IOException {
+		Professor professor = instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+
+		Problema problema_1 = this.instanciarProblema();
+		jogo.cadastrarProblema(problema_1);
+
+		jogo.gerarBalao(problema_1);
+
+		Jogador jogador = this.instanciarJogador();
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+		Canhao canhao = new Canhao();
+		Municao municao = new Municao();
+		canhao.setMunicao(municao);
+		jogador.setCanhao(canhao);
+
+		Fase fase = instanciarFase();
+		fase.setNivel(0);
+		jogo.inserirJogadorNaFase(jogador, fase);
+
+		jogo.estourarBalao(15);
+		Assert.assertFalse(jogo.verificarSeRespostaEstaEmBaloes(15));
+	}
+
 	@SuppressWarnings("static-access")
 	@Test
 	public void verificarSeJogadorMarcaScoreAoAcertarQuestao()
