@@ -11,9 +11,6 @@ public class Canhao {
 		return posicaoX;
 	}
 	
-	public void setPosicaoX(int posicaoX) {//MŽtodo que muda o valor do atributo posicaoX
-		this.posicaoX = posicaoX;
-	}
 	
 	public int getPosicaoY() {//MŽtodo que recupera atributo privado posicaoY
 		return posicaoY;
