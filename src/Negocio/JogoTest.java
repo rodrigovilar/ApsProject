@@ -1,7 +1,6 @@
 package Negocio;
 
 import java.io.IOException;
-
 import java.util.ArrayList;
 
 import junit.framework.Assert;
@@ -9,12 +8,16 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
+import Excecao.BalasEsgotadasException;
+import Excecao.FaseNaoDisponivelException;
 import Excecao.JogadorNaoLogadoException;
+import Excecao.LoginInexistenteException;
 import Excecao.ObjetoInexistenteException;
 import Excecao.ObjetoJaExistenteException;
+import Model.Canhao;
 import Model.Fase;
 import Model.Jogo;
+import Model.Municao;
 import Model.Problema;
 import Model.Professor;
 
@@ -22,56 +25,65 @@ public class JogoTest {
 	private Jogo jogo;
 
 	@Before
-	public void iniciarTest() throws JogadorNaoLogadoException, IOException {
+	public void iniciarTest() throws JogadorNaoLogadoException {
 		jogo = new Jogo();
 	}
 
 	@Test
-	public void iniciarJogo() throws ObjetoJaExistenteException, JogadorNaoLogadoException {
+	public void iniciarJogo() throws ObjetoJaExistenteException,
+			JogadorNaoLogadoException {
 		Assert.assertFalse("O jogo iniciou acabado", jogo.jogoAcabou());
 	}
 
 	@Test
-	public void verificarArquivoInicialDeProfessores() throws Exception {
-		Assert.assertEquals("Esse teste espera que a lista inicial de professores seja igual a zero", 0, jogo.getQuantidadeDeProfessoresCadastrados());
-		
+	public void verificarListaInicialDeProfessores() {
+		Assert.assertEquals(
+				"Esse teste espera que a lista inicial de professores seja igual a zero",
+				0, jogo.getQuantidadeDeProfessoresCadastrados());
 	}
 
 	@Test
-	public void cadastrarProfessor() throws Exception {
-		Professor professor = instanciarProfessor();
+	public void cadastrarProfessor() throws ObjetoJaExistenteException,
+			ObjetoInexistenteException, IOException {
+		Professor professor = this.instanciarProfessor();
 		jogo.cadastrarProfesssor(professor);
-		
-		Jogo novoJogo = new Jogo();
-		ArrayList<Professor> professoresCadastrados = novoJogo.listarProfessores();
-		Assert.assertEquals("Esse teste espera que possua apenas um professor cadastrado", 1, professoresCadastrados.size());
-		
+		ArrayList<Professor> professoresCadastrados = jogo.listarProfessores();
+		Assert.assertEquals(
+				"Esse teste espera que possua apenas um professor cadastrado",
+				1, jogo.getQuantidadeDeProfessoresCadastrados());
+		Professor professorSalvo = professoresCadastrados.get(0);
+		Assert.assertEquals(
+				"Esse teste espera que o professor cadastrado seja igual ao jogador salvo na lista",
+				professor, professorSalvo);
 	}
 
 	@Test(expected = ObjetoJaExistenteException.class)
-	public void cadastrarProfessorJaCadastrado() throws Exception {
-		Professor professor = instanciarProfessor();
-		jogo.cadastrarProfesssor(professor);
+	public void cadastrarProfessorJaCadastrado()
+			throws ObjetoJaExistenteException, ObjetoInexistenteException, IOException {
+		Professor professor_1 = this.instanciarProfessor();
+		jogo.cadastrarProfesssor(professor_1);
 
 		Professor professor_2 = this.instanciarProfessor();
 		jogo.cadastrarProfesssor(professor_2);
 	}
 
 	@Test
-	public void removerProfessor() throws Exception {
-		Professor professor = instanciarProfessor();
+	public void removerProfessor() throws ObjetoInexistenteException,
+			ObjetoJaExistenteException, IOException {
+		Professor professor = this.instanciarProfessor();
 		jogo.cadastrarProfesssor(professor);
-		
-		Jogo novoJogo = new Jogo();
-		ArrayList<Professor> professoresCadastrados = novoJogo.listarProfessores();
-		Assert.assertEquals("Esse teste espera que possua apenas um jogador cadastrado", 1, professoresCadastrados.size());
-		novoJogo.removerProfessor(professor);
-		Assert.assertEquals("Esse teste espera que a quantidade de jogadores seja igual a 0", 0, professoresCadastrados.size());
+		Assert.assertEquals(
+				"Esse teste espera que possua apenas um jogador cadastrado", 1,
+				jogo.getQuantidadeDeProfessoresCadastrados());
+		jogo.removerProfessor(professor);
+		Assert.assertEquals(
+				"Esse teste espera que a quantidade de jogadores seja igual a 0",
+				0, jogo.getQuantidadeDeProfessoresCadastrados());
 	}
 
 	@Test(expected = ObjetoInexistenteException.class)
 	public void removerMesmoProfessorDuasVezes()
-			throws Exception {
+			throws ObjetoJaExistenteException, ObjetoInexistenteException, IOException {
 		Professor professor = this.instanciarProfessor();
 		jogo.cadastrarProfesssor(professor);
 		jogo.removerProfessor(professor);
@@ -79,30 +91,33 @@ public class JogoTest {
 	}
 
 	@Test
-	public void verificaSeNomeDoProfessorEstaCorreto() throws Exception {
+	public void verificaSeNomeDoProfessorEstaCorreto()
+			throws ObjetoJaExistenteException, ObjetoInexistenteException, IOException {
 		Professor professor = instanciarProfessor();
 		professor.setNome("Madalena");
 		jogo.cadastrarProfesssor(professor);
 		ArrayList<Professor> professores = jogo.listarProfessores();
 		Professor professorSalvo = professores.get(0);
-		Assert.assertEquals("Esse teste espera que o professor cadastrado seja igual ao professor salvo na lista", professor.getNome(), professorSalvo.getNome());
+		Assert.assertEquals(
+				"Esse teste espera que o professor cadastrado seja igual ao professor salvo na lista",
+				professor.getNome(), professorSalvo.getNome());
 	}
 
 	@Test(expected = ObjetoInexistenteException.class)
 	public void removerProfessorInexistente()
-			throws Exception {
+			throws ObjetoJaExistenteException, ObjetoInexistenteException {
 		Professor professor_2 = this.instanciarProfessor();
 		jogo.removerProfessor(professor_2);
 	}
 
 	@Test
-	public void verificarListaInicialDeJogadores() throws IOException, Exception {
+	public void verificarListaInicialDeJogadores() {
 		Assert.assertEquals(
 				"Esse teste espera que a lista inicial de jogadores seja igual a zero",
 				0, jogo.getQuantidadeDeJogadoresCadastrados());
 	}
 
-	/*@Test
+	@Test
 	public void cadastrarJogador() throws ObjetoJaExistenteException {
 		Jogador jogador = this.instanciarJogador();
 		jogo.cadastrarJogador(jogador);
@@ -132,7 +147,8 @@ public class JogoTest {
 	@Test(expected = ObjetoJaExistenteException.class)
 	public void cadastrarJogadorJaCadastrado()
 			throws ObjetoJaExistenteException, JogadorNaoLogadoException,
-			LoginInexistenteException {
+			LoginInexistenteException {// Cadastra duas vezes o mesmo jogador e
+										// lanÂ�a uma exceÂ�Â‹o
 		Jogador jogador_1 = instanciarJogador();
 		jogo.cadastrarJogador(jogador_1);
 		jogo.loginJogador(jogador_1);
@@ -143,7 +159,7 @@ public class JogoTest {
 
 	@Test
 	public void removerJogadorCadastrado() throws ObjetoJaExistenteException,
-			ObjetoInexistenteException {
+			ObjetoInexistenteException {// Remove jogador cadastrado
 		Jogador jogador_1 = this.instanciarJogador();
 		jogo.cadastrarJogador(jogador_1);
 		Assert.assertEquals(
@@ -966,14 +982,115 @@ public class JogoTest {
 	}
 	
 	@Test
+	public void gameOver() throws Exception {
+		Professor p1 = instanciarProfessor();
+		p1.setNome("processador");
+		p1.setSenha("console");
+		jogo.cadastrarProfesssor(p1);
+		Jogo novoJogo = new Jogo();
+		novoJogo.loginProfessor(p1);
+
+		Problema p2 = this.instanciarProblema();
+		p2.setQuestao("problema_1");
+		p2.setResposta(1);
+		novoJogo.cadastrarProblema(p2);
+
+		Problema p3 = this.instanciarProblema();
+		p3.setQuestao("problema_2");
+		p3.setResposta(2);
+		novoJogo.cadastrarProblema(p3);
+
+		Problema p4 = this.instanciarProblema();
+		p4.setQuestao("problema_3");
+		p4.setResposta(3);
+		novoJogo.cadastrarProblema(p4);
+
+		Problema p5 = this.instanciarProblema();
+		p5.setQuestao("problema_4");
+		p5.setResposta(4);
+		novoJogo.cadastrarProblema(p5);
+
+		Problema p6 = this.instanciarProblema();
+		p6.setQuestao("problema_5");
+		p6.setResposta(5);
+		novoJogo.cadastrarProblema(p6);
+		
+		Problema p7 = this.instanciarProblema();
+		p7.setQuestao("problema_6");
+		p7.setResposta(6);
+		novoJogo.cadastrarProblema(p7);
+
+		Problema p8 = this.instanciarProblema();
+		p8.setQuestao("problema_7");
+		p8.setResposta(7);
+		novoJogo.cadastrarProblema(p8);
+
+		Problema p9= this.instanciarProblema();
+		p9.setQuestao("problema_8");
+		p9.setResposta(8);
+		novoJogo.cadastrarProblema(p9);
+
+		Problema p10 = this.instanciarProblema();
+		p10.setQuestao("problema_9");
+		p10.setResposta(9);
+		novoJogo.cadastrarProblema(p10);
+		
+		Problema p11 = this.instanciarProblema();
+		p11.setQuestao("problema_10");
+		p11.setResposta(10);
+		novoJogo.cadastrarProblema(p11);
+		
+		Problema p12 = this.instanciarProblema();
+		p12.setQuestao("problema_11");
+		p12.setResposta(12);
+		novoJogo.cadastrarProblema(p12);
+				
+		Jogador j1 = instanciarJogador();
+		j1.setNome("danado");
+		j1.setSenha("fodinha");
+
+		Canhao canhao = new Canhao();
+		Municao municao = new Municao();
+		canhao.setMunicao(municao);
+		j1.setCanhao(canhao);
+
+		novoJogo.cadastrarJogador(j1);
+		novoJogo.loginJogador(j1);
+
+		novoJogo.gerarBalao(p6);
+		novoJogo.estourarBalao(31);
+		novoJogo.gerarBalao(p5);
+		novoJogo.estourarBalao(18);
+		novoJogo.gerarBalao(p4);
+		novoJogo.estourarBalao(34);
+		novoJogo.gerarBalao(p3);
+		novoJogo.estourarBalao(23);
+		novoJogo.gerarBalao(p2);
+		novoJogo.estourarBalao(67);
+		
+		novoJogo.gerarBalao(p11);
+		novoJogo.estourarBalao(14);
+		novoJogo.gerarBalao(p10);
+		novoJogo.estourarBalao(78);
+		novoJogo.gerarBalao(p9);
+		novoJogo.estourarBalao(56);
+		novoJogo.gerarBalao(p8);
+		novoJogo.estourarBalao(23);
+		novoJogo.gerarBalao(p7);
+		novoJogo.gerarBalao(p12);
+		novoJogo.estourarBalao(67);
+		Assert.assertTrue(novoJogo.isGameOver());
+	}
+	
+	@Test
 	public void cadastrarProfessorNoArquivo() throws ObjetoJaExistenteException, ObjetoInexistenteException, IOException, ClassNotFoundException{
 		Professor professor = instanciarProfessor();
 		professor.setNome("Jonnathann");
 		jogo.cadastrarProfesssor(professor);
-	}*/
+	}
 
-	private Professor instanciarJogador() {
-		Professor jogador = new Professor();
+	private Jogador instanciarJogador() {
+		Jogador jogador = new Jogador();
 		jogador.setNome("jonas");
 		return jogador;
 	}
