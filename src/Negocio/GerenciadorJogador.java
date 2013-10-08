@@ -38,4 +38,11 @@ public class GerenciadorJogador {
 	public ArrayList<Jogador> listarJogadores(){
 		return jogadores;
 	}
+	
+	public boolean isGameOver(){
+		if(Jogador.getScore() == 0){
+			return true;
+		}
+		return false;
+	}
 }
