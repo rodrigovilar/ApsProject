@@ -776,10 +776,7 @@ public class JogoTest {
 		Assert.assertEquals(false, jogo.listarFases().get(4).isLiberado());
 	}
 
-	@Test(expected = FaseNaoDisponivelException.class)
-	public void faseInexisteException() throws FaseNaoDisponivelException {
-		jogo.verificarExistenciaDeFase(6);
-	}
+	
 
 	@Test(expected = LoginInexistenteException.class)
 	public void professorNaoLogado() throws ObjetoJaExistenteException,
