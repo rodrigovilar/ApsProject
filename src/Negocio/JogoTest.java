@@ -672,7 +672,62 @@ public class JogoTest {
 		Assert.assertEquals(11, jogador.getScore());
 	}
 
-	
+	@Test
+	public void verificarSeJogadorPassaDeFaseAoFazer15Pontos()
+			throws ObjetoJaExistenteException, ObjetoInexistenteException,
+			FaseNaoDisponivelException, JogadorNaoLogadoException,
+			LoginInexistenteException, IOException {
+		Professor professor = instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+
+		Problema problema_1 = this.instanciarProblema();
+		problema_1.setQuestao("problema_1");
+		problema_1.setResposta(1);
+		jogo.cadastrarProblema(problema_1);
+
+		Problema problema_2 = this.instanciarProblema();
+		problema_2.setQuestao("problema_2");
+		problema_2.setResposta(2);
+		jogo.cadastrarProblema(problema_2);
+
+		Problema problema_3 = this.instanciarProblema();
+		problema_3.setQuestao("problema_3");
+		problema_3.setResposta(3);
+		jogo.cadastrarProblema(problema_3);
+
+		Problema problema_4 = this.instanciarProblema();
+		problema_4.setQuestao("problema_4");
+		problema_4.setResposta(4);
+		jogo.cadastrarProblema(problema_4);
+
+		Problema problema_5 = this.instanciarProblema();
+		problema_5.setQuestao("problema_5");
+		problema_5.setResposta(5);
+		jogo.cadastrarProblema(problema_5);
+
+		Jogador jogador = this.instanciarJogador();
+
+		Canhao canhao = new Canhao();
+		Municao municao = new Municao();
+		canhao.setMunicao(municao);
+		jogador.setCanhao(canhao);
+
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+
+		jogo.gerarBalao(problema_5);
+		jogo.estourarBalao(5);
+		jogo.gerarBalao(problema_4);
+		jogo.estourarBalao(4);
+		jogo.gerarBalao(problema_3);
+		jogo.estourarBalao(3);
+		jogo.gerarBalao(problema_2);
+		jogo.estourarBalao(2);
+		jogo.gerarBalao(problema_1);
+		jogo.estourarBalao(1);
+		Assert.assertTrue(jogo.listarFases().get(0).isLiberado());
+	}
 
 	@Test(expected = ObjetoInexistenteException.class)
 	public void removerProblemaInexistente() throws ObjetoJaExistenteException,
