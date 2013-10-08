@@ -1079,12 +1079,7 @@ public class JogoTest {
 		Assert.assertTrue(jogo.isGameOver());
 	}
 	
-	@Test
-	public void cadastrarProfessorNoArquivo() throws ObjetoJaExistenteException, ObjetoInexistenteException, IOException, ClassNotFoundException{
-		Professor professor = instanciarProfessor();
-		professor.setNome("Jonnathann");
-		jogo.cadastrarProfesssor(professor);
-	}
+
 
 	private Jogador instanciarJogador() {
 		Jogador jogador = new Jogador();
