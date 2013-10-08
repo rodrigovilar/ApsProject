@@ -1,11 +1,8 @@
 package Model;
 
-import java.io.Serializable;
-
 import Excecao.BalasEsgotadasException;
 
-@SuppressWarnings("serial")
-public class Municao implements Serializable{
+public class Municao {
 	private int quantidadeDeBalas = 10;
 
 	public int getQuantidadeDeBalas() {

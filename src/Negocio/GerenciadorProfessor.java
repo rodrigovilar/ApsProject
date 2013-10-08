@@ -1,18 +1,18 @@
 package Negocio;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import Excecao.ObjetoInexistenteException;
 import Excecao.ObjetoJaExistenteException;
 import Model.Professor;
-import Persistencia.ProfessorDAO;
 
 
 public class GerenciadorProfessor {
 	private ArrayList<Professor> professores = new ArrayList<Professor>();
 	private GerenciadorProblema gerenciadorProblema = new GerenciadorProblema();
-	private ProfessorDAO professorDAO = new ProfessorDAO();
+	//private Persistencia persistencia;
 	
-	public boolean loginProfessor(Professor professor) throws Exception{
+	public boolean loginProfessor(Professor professor){
 		return buscarProfessor(professor);
 	}
 	
@@ -20,31 +20,26 @@ public class GerenciadorProfessor {
 		return gerenciadorProblema;
 	}
 	
-	public void cadastrarProfessor(Professor professor) throws Exception {
+	public void cadastrarProfessor(Professor professor) throws ObjetoJaExistenteException, ObjetoInexistenteException, IOException {
 		if(buscarProfessor(professor)){
-			throw new ObjetoJaExistenteException("Não é possível cadastrar o mesmo professor duas vezes");
+			throw new ObjetoJaExistenteException("Esse professor já existe");
 		}
-		if(professor.getSenha().length() <= 4){
-			throw new ObjetoInexistenteException("A senha tem que ter mais do que 4 caracteres!");
+		if(professor.getSenha() == null || professor.getSenha().length() < 4){
+			throw new ObjetoInexistenteException("Senha invï¿½lida");
 		}
 		professores.add(professor);
-		professorDAO.insert(professores);
+		//Persistencia.escreverNoArquivo(professor);
 	}
 	
-	public void removerProfessor(Professor professor) throws Exception{
+	public void removerProfessor(Professor professor) throws ObjetoInexistenteException{
 		if(!buscarProfessor(professor)){
-			throw new ObjetoInexistenteException("Esse professor não existe");
+			throw new ObjetoInexistenteException("Esse professor nï¿½o existe");
 		}
-		for(Professor p:professorDAO.selectAll()){
-			if(p.getNome().equals(professor.getNome())){
-				professores.remove(professor);
-				professorDAO.insert(professores);
-			}
-		}
+		professores.remove(professor);
 	}
 	
-	private boolean buscarProfessor(Professor professor) throws Exception {
-		for(Professor p:professorDAO.selectAll()){
+	private boolean buscarProfessor(Professor professor) {
+		for(Professor p:professores){
 			if(p.getNome().equals(professor.getNome())){
 				return true;
 			}
@@ -52,11 +47,11 @@ public class GerenciadorProfessor {
 		return false;
 	}
 	
-	public int getQuantidadeDeProfessoresCadastrados() throws Exception{
-		return professorDAO.selectAll().size();
+	public int getQuantidadeDeProfessoresCadastrados(){
+		return professores.size();
 	}
 	
-	public ArrayList<Professor> listarProfessores() throws Exception{
-		return professorDAO.selectAll();
+	public ArrayList<Professor> listarProfessores(){
+		return professores;
 	}
 }

@@ -1,45 +1,30 @@
 package Negocio;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import Excecao.ObjetoInexistenteException;
 import Excecao.ObjetoJaExistenteException;
-import Persistencia.JogadorDAO;
 public class GerenciadorJogador {
-	
 	private ArrayList<Jogador> jogadores = new ArrayList<Jogador>();
-	private JogadorDAO jogadorDAO = new JogadorDAO();
 	
-	public boolean loginJogador(Jogador jogador) throws IOException, Exception{
+	public boolean loginJogador(Jogador jogador){
 		return buscarJogador(jogador);
 	}
 	
-	public void cadastrarJogador(Jogador jogador) throws IOException, Exception {
+	public void cadastrarJogador(Jogador jogador) throws ObjetoJaExistenteException {
 		if(buscarJogador(jogador)){
-			throw new ObjetoJaExistenteException("Não é permitido cadastrar o mesmo jogador duas vezes");
-		}
-		if(jogador.getSenha().length() <= 4){
-			throw new ObjetoInexistenteException("A senha tem que ter mais do que 4 caracteres!");
+			throw new ObjetoJaExistenteException("Esse jogador jï¿½ existe");
 		}
 		jogadores.add(jogador);
-		jogadorDAO.insert(jogadores);
 	}
-	
-	public void removerJogador(Jogador jogador) throws Exception{
+	public void removerJogador(Jogador jogador) throws ObjetoInexistenteException{
 		if(!buscarJogador(jogador)){
-			throw new ObjetoInexistenteException("Esse jogador não existe!");
+			throw new ObjetoInexistenteException("Esse jogador nï¿½o existe");
 		}
-		for(Jogador j:jogadorDAO.selectAll()){
-			if(j.getNome().equals(jogador.getNome())){
-				jogadores.remove(jogador);
-				jogadorDAO.insert(jogadores);
-			}
-		}
+		jogadores.remove(jogador);
 	}
-	
-	private boolean buscarJogador(Jogador jogador) throws IOException, Exception {
-		for(Jogador j:jogadorDAO.selectAll()){
+	private boolean buscarJogador(Jogador jogador) {
+		for(Jogador j:jogadores){
 			if(j.getNome().equals(jogador.getNome()) ){
 				return true;
 			}
@@ -47,18 +32,10 @@ public class GerenciadorJogador {
 		return false;
 	}
 	
-	public int getQuantidadeDeJogadoresCadastrados() throws IOException, Exception{
-		return jogadorDAO.selectAll().size();
+	public int getQuantidadeDeJogadoresCadastrados(){
+		return jogadores.size();
 	}
-	
-	public ArrayList<Jogador> listarJogadores() throws IOException, Exception{
-		return jogadorDAO.selectAll();
-	}
-
-	public boolean isGameOver() {
-		if(Jogador.getScore() == 0){
-			return true;
-		}
-		return false;
+	public ArrayList<Jogador> listarJogadores(){
+		return jogadores;
 	}
 }

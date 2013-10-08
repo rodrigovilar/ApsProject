@@ -1,9 +1,6 @@
 package Model;
 
-import java.io.Serializable;
-
-@SuppressWarnings("serial")
-public class Problema implements Serializable{
+public class Problema {
 	
 	private int id;
 	private String questao;

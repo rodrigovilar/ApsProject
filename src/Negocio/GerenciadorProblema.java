@@ -2,30 +2,30 @@ package Negocio;
 
 
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
 import Excecao.FaseNaoDisponivelException;
 import Excecao.LoginInexistenteException;
 import Excecao.ObjetoInexistenteException;
+import Excecao.ObjetoJaExistenteException;
 import Model.Balao;
 import Model.Problema;
-import Persistencia.ProblemaDAO;
 
 public class GerenciadorProblema {
 	private ArrayList<Problema> problemas = new ArrayList<Problema>();
 	private boolean isProfessorLogado;
 	private GerenciadorFase gerenciadorFase = new GerenciadorFase();
 	private ArrayList<Balao> baloes= new ArrayList<Balao>();
-	private ProblemaDAO problemaDAO = new ProblemaDAO();
 	
-	public void cadastrarProblema(Problema problema) throws Exception {
+	public void cadastrarProblema(Problema problema) throws ObjetoJaExistenteException, ObjetoInexistenteException, LoginInexistenteException {
+		if(buscarProblema(problema)){
+			throw new ObjetoJaExistenteException("Esse problema já existe");
+		}
 		if(!isProfessorLogado){
 			throw new LoginInexistenteException("Você não tem permissão para cadastrar o problema!");
 		}
 		problemas.add(problema);
-		problemaDAO.insert(problemas);
 		
 	}
 	
@@ -41,39 +41,29 @@ public class GerenciadorProblema {
 		isProfessorLogado = status;
 	}
 
-	public void removerProblema(Problema problema) throws IOException, Exception{
+	public void removerProblema(Problema problema) throws ObjetoInexistenteException, LoginInexistenteException{
 		if(!buscarProblema(problema)){
 			throw new ObjetoInexistenteException("Esse problema não existe");
 		}
 		if(!isProfessorLogado){
 			throw new LoginInexistenteException("Você não tem permissão para cadastrar o problema!");
 		}
-		for(Problema p:problemaDAO.selectAll()){
-			if(p.getQuestao().equals(problema.getQuestao())){
-				problemas.remove(problema);
-				problemaDAO.insert(problemas);
-			}
-		}
-		
+		problemas.remove(problema);
 	}
-	
-	private boolean buscarProblema(Problema problema) throws IOException, Exception {
-		for(Problema p:problemaDAO.selectAll()){
+	private boolean buscarProblema(Problema problema) {
+		for(Problema p:problemas){
 			if(p.getQuestao().equals(problema.getQuestao())){
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	public int getQuantidadeDeProblemasCadastrados() throws IOException, Exception{
-		return problemaDAO.selectAll().size();
+	public int getQuantidadeDeProblemasCadastrados(){
+		return problemas.size();
 	}
-	
-	public ArrayList<Problema> listarProblemas() throws IOException, Exception{
-		return problemaDAO.selectAll();
+	public ArrayList<Problema> listarProblemas(){
+		return problemas;
 	}
-	
 	public boolean verificarSeRespostaCorretaEmBalao(int resposta){
 		for(Balao b: baloes){
 			if(b.getResposta() == resposta){
@@ -82,8 +72,8 @@ public class GerenciadorProblema {
 		}
 		return false;
 	}
-	
 	public void gerarBaloes(Problema problema){
+		
 		Random random = new Random();
 		int posicao = random.nextInt(10);
 		for(int i = 0; i< 10; i++){
@@ -99,10 +89,9 @@ public class GerenciadorProblema {
 			}
 		}
 	}
-	
 	public int getQuantidadeDeBaloesGerados() throws ObjetoInexistenteException{
 		if(this.baloes.size() == 0){
-			throw new ObjetoInexistenteException("Não existe nenhum balão!");
+			throw new ObjetoInexistenteException("Nao existe nenhum balao");
 		}
 		else{
 			return this.baloes.size();
@@ -112,16 +101,16 @@ public class GerenciadorProblema {
 	public void estourarBalao(int resposta) throws ObjetoInexistenteException, FaseNaoDisponivelException{
 		boolean encontrou = false;
 		int cont = 0;
-		
 		for(int i = 0; i < baloes.size(); i++){
+			
 			if(baloes.get(i).getResposta() == resposta && cont == 0){
+				System.out.println("Contador" + cont);
 				cont++;
 				baloes.remove(baloes.get(i));
 				Jogador.incrementarScore();
 				encontrou = true;
 			}
 		}
-		
 		if(encontrou){
 			for(int i = 0; i < baloes.size(); i++){
 					baloes.remove(baloes.get(i));
@@ -131,7 +120,6 @@ public class GerenciadorProblema {
 		if(encontrou == false){
 			Jogador.decrementarScore();
 		}
-		
 	}
 	
 	private void verificarPassagemDeFase() throws FaseNaoDisponivelException{

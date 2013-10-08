@@ -63,6 +63,7 @@ private ArrayList<Fase> fases = new ArrayList<Fase>();
 			fase.setLiberado(false);
 			fases.add(fase);
 		}
+		
 	}
 
 	public void passarDeFase() throws FaseNaoDisponivelException {

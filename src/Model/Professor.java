@@ -2,7 +2,7 @@ package Model;
 
 import java.io.Serializable;
 
-@SuppressWarnings("serial")
+//@SuppressWarnings("serial")
 public class Professor extends Usuario  implements Serializable { //
 	/*private String nome;
 	public String getNome() {
