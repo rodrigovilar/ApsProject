@@ -729,7 +729,21 @@ public class JogoTest {
 		Assert.assertTrue(jogo.listarFases().get(0).isLiberado());
 	}
 
-	
+	@Test(expected = ObjetoInexistenteException.class)
+	public void removerProblemaInexistente() throws ObjetoJaExistenteException,
+			ObjetoInexistenteException, LoginInexistenteException, IOException {
+		Professor professor = instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+
+		Problema problema_1 = this.instanciarProblema();
+		jogo.cadastrarProblema(problema_1);
+
+		Problema problema_2 = this.instanciarProblema();
+		problema_2.setQuestao("problema_2");
+		problema_2.setResposta(115);
+		jogo.removerProblema(problema_2);
+	}
 
 	@Test
 	public void verificarSePrimeiraFaseEstaDisponivel()
