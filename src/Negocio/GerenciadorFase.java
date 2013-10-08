@@ -66,19 +66,5 @@ private ArrayList<Fase> fases = new ArrayList<Fase>();
 		
 	}
 
-	public void passarDeFase() throws FaseNaoDisponivelException {
-		int nivelAux = 0;
-		for(Fase f:fases){
-			if(f.isLiberado()){
-				nivelAux = f.getNivel();
-			}
-		}
-		if((nivelAux) > fases.size()){
-			throw new FaseNaoDisponivelException("Fase inexistente!");
-		}
-		fases.get(nivelAux+1).setLiberado(true);
-		
-		
-		
-	}
+	
 }
