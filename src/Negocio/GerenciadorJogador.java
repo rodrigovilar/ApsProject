@@ -31,14 +31,12 @@ public class GerenciadorJogador {
 		}
 		return false;
 	}
-	
 	public int getQuantidadeDeJogadoresCadastrados(){
 		return jogadores.size();
 	}
 	public ArrayList<Jogador> listarJogadores(){
 		return jogadores;
 	}
-	
 	public boolean isGameOver(){
 		if(Jogador.getScore() == 0){
 			return true;
