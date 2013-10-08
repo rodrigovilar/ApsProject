@@ -5,11 +5,7 @@ import java.util.ArrayList;
 import Excecao.ObjetoInexistenteException;
 import Excecao.ObjetoJaExistenteException;
 public class GerenciadorJogador {
-	private ArrayList<Jogador> jogadores = new ArrayList<Jogador>();
 	
-	public boolean loginJogador(Jogador jogador){
-		return buscarJogador(jogador);
-	}
 	
 	public void cadastrarJogador(Jogador jogador) throws ObjetoJaExistenteException {
 		if(buscarJogador(jogador)){
