@@ -803,19 +803,7 @@ public class JogoTest {
 		jogo.loginProfessor(professor_2);
 	}
 
-	@Test(expected = LoginInexistenteException.class)
-	public void loginDuploJogador() throws ObjetoJaExistenteException,
-			JogadorNaoLogadoException, LoginInexistenteException {
-		Jogador jogador = instanciarJogador();
-		jogo.cadastrarJogador(jogador);
-		jogo.loginJogador(jogador);
-
-		Jogador jogador_2 = instanciarJogador();
-		jogador_2.setNome("Ligeirinho");
-		jogo.cadastrarJogador(jogador_2);
-		jogo.loginJogador(jogador_2);
-
-	}
+	
 
 	@Test
 	public void verificarSeJogoFoiZerado() throws ObjetoInexistenteException,FaseNaoDisponivelException, LoginInexistenteException,	ObjetoJaExistenteException, JogadorNaoLogadoException, IOException {
