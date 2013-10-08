@@ -1,6 +1,7 @@
 package Model;
 
 
+@SuppressWarnings("serial")
 public class Professor extends Usuario{ 
 	
 	public Professor(){
