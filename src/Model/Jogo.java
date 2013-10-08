@@ -15,6 +15,10 @@ import Negocio.Jogador;
 
 public class Jogo {
 	
+	private GerenciadorJogador gerenciadorJogador = new GerenciadorJogador();
+	private GerenciadorProfessor gerenciadorProfessor = new GerenciadorProfessor();
+	private boolean isJogoAcabou = false;
+	//private Persistencia persistencia = new Persistencia();
 	
 	public void loginJogador(Jogador jogador) throws JogadorNaoLogadoException, LoginInexistenteException{
 		if(gerenciadorProfessor.getGerenciadorProblema().getGerenciadorFase().getIsFaseLiberada()){
