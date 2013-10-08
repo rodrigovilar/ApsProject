@@ -20,7 +20,24 @@ public class Jogo {
 	private boolean isJogoAcabou = false;
 	//private Persistencia persistencia = new Persistencia();
 	
+	public void loginJogador(Jogador jogador) throws JogadorNaoLogadoException, LoginInexistenteException{
+		if(gerenciadorProfessor.getGerenciadorProblema().getGerenciadorFase().getIsFaseLiberada()){
+			throw new LoginInexistenteException("Login não permitido, jogador logado!");
+		}
+		if(gerenciadorJogador.loginJogador(jogador)){
+			gerenciadorProfessor.getGerenciadorProblema().getGerenciadorFase().gerarFase();
+		}
+		
+	}
 	
+	public void loginProfessor(Professor professor) throws LoginInexistenteException{
+		if(gerenciadorProfessor.getGerenciadorProblema().getIsLogado()){
+			throw new LoginInexistenteException("Login não permitido, professor logado!");
+		}
+		if(gerenciadorProfessor.loginProfessor(professor)){
+			gerenciadorProfessor.getGerenciadorProblema().setIsProfessorLogado(true);
+		}
+	}
 	
 	public boolean jogoAcabou() {
 		return isJogoAcabou;
