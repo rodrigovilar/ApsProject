@@ -131,4 +131,8 @@ public class Jogo {
 		gerenciadorProfessor.getGerenciadorProblema().estourarBalao(resposta);
 		
 	}
+	
+	public boolean isGameOver() {
+		return gerenciadorJogador.isGameOver();
+	}
 }
