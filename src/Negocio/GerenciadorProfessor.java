@@ -16,6 +16,9 @@ public class GerenciadorProfessor {
 		return buscarProfessor(professor);
 	}
 	
+	public GerenciadorProblema getGerenciadorProblema(){
+		return gerenciadorProblema;
+	}
 	
 	public void cadastrarProfessor(Professor professor) throws ObjetoJaExistenteException, ObjetoInexistenteException, IOException {
 		if(buscarProfessor(professor)){
