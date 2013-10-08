@@ -39,6 +39,25 @@ public class Jogo {
 		}
 	}
 	
+	public boolean jogoAcabou() {
+		return isJogoAcabou;
+	}
+	
+	public void fimDeJogo(Jogador jogador){
+		for(Jogador j: gerenciadorJogador.listarJogadores()){
+			if(j.equals(jogador) && (j.getCanhao().getMunicao().getQuantidadeDeBalas() == 0)){
+				isJogoAcabou = true;
+			}
+		}
+	}
+	
+	public int getQuantidadeDeJogadoresCadastrados() {
+		return gerenciadorJogador.getQuantidadeDeJogadoresCadastrados();
+	}
+	
+	public void cadastrarJogador(Jogador jogador) throws ObjetoJaExistenteException {
+		gerenciadorJogador.cadastrarJogador(jogador);
+	}
 	
 	public void removerJogador(Jogador jogador) throws ObjetoInexistenteException{
 		gerenciadorJogador.removerJogador(jogador);
