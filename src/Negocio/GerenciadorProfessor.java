@@ -10,7 +10,7 @@ import Model.Professor;
 public class GerenciadorProfessor {
 	private ArrayList<Professor> professores = new ArrayList<Professor>();
 	private GerenciadorProblema gerenciadorProblema = new GerenciadorProblema();
-	//private Persistencia persistencia;
+	
 	
 	public boolean loginProfessor(Professor professor){
 		return buscarProfessor(professor);
