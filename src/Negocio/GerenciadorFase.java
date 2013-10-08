@@ -24,28 +24,7 @@ private ArrayList<Fase> fases = new ArrayList<Fase>();
 		
 	}
 	
-	public boolean getIsFaseLiberada(){
-		if(fases.size() > 0){
-			return true;
-		}
-		return false;
-	}
 	
-	public boolean isVerificarJogadorNaFaseDisponivel(Jogador jogador){
-		for(Fase f: fases){
-			if(f.getJogador().equals(jogador))
-				return true;
-		}
-		return false;
-	}
-	
-	public void atualizarFase(int indice) throws FaseNaoDisponivelException{
-		if(indice <= 0 || indice > 5){
-			throw new FaseNaoDisponivelException("Fase inexistente");
-		}
-		fases.get(indice).setLiberado(true);
-		fases.add(indice, fases.get(indice));
-	}
 	
 	public ArrayList<Fase> getFases(){
 		return fases;
