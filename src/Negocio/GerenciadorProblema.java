@@ -104,7 +104,6 @@ public class GerenciadorProblema {
 		for(int i = 0; i < baloes.size(); i++){
 			
 			if(baloes.get(i).getResposta() == resposta && cont == 0){
-				System.out.println("Contador" + cont);
 				cont++;
 				baloes.remove(baloes.get(i));
 				Jogador.incrementarScore();
@@ -127,6 +126,5 @@ public class GerenciadorProblema {
 			gerenciadorFase.passarDeFase();
 			Jogador.setScoreInicial();
 		}
-		System.out.println(Jogador.getScore());
 	}
 }
