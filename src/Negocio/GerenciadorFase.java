@@ -47,24 +47,7 @@ private ArrayList<Fase> fases = new ArrayList<Fase>();
 		fases.add(indice, fases.get(indice));
 	}
 	
-	public ArrayList<Fase> getFases(){
-		return fases;
-	}
 	
-	public void gerarFase() throws JogadorNaoLogadoException{
-		int numeroMaximoDeFases = 5;
-		Fase fase0 = new Fase();
-		fase0.setLiberado(true);
-		fases.add(fase0);
-		for(int i = 1; i < numeroMaximoDeFases; i++){
-			Fase fase = new Fase();
-			fase.setNome("Fase: "+i);
-			fase.setNivel(i);
-			fase.setLiberado(false);
-			fases.add(fase);
-		}
-		
-	}
 
 	public void passarDeFase() throws FaseNaoDisponivelException {
 		int nivelAux = 0;
