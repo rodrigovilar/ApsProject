@@ -781,14 +781,7 @@ public class JogoTest {
 		jogo.verificarExistenciaDeFase(6);
 	}
 
-	@Test(expected = LoginInexistenteException.class)
-	public void professorNaoLogado() throws ObjetoJaExistenteException,
-			ObjetoInexistenteException, LoginInexistenteException {
-		Jogador jogador = instanciarJogador();
-		jogo.cadastrarJogador(jogador);
-		Problema problema = instanciarProblema();
-		jogo.cadastrarProblema(problema);
-	}
+	
 
 	@Test(expected = LoginInexistenteException.class)
 	public void loginDuploDeProfessor() throws ObjetoJaExistenteException,
