@@ -19,5 +19,16 @@ public class Canhao {
 		return posicaoY;
 	}
 	
+	public void setPosicaoY(int posicaoY) {
+		this.posicaoY = posicaoY;
+	}
 	
+	public Municao getMunicao() {
+		return municao;
+	}
+	
+	public void setMunicao(Municao tiro) {
+		this.municao = tiro;
+	}
+
 }
