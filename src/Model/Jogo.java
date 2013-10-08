@@ -59,7 +59,46 @@ public class Jogo {
 		gerenciadorJogador.cadastrarJogador(jogador);
 	}
 	
+	public void removerJogador(Jogador jogador) throws ObjetoInexistenteException{
+		gerenciadorJogador.removerJogador(jogador);
+	}
 	
+	public ArrayList<Jogador> listarJogadores(){
+		return gerenciadorJogador.listarJogadores();
+	}
+	
+	public int getQuantidadeDeProfessoresCadastrados() {
+		return gerenciadorProfessor.getQuantidadeDeProfessoresCadastrados();
+	}
+	
+	public void cadastrarProfesssor(Professor professor) throws ObjetoJaExistenteException, ObjetoInexistenteException, IOException {
+		gerenciadorProfessor.cadastrarProfessor(professor);
+	}
+	
+	public ArrayList<Professor> listarProfessores() {
+		return gerenciadorProfessor.listarProfessores();
+	}
+	
+	public void removerProfessor(Professor professor) throws ObjetoInexistenteException {
+		gerenciadorProfessor.removerProfessor(professor);
+	}
+	
+	public void cadastrarProblema(Problema problema) throws ObjetoJaExistenteException, ObjetoInexistenteException, LoginInexistenteException {
+		gerenciadorProfessor.getGerenciadorProblema().cadastrarProblema(problema);
+	}
+	
+	public int getQuantidadeDeProblemasCadastrados() {
+		return gerenciadorProfessor.getGerenciadorProblema().getQuantidadeDeProblemasCadastrados();
+	}
+	
+	public ArrayList<Problema> listarProblemas() {
+		return gerenciadorProfessor.getGerenciadorProblema().listarProblemas();
+	}
+	
+	public void removerProblema(Problema problema_1) throws ObjetoInexistenteException, LoginInexistenteException {
+		gerenciadorProfessor.getGerenciadorProblema().removerProblema(problema_1);
+		
+	}
 	
 	public void verificarExistenciaDeFase(int fase) throws FaseNaoDisponivelException{
 		gerenciadorProfessor.getGerenciadorProblema().getGerenciadorFase().atualizarFase(fase);
