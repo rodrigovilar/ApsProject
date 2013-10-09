@@ -4,22 +4,26 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import Excecao.FaseNaoDisponivelException;
-import Excecao.JogadorNaoLogadoException;
 import Excecao.LoginInexistenteException;
 import Excecao.ObjetoInexistenteException;
-import Excecao.ObjetoJaExistenteException;
 import Negocio.GerenciadorJogador;
 import Negocio.GerenciadorProfessor;
 import Negocio.Jogador;
+import Persistencia.JogadorDAO;
+import Persistencia.ProblemaDAO;
+import Persistencia.ProfessorDAO;
 
 
 public class Jogo {
 	private GerenciadorJogador gerenciadorJogador = new GerenciadorJogador();
-	private GerenciadorProfessor gerenciadorProfessor = new GerenciadorProfessor();
+	private GerenciadorProfessor gerenciadorProfessor;
 	private boolean isJogoAcabou = false;
-	//private Persistencia persistencia = new Persistencia();
 	
-	public void loginJogador(Jogador jogador) throws JogadorNaoLogadoException, LoginInexistenteException{
+	public Jogo() throws IOException{
+		gerenciadorProfessor = new GerenciadorProfessor();
+	}
+	
+	public void loginJogador(Jogador jogador) throws IOException, Exception{
 		if(gerenciadorProfessor.getGerenciadorProblema().getGerenciadorFase().getIsFaseLiberada()){
 			throw new LoginInexistenteException("Login não permitido, jogador logado!");
 		}
@@ -29,7 +33,7 @@ public class Jogo {
 		
 	}
 	
-	public void loginProfessor(Professor professor) throws LoginInexistenteException{
+	public void loginProfessor(Professor professor) throws Exception{
 		if(gerenciadorProfessor.getGerenciadorProblema().getIsLogado()){
 			throw new LoginInexistenteException("Login não permitido, professor logado!");
 		}
@@ -42,59 +46,59 @@ public class Jogo {
 		return isJogoAcabou;
 	}
 	
-	public void fimDeJogo(Jogador jogador){
+	public void fimDeJogo(Jogador jogador) throws IOException, Exception{
 		for(Jogador j: gerenciadorJogador.listarJogadores()){
-			if(j.equals(jogador) && (j.getCanhao().getMunicao().getQuantidadeDeBalas() == 0)){
+			if(j.getNome().equals(jogador.getNome()) && (jogador.getCanhao().getMunicao().getQuantidadeDeBalas() == 0)){
 				isJogoAcabou = true;
 			}
 		}
 	}
 	
-	public int getQuantidadeDeJogadoresCadastrados() {
+	public int getQuantidadeDeJogadoresCadastrados() throws IOException, Exception {
 		return gerenciadorJogador.getQuantidadeDeJogadoresCadastrados();
 	}
 	
-	public void cadastrarJogador(Jogador jogador) throws ObjetoJaExistenteException {
+	public void cadastrarJogador(Jogador jogador) throws IOException, Exception {
 		gerenciadorJogador.cadastrarJogador(jogador);
 	}
 	
-	public void removerJogador(Jogador jogador) throws ObjetoInexistenteException{
+	public void removerJogador(Jogador jogador) throws Exception{
 		gerenciadorJogador.removerJogador(jogador);
 	}
 	
-	public ArrayList<Jogador> listarJogadores(){
+	public ArrayList<Jogador> listarJogadores() throws IOException, Exception{
 		return gerenciadorJogador.listarJogadores();
 	}
 	
-	public int getQuantidadeDeProfessoresCadastrados() {
+	public int getQuantidadeDeProfessoresCadastrados() throws Exception {
 		return gerenciadorProfessor.getQuantidadeDeProfessoresCadastrados();
 	}
 	
-	public void cadastrarProfesssor(Professor professor) throws ObjetoJaExistenteException, ObjetoInexistenteException, IOException {
+	public void cadastrarProfesssor(Professor professor) throws Exception {
 		gerenciadorProfessor.cadastrarProfessor(professor);
 	}
 	
-	public ArrayList<Professor> listarProfessores() {
+	public ArrayList<Professor> listarProfessores() throws Exception {
 		return gerenciadorProfessor.listarProfessores();
 	}
 	
-	public void removerProfessor(Professor professor) throws ObjetoInexistenteException {
+	public void removerProfessor(Professor professor) throws Exception {
 		gerenciadorProfessor.removerProfessor(professor);
 	}
 	
-	public void cadastrarProblema(Problema problema) throws ObjetoJaExistenteException, ObjetoInexistenteException, LoginInexistenteException {
+	public void cadastrarProblema(Problema problema) throws Exception {
 		gerenciadorProfessor.getGerenciadorProblema().cadastrarProblema(problema);
 	}
 	
-	public int getQuantidadeDeProblemasCadastrados() {
+	public int getQuantidadeDeProblemasCadastrados() throws IOException, Exception {
 		return gerenciadorProfessor.getGerenciadorProblema().getQuantidadeDeProblemasCadastrados();
 	}
 	
-	public ArrayList<Problema> listarProblemas() {
+	public ArrayList<Problema> listarProblemas() throws IOException, Exception {
 		return gerenciadorProfessor.getGerenciadorProblema().listarProblemas();
 	}
 	
-	public void removerProblema(Problema problema_1) throws ObjetoInexistenteException, LoginInexistenteException {
+	public void removerProblema(Problema problema_1) throws IOException, Exception {
 		gerenciadorProfessor.getGerenciadorProblema().removerProblema(problema_1);
 		
 	}
@@ -132,7 +136,21 @@ public class Jogo {
 		
 	}
 
-	public boolean isGameOver() {
-		return gerenciadorJogador.isGameOver();
+	public void iniciandoDAO() throws IOException {
+		ProfessorDAO profDAO = new ProfessorDAO();
+		ArrayList<Professor> lista = new ArrayList<Professor>();
+		profDAO.insert(lista);
+		
+		JogadorDAO jogDAO = new JogadorDAO();
+		ArrayList<Jogador> listajog = new ArrayList<Jogador>();
+		jogDAO.insert(listajog);
+		
+		
+	}
+	public void destruirArquivo() {
+		JogadorDAO.deletarFileJogador();
+		ProfessorDAO.deletarFileProfessor();
+		ProblemaDAO.deletarFileProblema();
+		
 	}
 }
