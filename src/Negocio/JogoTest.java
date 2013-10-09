@@ -442,5 +442,32 @@ public class JogoTest {
 				.getQuantidadeDeBalas());
 	}
 
+	
+	@Test(expected = BalasEsgotadasException.class)
+	public void verificarSeQuantidadeDeMunicaoEsgostaram()
+			throws ObjetoJaExistenteException, BalasEsgotadasException,
+			FaseNaoDisponivelException, JogadorNaoLogadoException,
+			LoginInexistenteException {// verifica se balas esgotaram
+		Jogador jogador = this.instanciarJogador();
+
+		Canhao canhao = new Canhao();
+		Municao municao = new Municao();
+		canhao.setMunicao(municao);
+		jogador.setCanhao(canhao);
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+	}
 
 }
