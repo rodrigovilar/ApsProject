@@ -546,4 +546,36 @@ public class JogoTest {
 		Assert.assertEquals(11, Jogador.getScore());
 	}
 	
+	@SuppressWarnings("static-access")
+	@Test
+	public void verificarSeJogadorPerdeScoreAoErrarQuestao()
+			throws Exception {
+		Professor professor = instanciarObjetoProfessor();
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+
+		Problema problema_1 = instanciarObjetoProblema();
+		jogo.cadastrarProblema(problema_1);
+
+		jogo.gerarBalao(problema_1);
+
+		Jogador jogador = instanciarObjetoJogador();
+
+		Canhao canhao = new Canhao();
+		Municao municao = new Municao();
+		canhao.setMunicao(municao);
+		jogador.setCanhao(canhao);
+
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+		Fase fase = instanciarObjetoFase();
+		fase.setNivel(0);
+		jogo.inserirJogadorNaFase(jogador, fase);
+
+		jogo.estourarBalao(52);
+		Assert.assertEquals(9, jogador.getScore());
+	}
+
+
+	
 	
