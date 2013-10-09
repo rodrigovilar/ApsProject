@@ -30,4 +30,8 @@ public class JogadorDAO {
 		objIn.close();
 		return listaAux;
 	}
+	
+	public static void deletarFileJogador(){
+		fileJogador.delete();
+	}
 }
