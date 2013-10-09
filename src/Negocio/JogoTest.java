@@ -302,4 +302,15 @@ public class JogoTest {
 		Assert.assertEquals("Esse teste espera que o jogador cadastrado seja inserido na fase", listaJogadores.get(0), listaFases.get(0).getJogador());
 	}
 	
+	@Test(expected=FaseNaoDisponivelException.class)
+	public void verificarFaseIndisponivel() throws IOException, Exception{
+		Jogador j1 = instanciarObjetoJogador();
+		jogo.cadastrarJogador(j1);
+		Jogo novoJogo = new Jogo();
+		ArrayList<Jogador> listaJogadores = novoJogo.listarJogadores();
+		Fase f1 = instanciarObjetoFase();
+		f1.setNivel(1);
+		novoJogo.inserirJogadorNaFase(listaJogadores.get(0), f1);
+	}
+	
 	
