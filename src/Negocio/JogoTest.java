@@ -313,4 +313,14 @@ public class JogoTest {
 		novoJogo.inserirJogadorNaFase(listaJogadores.get(0), f1);
 	}
 	
+	@Test
+	public void verificarOsNiveisDasFasesGeradas() throws IOException, Exception{
+		Jogador j1 = instanciarObjetoJogador();
+		jogo.cadastrarJogador(j1);
+		Jogo novoJogo = new Jogo();
+		novoJogo.loginJogador(j1);
+		ArrayList<Fase> listaFases = novoJogo.listarFases();
+		Assert.assertEquals("Esse teste espera que a quantidade de fases sejam igual a 5", 5, listaFases.size());
+	}
+	
 	
