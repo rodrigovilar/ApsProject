@@ -74,6 +74,15 @@ public class JogoTest {
 		return c;
 	}
 	
+	@Test
+	public void cadastrarProfessor() throws Exception{
+		Professor p1 = instanciarObjetoProfessor();
+		jogo.cadastrarProfesssor(p1);
+		Jogo novoJogo = new Jogo();
+		Assert.assertEquals("Esse teste espera que o valor do arquivo cadastrado atualize para 1", 1, novoJogo.getQuantidadeDeProfessoresCadastrados());
+	}
+	
+	
 	
 	
 
