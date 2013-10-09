@@ -250,5 +250,20 @@ public class JogoTest {
 		Assert.assertEquals("Esse teste espera que o valor da questão cadastrada seja a mesma que está no arquivo", pro1.getQuestao(), listaProblemas.get(0).getQuestao());
 	}
 	
+	@Test
+	public void verificaSeRespostaDaQuestaoDoProblemaFoiCadastradaCorretamente() throws Exception{
+		Professor p1 = instanciarObjetoProfessor();
+		jogo.cadastrarProfesssor(p1);
+		Jogo novoJogo = new Jogo();
+		novoJogo.loginProfessor(p1);
+		Problema pro1 = instanciarObjetoProblema();
+		pro1.setQuestao("Qual o valor da soma de x+2.x, considerando x = 2?");
+		pro1.setResposta(8);
+		novoJogo.cadastrarProblema(pro1);
+		Jogo maisUmJogo = new Jogo();
+		ArrayList<Problema> listaProblemas = maisUmJogo.listarProblemas();
+		Assert.assertEquals("Esse teste espera que a resposta da questão cadastrada seja a mesma que está no arquivo", pro1.getResposta(), listaProblemas.get(0).getResposta());
+	}
+	
 
 }
