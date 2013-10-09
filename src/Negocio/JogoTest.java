@@ -472,4 +472,20 @@ public class JogoTest {
 		jogo.verificarQuantidadeDeBaloesGerados();
 	}
 	
+	@Test
+	public void verificarQuantidadeDeBaloesGerados()throws Exception {
+		Professor p1 = instanciarObjetoProfessor();
+		jogo.cadastrarProfesssor(p1);
+		Jogo novoJogo = new Jogo();
+		novoJogo.loginProfessor(p1);
+		Problema pro1 = instanciarObjetoProblema();
+		pro1.setQuestao("2+4?");
+		pro1.setResposta(6);
+		novoJogo.cadastrarProblema(pro1);
+		ArrayList<Problema> listaProblemas = novoJogo.listarProblemas();
+		Jogo maisUmJogo = new Jogo();
+		maisUmJogo.gerarBalao(listaProblemas.get(0));
+		Assert.assertEquals("Espera que a quantidade de balões gerados seja igual a 10", 10, maisUmJogo.verificarQuantidadeDeBaloesGerados());
+	}
+	
 	
