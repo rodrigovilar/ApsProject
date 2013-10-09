@@ -31,4 +31,16 @@ public class GerenciadorProfessor {
 		professores.add(professor);
 		professorDAO.insert(professores);
 	}
+	
+	public void removerProfessor(Professor professor) throws Exception{
+		if(!buscarProfessor(professor)){
+			throw new ObjetoInexistenteException("Esse professor não existe");
+		}
+		for(Professor p:professorDAO.selectAll()){
+			if(p.getNome().equals(professor.getNome())){
+				professores.remove(professor);
+				professorDAO.insert(professores);
+			}
+		}
+	}
 }
