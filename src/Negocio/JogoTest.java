@@ -203,5 +203,13 @@ public class JogoTest {
 		Jogo maisUmJogo = new Jogo();
 		Assert.assertEquals("Esse teste espera que o valor da lista de problemas atualize para 1", 1, maisUmJogo.getQuantidadeDeProblemasCadastrados());
 	}
+	
+	@Test(expected = ObjetoInexistenteException.class)
+	public void senhaDeProfessorComMenosDeQuatroDigitosImpossibilidadeDeCadastro() throws Exception{
+		Professor p1 = instanciarObjetoProfessor();
+		p1.setSenha("ufpb");
+		jogo.cadastrarProfesssor(p1);
+	}
+	
 
 }
