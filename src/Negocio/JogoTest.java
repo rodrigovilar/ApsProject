@@ -64,6 +64,11 @@ public class JogoTest {
 		return pro1;
 	}
 	
+	private Fase instanciarObjetoFase(){
+		Fase f1 = new Fase();
+		return f1;
+	}
+	
 	
 	
 
