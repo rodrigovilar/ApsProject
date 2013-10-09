@@ -972,6 +972,14 @@ public class JogoTest {
 		Assert.assertTrue(jogo.listarFases().get(4).isLiberado());
 	}
 
+	@Test
+	public void cadastrarProfessorNoArquivo() throws Exception{
+		Professor professor = instanciarObjetoProfessor();
+		professor.setNome("Jonnathann");
+		jogo.cadastrarProfesssor(professor);
+	}
+	
+}
 
 	
 	
