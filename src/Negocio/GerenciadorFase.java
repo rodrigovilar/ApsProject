@@ -23,4 +23,11 @@ private ArrayList<Fase> fases = new ArrayList<Fase>();
 		}
 		
 	}
+	
+	public boolean getIsFaseLiberada(){
+		if(fases.size() > 0){
+			return true;
+		}
+		return false;
+	}
 }
