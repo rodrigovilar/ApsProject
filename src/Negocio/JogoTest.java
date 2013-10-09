@@ -422,5 +422,31 @@ public class JogoTest {
 		listaJogadores.get(0).atirar();
 	}
 	
+	@Test
+	public void verificarSeJogoAcabou() throws IOException, Exception{
+		Jogador j1 = instanciarObjetoJogador();
+		jogo.cadastrarJogador(j1);
+		Jogo novoJogo = new Jogo();
+		novoJogo.loginJogador(j1);
+		Canhao c = instanciarObjetoCanhao();
+		Municao m = new Municao();
+		c.setMunicao(m);
+		ArrayList<Jogador> listaJogadores = novoJogo.listarJogadores();
+		listaJogadores.get(0).setCanhao(c);
+		Fase f1 = instanciarObjetoFase();
+		novoJogo.inserirJogadorNaFase(listaJogadores.get(0), f1);
+		listaJogadores.get(0).atirar();
+		listaJogadores.get(0).atirar();
+		listaJogadores.get(0).atirar();
+		listaJogadores.get(0).atirar();
+		listaJogadores.get(0).atirar();
+		listaJogadores.get(0).atirar();
+		listaJogadores.get(0).atirar();
+		listaJogadores.get(0).atirar();
+		listaJogadores.get(0).atirar();
+		listaJogadores.get(0).atirar();
+		novoJogo.fimDeJogo(listaJogadores.get(0));
+		Assert.assertTrue(novoJogo.jogoAcabou());
+	}
 	
 	
