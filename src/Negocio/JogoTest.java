@@ -718,6 +718,17 @@ public class JogoTest {
 		jogo.loginJogador(jogador);
 		Assert.assertEquals(5, jogo.listarFases().size());
 	}
-
+	
+	@Test
+	public void verificarFasesBloqueadas() throws ObjetoJaExistenteException,
+			JogadorNaoLogadoException, LoginInexistenteException {
+		Jogador jogador = instanciarJogador();
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+		Assert.assertEquals(false, jogo.listarFases().get(1).isLiberado());
+		Assert.assertEquals(false, jogo.listarFases().get(2).isLiberado());
+		Assert.assertEquals(false, jogo.listarFases().get(3).isLiberado());
+		Assert.assertEquals(false, jogo.listarFases().get(4).isLiberado());
+	}
 
 }
