@@ -513,5 +513,10 @@ public class JogoTest {
 		Assert.assertEquals(true, jogo.verificarSeRespostaEstaEmBaloes(15));
 	}
 
+	@Test(expected = ObjetoInexistenteException.class)
+	public void verificarQuantidadeInicialDeBaloesGerados()
+			throws ObjetoJaExistenteException, ObjetoInexistenteException {
+		jogo.verificarQuantidadeDeBaloesGerados();
+	}
 
 }
