@@ -25,7 +25,12 @@ import Model.Professor;
 public class JogoTest {
 	
 	private Jogo jogo;
-
+	
+	@Before
+	public void iniciarTeste() throws IOException{
+		jogo = new Jogo();
+		jogo.iniciandoDAO();
+	}
 	
 
 }
