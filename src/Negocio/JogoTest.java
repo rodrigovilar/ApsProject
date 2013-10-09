@@ -211,5 +211,14 @@ public class JogoTest {
 		jogo.cadastrarProfesssor(p1);
 	}
 	
+	@Test(expected = ObjetoInexistenteException.class)
+	public void senhaDeJogadorComMenosDeQuatroDigitosImpossibilidadeDeCadastro() throws IOException, Exception{
+		Jogador j1 = instanciarObjetoJogador();
+		j1.setNome("Piu_Pesadelo");
+		j1.setSenha("@$#%");
+		jogo.cadastrarJogador(j1);
+	}
+	
+	
 
 }
