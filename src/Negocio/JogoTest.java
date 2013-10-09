@@ -688,6 +688,19 @@ public class JogoTest {
 		Problema problema = instanciarObjetoProblema();
 		jogo.cadastrarProblema(problema);
 	}
+	
+	@Test(expected = LoginInexistenteException.class)
+	public void loginDuploDeProfessor() throws Exception {
+		Professor professor = instanciarObjetoProfessor();
+		professor.setNome("rafael");
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+
+		Professor professor_2 = instanciarObjetoProfessor();
+		professor_2.setNome("jonas");
+		jogo.cadastrarProfesssor(professor_2);
+		jogo.loginProfessor(professor_2);
+	}
 
 	
 	
