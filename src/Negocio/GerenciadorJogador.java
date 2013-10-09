@@ -37,4 +37,13 @@ public class GerenciadorJogador {
 			}
 		}
 	}
+	
+	private boolean buscarJogador(Jogador jogador) throws IOException, Exception {
+		for(Jogador j:jogadorDAO.selectAll()){
+			if(j.getNome().equals(jogador.getNome()) ){
+				return true;
+			}
+		}
+		return false;
+	}
 }
