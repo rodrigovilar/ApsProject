@@ -50,6 +50,13 @@ public class JogoTest {
 		return p1;
 	}
 	
+	private Jogador instanciarObjetoJogador(){
+		Jogador j1 = new Jogador();
+		j1.setNome("Rodrigo");
+		j1.setSenha("alucard1800");
+		return j1;
+	}
+	
 	
 	
 
