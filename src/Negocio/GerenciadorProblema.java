@@ -36,4 +36,8 @@ public class GerenciadorProblema {
 	public boolean getIsLogado(){
 		return isProfessorLogado;
 	}
+	
+	public void setIsProfessorLogado(boolean status){
+		isProfessorLogado = status;
+	}
 }
