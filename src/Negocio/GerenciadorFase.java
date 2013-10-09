@@ -6,7 +6,7 @@ import Excecao.JogadorNaoLogadoException;
 import Model.Fase;
 
 public class GerenciadorFase {
-
+	
 private ArrayList<Fase> fases = new ArrayList<Fase>();
 	
 	public void inserirJogadorNaFase(Jogador jogador, Fase fase) throws FaseNaoDisponivelException{

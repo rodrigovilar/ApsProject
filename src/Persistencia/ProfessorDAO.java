@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import Model.Professor;
 
 public class ProfessorDAO {
-private static File fileProfessor ;
+	private static File fileProfessor ;
 	
 	public ProfessorDAO(){
 		fileProfessor = new File("ProfessorPersistência.ser");
@@ -20,7 +20,8 @@ private static File fileProfessor ;
 		FileOutputStream fileOut = new FileOutputStream(fileProfessor);
 		ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
 		objOut.writeObject(professores);
-		objOut.close();	
+		objOut.close();
+		
 	}
 	
 	@SuppressWarnings("unchecked")

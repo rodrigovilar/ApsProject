@@ -5,8 +5,10 @@ import Excecao.BalasEsgotadasException;
 import Model.Canhao;
 import Model.Usuario;
 
+@SuppressWarnings("serial")
 public class Jogador extends Usuario{
 	private static int score = 10;
+	public static boolean isGameOver = false;
 	private Canhao canhao;
 	public Jogador(){
 		score = 10;
@@ -23,6 +25,9 @@ public class Jogador extends Usuario{
 	}
 	public static void decrementarScore(){
 		score--;
+		if(score == 0){
+			isGameOver = true;
+		}
 	}
 	public static int getScore() {
 		

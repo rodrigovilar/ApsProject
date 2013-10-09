@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import junit.framework.Assert;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,542 +23,597 @@ import Model.Professor;
 
 @SuppressWarnings("deprecation")
 public class JogoTest {
-	
 	private Jogo jogo;
-	
+
 	@Before
-	public void iniciarTeste() throws IOException{
+	public void iniciarTest() throws JogadorNaoLogadoException, IOException {
 		jogo = new Jogo();
-		jogo.iniciandoDAO();
 	}
-	
-	@After
-	public void destruirArquivo(){
-		jogo.destruirArquivo();
-	}
-	
+
 	@Test
-	public void iniciarJogo(){
-		Assert.assertFalse("O jogo já iniciou acabado", jogo.jogoAcabou());
+	public void iniciarJogo() throws ObjetoJaExistenteException, JogadorNaoLogadoException {
+		Assert.assertFalse("O jogo iniciou acabado", jogo.jogoAcabou());
 	}
-	
-	private Professor instanciarObjetoProfessor(){
-		Professor p1 = new Professor();
-		p1.setNome("Antônio");
-		p1.setSenha("81011054");
-		return p1;
-	}
-	
-	private Jogador instanciarObjetoJogador(){
-		Jogador j1 = new Jogador();
-		j1.setNome("Rodrigo");
-		j1.setSenha("alucard1800");
-		return j1;
-	}
-	
-	private Problema instanciarObjetoProblema(){
-		Problema pro1 = new Problema();
-		pro1.setQuestao("Qual o resultado da operação (3x3)²?");
-		pro1.setResposta(81);
-		return pro1;
-	}
-	
-	private Fase instanciarObjetoFase(){
-		Fase f1 = new Fase();
-		return f1;
-	}
-	
-	private Canhao instanciarObjetoCanhao(){
-		Canhao c = new Canhao();
-		return c;
-	}
-	
+
 	@Test
-	public void cadastrarProfessor() throws Exception{
-		Professor p1 = instanciarObjetoProfessor();
-		jogo.cadastrarProfesssor(p1);
-		Jogo novoJogo = new Jogo();
-		Assert.assertEquals("Esse teste espera que o valor do arquivo cadastrado atualize para 1", 1, novoJogo.getQuantidadeDeProfessoresCadastrados());
-	}
-	
-	@Test
-	public void removerProfessor() throws Exception{
-		Professor p1 = instanciarObjetoProfessor();
-		jogo.cadastrarProfesssor(p1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.removerProfessor(p1);
-		Assert.assertEquals("Esse teste remove um objeto professor do arquivo", 0, novoJogo.getQuantidadeDeProfessoresCadastrados());
+	public void verificarArquivoInicialDeProfessores() throws Exception {
+		Assert.assertEquals("Esse teste espera que a lista inicial de professores seja igual a zero", 0, jogo.getQuantidadeDeProfessoresCadastrados());
 		
 	}
-	
-	@Test(expected=ObjetoJaExistenteException.class)
-	public void cadastrarMesmoProfessorDuasVezes() throws Exception{
-		Professor p1 = instanciarObjetoProfessor();
-		jogo.cadastrarProfesssor(p1);
+
+	@Test
+	public void cadastrarProfessor() throws Exception {
+		Professor professor = instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+		
 		Jogo novoJogo = new Jogo();
-		novoJogo.cadastrarProfesssor(p1);
+		ArrayList<Professor> professoresCadastrados = novoJogo.listarProfessores();
+		Assert.assertEquals("Esse teste espera que possua apenas um professor cadastrado", 1, professoresCadastrados.size());
 		
 	}
-	
+
+	@Test(expected = ObjetoJaExistenteException.class)
+	public void cadastrarProfessorJaCadastrado() throws Exception {
+		Professor professor = instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+
+		Professor professor_2 = this.instanciarProfessor();
+		jogo.cadastrarProfesssor(professor_2);
+	}
+
+	@Test
+	public void removerProfessor() throws Exception {
+		Professor professor = instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+		
+		Jogo novoJogo = new Jogo();
+		ArrayList<Professor> professoresCadastrados = novoJogo.listarProfessores();
+		Assert.assertEquals("Esse teste espera que possua apenas um jogador cadastrado", 1, professoresCadastrados.size());
+		novoJogo.removerProfessor(professor);
+		Assert.assertEquals("Esse teste espera que a quantidade de jogadores seja igual a 0", 0, professoresCadastrados.size());
+	}
+
+	@Test(expected = ObjetoInexistenteException.class)
+	public void removerMesmoProfessorDuasVezes()
+			throws Exception {
+		Professor professor = this.instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+		jogo.removerProfessor(professor);
+		jogo.removerProfessor(professor);
+	}
+
 	@Test
 	public void verificaSeNomeDoProfessorEstaCorreto() throws Exception {
-		Professor p1 = instanciarObjetoProfessor();
-		p1.setNome("Madalena");
-		p1.setSenha("01411023");
-		jogo.cadastrarProfesssor(p1);
-		Jogo novoJogo = new Jogo();
-		ArrayList<Professor> listaProfessores = novoJogo.listarProfessores();
-		Assert.assertEquals("Esse teste espera que o professor cadastrado seja igual ao professor salvo na lista", p1.getNome(), listaProfessores.get(0).getNome());
+		Professor professor = instanciarProfessor();
+		professor.setNome("Madalena");
+		jogo.cadastrarProfesssor(professor);
+		ArrayList<Professor> professores = jogo.listarProfessores();
+		Professor professorSalvo = professores.get(0);
+		Assert.assertEquals("Esse teste espera que o professor cadastrado seja igual ao professor salvo na lista", professor.getNome(), professorSalvo.getNome());
 	}
-	
+
 	@Test(expected = ObjetoInexistenteException.class)
-	public void removerProfessorInexistente() throws Exception {
-		Professor p1= instanciarObjetoProfessor();
-		jogo.cadastrarProfesssor(p1);
-		Jogo novoJogo = new Jogo();
-		Professor p2 = instanciarObjetoProfessor();
-		p2.setNome("Joao");
-		p2.setSenha("01013456");
-		novoJogo.removerProfessor(p2);
-	}
-	
-	@Test(expected = ObjetoInexistenteException.class)
-	public void removerMesmoProfessorDuasVezes() throws Exception{
-		Professor p1 = instanciarObjetoProfessor();
-		jogo.cadastrarProfesssor(p1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.removerProfessor(p1);
-		Jogo maisUmJogo = new Jogo();
-		maisUmJogo.removerProfessor(p1);
-		
-	}
-	
-	@Test
-	public void cadastrarJogador() throws Exception{
-		Jogador j1 = instanciarObjetoJogador();
-		jogo.cadastrarJogador(j1);
-		Jogo novoJogo = new Jogo();
-		Assert.assertEquals("Esse teste espera que a quantidade de jogadores cadastrados seja igual a 1", 1, novoJogo.getQuantidadeDeJogadoresCadastrados());
-	}
-	
-	@Test
-	public void verificarSeNomeDoJogadorEstaCorreto() throws IOException, Exception{
-		Jogador j1 = instanciarObjetoJogador();
-		jogo.cadastrarJogador(j1);
-		Jogo novoJogo = new Jogo();
-		ArrayList<Jogador> listaJogadores = novoJogo.listarJogadores();
-		Assert.assertEquals("Esse teste verifica se o nome do jogador foi cadastrado corretamente", j1.getNome(), listaJogadores.get(0).getNome());
-	}
-	
-	@Test(expected=ObjetoJaExistenteException.class)
-	public void cadastrarJogadorJaCadastrado() throws IOException, Exception{
-		Jogador j1 = instanciarObjetoJogador();
-		jogo.cadastrarJogador(j1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.cadastrarJogador(j1);
-	}
-	
-	@Test
-	public void removerJogador() throws IOException, Exception{
-		Jogador j1 = instanciarObjetoJogador();
-		jogo.cadastrarJogador(j1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.removerJogador(j1);
-		Assert.assertEquals("Esse teste espera que o valor do arquivo de cadastro atualize para 1", 0, novoJogo.getQuantidadeDeJogadoresCadastrados());
-		
-	}
-	
-	@Test(expected=ObjetoInexistenteException.class)
-	public void removerMesmoJogadorDuasVezes() throws IOException, Exception{
-		Jogador j1 = instanciarObjetoJogador();
-		jogo.cadastrarJogador(j1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.removerJogador(j1);
-		Jogo maisUmJogo = new Jogo();
-		maisUmJogo.removerJogador(j1);
-	}
-	
-	@Test(expected=ObjetoInexistenteException.class)
-	public void removerJogadorInexistente() throws IOException, Exception{
-		Jogador j1 = instanciarObjetoJogador();
-		jogo.cadastrarJogador(j1);
-		Jogador j2 = instanciarObjetoJogador();
-		j2.setNome("Wandemberg");
-		j2.setSenha("atecubanos");
-		Jogo novoJogo = new Jogo();
-		novoJogo.removerJogador(j2);
-	}
-	
-	@Test
-	public void cadastrarProblema() throws Exception{
-		Professor p1 = instanciarObjetoProfessor();
-		jogo.cadastrarProfesssor(p1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.loginProfessor(p1);
-		Problema pro1 = instanciarObjetoProblema();
-		pro1.setQuestao("Qual a metade de dois mais dois?");
-		pro1.setResposta(3);
-		novoJogo.cadastrarProblema(pro1);
-		Jogo maisUmJogo = new Jogo();
-		Assert.assertEquals("Esse teste espera que o valor da lista de problemas atualize para 1", 1, maisUmJogo.getQuantidadeDeProblemasCadastrados());
-	}
-	
-	@Test(expected = ObjetoInexistenteException.class)
-	public void senhaDeProfessorComMenosDeQuatroDigitosImpossibilidadeDeCadastro() throws Exception{
-		Professor p1 = instanciarObjetoProfessor();
-		p1.setSenha("ufpb");
-		jogo.cadastrarProfesssor(p1);
-	}
-	
-	@Test(expected = ObjetoInexistenteException.class)
-	public void senhaDeJogadorComMenosDeQuatroDigitosImpossibilidadeDeCadastro() throws IOException, Exception{
-		Jogador j1 = instanciarObjetoJogador();
-		j1.setNome("Piu_Pesadelo");
-		j1.setSenha("@$#%");
-		jogo.cadastrarJogador(j1);
-	}
-	
-	@Test
-	public void removerProblema() throws Exception{
-		Professor p1 = instanciarObjetoProfessor();
-		jogo.cadastrarProfesssor(p1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.loginProfessor(p1);
-		Problema pro1 = instanciarObjetoProblema();
-		pro1.setQuestao("Quanto vale um terço de nove?");
-		pro1.setResposta(3);
-		novoJogo.cadastrarProblema(pro1);
-		Jogo maisUmJogo = new Jogo();
-		maisUmJogo.loginProfessor(p1);
-		maisUmJogo.removerProblema(pro1);
-		Assert.assertEquals("Esse teste espera que a lista de problemas seja atualizada para 0", 0, maisUmJogo.getQuantidadeDeProblemasCadastrados());
-	}
-	
-	@Test
-	public void verificaQuestaoDoProblemaCadastradoSeCadastrouCorretamente() throws Exception{
-		Professor p1 = instanciarObjetoProfessor();
-		jogo.cadastrarProfesssor(p1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.loginProfessor(p1);
-		Problema pro1 = instanciarObjetoProblema();
-		pro1.setQuestao("Qual o valor do quadrado de 1/2?");
-		pro1.setResposta((int)0.25);
-		novoJogo.cadastrarProblema(pro1);
-		Jogo maisUmJogo = new Jogo();
-		ArrayList<Problema> listaProblemas = maisUmJogo.listarProblemas();
-		Assert.assertEquals("Esse teste espera que o valor da questão cadastrada seja a mesma que está no arquivo", pro1.getQuestao(), listaProblemas.get(0).getQuestao());
-	}
-	
-	@Test
-	public void verificaSeRespostaDaQuestaoDoProblemaFoiCadastradaCorretamente() throws Exception{
-		Professor p1 = instanciarObjetoProfessor();
-		jogo.cadastrarProfesssor(p1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.loginProfessor(p1);
-		Problema pro1 = instanciarObjetoProblema();
-		pro1.setQuestao("Qual o valor da soma de x+2.x, considerando x = 2?");
-		pro1.setResposta(8);
-		novoJogo.cadastrarProblema(pro1);
-		Jogo maisUmJogo = new Jogo();
-		ArrayList<Problema> listaProblemas = maisUmJogo.listarProblemas();
-		Assert.assertEquals("Esse teste espera que a resposta da questão cadastrada seja a mesma que está no arquivo", pro1.getResposta(), listaProblemas.get(0).getResposta());
-	}
-	
-	@Test
-	public void verificarScoreInicialDoJogador() {
-		Assert.assertEquals("Esse teste espera que a quantidade de score inicial do jogador seja igual a 10", 10, Jogador.getScore());
-	}
-	
-	@Test
-	public void verificarIDdoJogadorCadastrado() throws IOException, Exception{
-		Jogador j1 = instanciarObjetoJogador();
-		jogo.cadastrarJogador(j1);
-		Jogo novoJogo = new Jogo();
-		ArrayList<Jogador> listaJogadores = novoJogo.listarJogadores();
-		Assert.assertEquals("Esse teste espera que o Id do jogador cadastrado seja igual a 1", 1, listaJogadores.get(0).getId());
-	}
-	
-	@Test
-	public void verificarIDdoProfessorCadastrado() throws Exception{
-		Professor p1 = instanciarObjetoProfessor();
-		jogo.cadastrarProfesssor(p1);
-		Jogo novoJogo = new Jogo();
-		ArrayList<Professor> listaProfessores = novoJogo.listarProfessores();
-		Assert.assertEquals("Esse teste espera que o Id do professsor cadastrado seja igual a 1", 1, listaProfessores.get(0).getId());
-	}
-	
-	@Test
-	public void inserirJogadorNaFase() throws IOException, Exception{
-		Jogador j1 = instanciarObjetoJogador();
-		jogo.cadastrarJogador(j1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.loginJogador(j1);
-		ArrayList<Jogador> listaJogadores = novoJogo.listarJogadores();
-		Fase f1 = instanciarObjetoFase();
-		f1.setNivel(0);
-		novoJogo.inserirJogadorNaFase(listaJogadores.get(0), f1);
-		ArrayList<Fase> listaFases = novoJogo.listarFases();
-		Assert.assertEquals("Esse teste espera que o jogador cadastrado seja inserido na fase", listaJogadores.get(0), listaFases.get(0).getJogador());
-	}
-	
-	@Test(expected=FaseNaoDisponivelException.class)
-	public void verificarFaseIndisponivel() throws IOException, Exception{
-		Jogador j1 = instanciarObjetoJogador();
-		jogo.cadastrarJogador(j1);
-		Jogo novoJogo = new Jogo();
-		ArrayList<Jogador> listaJogadores = novoJogo.listarJogadores();
-		Fase f1 = instanciarObjetoFase();
-		f1.setNivel(1);
-		novoJogo.inserirJogadorNaFase(listaJogadores.get(0), f1);
-	}
-	
-	@Test
-	public void verificarOsNiveisDasFasesGeradas() throws IOException, Exception{
-		Jogador j1 = instanciarObjetoJogador();
-		jogo.cadastrarJogador(j1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.loginJogador(j1);
-		ArrayList<Fase> listaFases = novoJogo.listarFases();
-		Assert.assertEquals("Esse teste espera que a quantidade de fases sejam igual a 5", 5, listaFases.size());
-	}
-	
-	@Test
-	public void verificarPosicaoInicialDoCanhao() throws IOException, Exception{
-		Jogador j1 = instanciarObjetoJogador();
-		jogo.cadastrarJogador(j1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.loginJogador(j1);
-		Fase f1 = instanciarObjetoFase();
-		f1.setNivel(0);
-		ArrayList<Jogador> listarJogadores = novoJogo.listarJogadores();
-		Canhao c = instanciarObjetoCanhao();
-		listarJogadores.get(0).setCanhao(c);
-		novoJogo.inserirJogadorNaFase(listarJogadores.get(0), f1);
-		ArrayList<Fase> listaFases = novoJogo.listarFases();
-		Assert.assertEquals("Espera que a posição X inicial do canhão seja 250", 250, listaFases.get(0).getJogador().getCanhao().getPosicaoX());
-		Assert.assertEquals("Espera que a posição Y inicial do canhão seja 500", 500, listaFases.get(0).getJogador().getCanhao().getPosicaoY());
-	}
-	
-	@Test
-	public void verificarSeJogadorControlaPosicaoCanhao() throws IOException, Exception{
-		Jogador j1 = instanciarObjetoJogador();
-		jogo.cadastrarJogador(j1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.loginJogador(j1);
-		Fase f1 = instanciarObjetoFase();
-		f1.setNivel(0);
-		ArrayList<Jogador> listarJogadores = novoJogo.listarJogadores();
-		Canhao c = instanciarObjetoCanhao();
-		listarJogadores.get(0).setCanhao(c);
-		listarJogadores.get(0).getCanhao().setPosicaoX(50);
-		listarJogadores.get(0).getCanhao().setPosicaoY(30);;
-		novoJogo.inserirJogadorNaFase(listarJogadores.get(0), f1);
-		ArrayList<Fase> listaFases = novoJogo.listarFases();
-		Assert.assertEquals("Espera que a posição X atual do canhão seja 50", 50, listaFases.get(0).getJogador().getCanhao().getPosicaoX());
-		Assert.assertEquals("Espera que a posição Y atual do canhão seja 30", 30, listaFases.get(0).getJogador().getCanhao().getPosicaoY());
-	}
-	
-	@Test
-	public void verificarSeCanhaoQueAindaNaoAtirouPossuiTodosOsTiros() throws IOException, Exception{
-		Jogador j1 = instanciarObjetoJogador();
-		jogo.cadastrarJogador(j1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.loginJogador(j1);
-		Canhao c = instanciarObjetoCanhao();
-		Municao m = new Municao();
-		c.setMunicao(m);
-		ArrayList<Jogador> listaJogadores = novoJogo.listarJogadores();
-		listaJogadores.get(0).setCanhao(c);
-		Fase f1 = instanciarObjetoFase();
-		novoJogo.inserirJogadorNaFase(listaJogadores.get(0), f1);
-		ArrayList<Fase> listaFases = novoJogo.listarFases();
-		Assert.assertEquals("Espera que a quantidade de tiros do canhão seja igual a 10", 10, listaFases.get(0).getJogador().getCanhao().getMunicao().getQuantidadeDeBalas());
-	}
-	
-	@Test
-	public void verificarSeJogadorAtiraComCanhao() throws IOException, Exception{
-		Jogador j1 = instanciarObjetoJogador();
-		jogo.cadastrarJogador(j1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.loginJogador(j1);
-		Canhao c = instanciarObjetoCanhao();
-		Municao m = new Municao();
-		c.setMunicao(m);
-		ArrayList<Jogador> listaJogadores = novoJogo.listarJogadores();
-		listaJogadores.get(0).setCanhao(c);
-		Fase f1 = instanciarObjetoFase();
-		novoJogo.inserirJogadorNaFase(listaJogadores.get(0), f1);
-		ArrayList<Fase> listaFases = novoJogo.listarFases();
-		listaJogadores.get(0).atirar();
-		listaJogadores.get(0).atirar();
-		listaJogadores.get(0).atirar();
-		Assert.assertEquals("Espera que a quantidade de tiros decremente para 7", 7, listaFases.get(0).getJogador().getCanhao().getMunicao().getQuantidadeDeBalas());
-	}
-	
-	@Test(expected = BalasEsgotadasException.class)
-	public void verificarSeQuantidadeDeBalasEsgotaram() throws IOException, Exception{
-		Jogador j1 = instanciarObjetoJogador();
-		jogo.cadastrarJogador(j1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.loginJogador(j1);
-		Canhao c = instanciarObjetoCanhao();
-		Municao m = new Municao();
-		c.setMunicao(m);
-		ArrayList<Jogador> listaJogadores = novoJogo.listarJogadores();
-		listaJogadores.get(0).setCanhao(c);
-		Fase f1 = instanciarObjetoFase();
-		novoJogo.inserirJogadorNaFase(listaJogadores.get(0), f1);
-		listaJogadores.get(0).atirar();
-		listaJogadores.get(0).atirar();
-		listaJogadores.get(0).atirar();
-		listaJogadores.get(0).atirar();
-		listaJogadores.get(0).atirar();
-		listaJogadores.get(0).atirar();
-		listaJogadores.get(0).atirar();
-		listaJogadores.get(0).atirar();
-		listaJogadores.get(0).atirar();
-		listaJogadores.get(0).atirar();
-		listaJogadores.get(0).atirar();
-	}
-	
-	@Test
-	public void verificarSeJogoAcabou() throws IOException, Exception{
-		Jogador j1 = instanciarObjetoJogador();
-		jogo.cadastrarJogador(j1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.loginJogador(j1);
-		Canhao c = instanciarObjetoCanhao();
-		Municao m = new Municao();
-		c.setMunicao(m);
-		ArrayList<Jogador> listaJogadores = novoJogo.listarJogadores();
-		listaJogadores.get(0).setCanhao(c);
-		Fase f1 = instanciarObjetoFase();
-		novoJogo.inserirJogadorNaFase(listaJogadores.get(0), f1);
-		listaJogadores.get(0).atirar();
-		listaJogadores.get(0).atirar();
-		listaJogadores.get(0).atirar();
-		listaJogadores.get(0).atirar();
-		listaJogadores.get(0).atirar();
-		listaJogadores.get(0).atirar();
-		listaJogadores.get(0).atirar();
-		listaJogadores.get(0).atirar();
-		listaJogadores.get(0).atirar();
-		listaJogadores.get(0).atirar();
-		novoJogo.fimDeJogo(listaJogadores.get(0));
-		Assert.assertTrue(novoJogo.jogoAcabou());
-	}
-	
-	@Test
-	public void verificarPossivelRespostaCorretaEmBaloes()throws Exception {
-		Professor p1 = instanciarObjetoProfessor();
-		jogo.cadastrarProfesssor(p1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.loginProfessor(p1);
-		Problema pro1 = instanciarObjetoProblema();
-		pro1.setQuestao("2x3?");
-		pro1.setResposta(6);
-		Jogo maisUmNovoJogo = new Jogo();
-		maisUmNovoJogo.loginProfessor(p1);
-		maisUmNovoJogo.cadastrarProblema(pro1);
-		ArrayList<Problema> listaProblemas = maisUmNovoJogo.listarProblemas();
-		System.out.println(listaProblemas.get(0).getResposta());
-		maisUmNovoJogo.gerarBalao(listaProblemas.get(0));
-		Assert.assertTrue(maisUmNovoJogo.verificarSeRespostaEstaEmBaloes(6));
-	}
-	
-	@Test(expected = ObjetoInexistenteException.class)
-	public void verificarQuantidadeInicialDeBaloesGerados()throws ObjetoJaExistenteException, ObjetoInexistenteException {
-		jogo.verificarQuantidadeDeBaloesGerados();
-	}
-	
-	@Test
-	public void verificarQuantidadeDeBaloesGerados()throws Exception {
-		Professor p1 = instanciarObjetoProfessor();
-		jogo.cadastrarProfesssor(p1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.loginProfessor(p1);
-		Problema pro1 = instanciarObjetoProblema();
-		pro1.setQuestao("2+4?");
-		pro1.setResposta(6);
-		novoJogo.cadastrarProblema(pro1);
-		ArrayList<Problema> listaProblemas = novoJogo.listarProblemas();
-		Jogo maisUmJogo = new Jogo();
-		maisUmJogo.gerarBalao(listaProblemas.get(0));
-		Assert.assertEquals("Espera que a quantidade de balões gerados seja igual a 10", 10, maisUmJogo.verificarQuantidadeDeBaloesGerados());
-	}
-	
-	@Test
-	public void verificarSeBalaoEstoura() throws Exception {
-		Professor p1 = instanciarObjetoProfessor();
-		jogo.cadastrarProfesssor(p1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.loginProfessor(p1);
-		Problema pro1 = instanciarObjetoProblema();
-		pro1.setQuestao("4x4?");
-		pro1.setResposta(16);
-		novoJogo.cadastrarProblema(pro1);
-		ArrayList<Problema> listaProblemas = novoJogo.listarProblemas();
-		novoJogo.gerarBalao(listaProblemas.get(0));
-		Jogador j1 = instanciarObjetoJogador();
-		j1.setNome("Jonas");
-		j1.setSenha("81011032");
-		novoJogo.cadastrarJogador(j1);
-		novoJogo.loginJogador(j1);
-		Canhao c = new Canhao();
-		Municao m = new Municao();
-		c.setMunicao(m);
-		ArrayList<Jogador> listaJogadores = novoJogo.listarJogadores();
-		listaJogadores.get(0).setCanhao(c);
-		Fase f1 = instanciarObjetoFase();
-		f1.setNivel(0);
-		novoJogo.inserirJogadorNaFase(listaJogadores.get(0), f1);
-		novoJogo.estourarBalao(16);
-		Assert.assertFalse(novoJogo.verificarSeRespostaEstaEmBaloes(16));
-	}
-	
-	@Test
-	public void verificarSeJogadorMarcaScoreAoAcertarQuestao()throws Exception {
-		Professor p1 = instanciarObjetoProfessor();
-		jogo.cadastrarProfesssor(p1);
-		Jogo novoJogo = new Jogo();
-		novoJogo.loginProfessor(p1);
-		Problema pro1 = instanciarObjetoProblema();
-		pro1.setQuestao("2+5?");
-		pro1.setResposta(7);
-		novoJogo.cadastrarProblema(pro1);
-		ArrayList<Problema> listaProblemas = novoJogo.listarProblemas();
-		novoJogo.gerarBalao(listaProblemas.get(0));
-		Jogador j1 = instanciarObjetoJogador();
-		j1.setNome("kvasak");
-		j1.setSenha("812383");
-		novoJogo.cadastrarJogador(j1);
-		novoJogo.loginJogador(j1);
-		Canhao c = new Canhao();
-		Municao m = new Municao();
-		c.setMunicao(m);
-		ArrayList<Jogador> listaJogadores = novoJogo.listarJogadores();
-		listaJogadores.get(0).setCanhao(c);
-		Fase f1 = instanciarObjetoFase();
-		f1.setNivel(0);
-		novoJogo.inserirJogadorNaFase(listaJogadores.get(0), f1);
-		novoJogo.estourarBalao(7);
-		Assert.assertEquals(11, Jogador.getScore());
-	}
-	
-	@SuppressWarnings("static-access")
-	@Test
-	public void verificarSeJogadorPerdeScoreAoErrarQuestao()
+	public void removerProfessorInexistente()
 			throws Exception {
-		Professor professor = instanciarObjetoProfessor();
+		Professor professor_2 = this.instanciarProfessor();
+		jogo.removerProfessor(professor_2);
+	}
+
+	@Test
+	public void verificarListaInicialDeJogadores() throws IOException, Exception {
+		Assert.assertEquals(
+				"Esse teste espera que a lista inicial de jogadores seja igual a zero",
+				0, jogo.getQuantidadeDeJogadoresCadastrados());
+	}
+
+	/*@Test
+	public void cadastrarJogador() throws ObjetoJaExistenteException {
+		Jogador jogador = this.instanciarJogador();
+		jogo.cadastrarJogador(jogador);
+		ArrayList<Jogador> jogadoresCadastrados = jogo.listarJogadores();
+		Assert.assertEquals(
+				"Esse teste espera que possua apenas um jogador cadastrado", 1,
+				jogadoresCadastrados.size());
+		Jogador jogadorSalvo = jogadoresCadastrados.get(0);
+		Assert.assertEquals(
+				"Esse teste espera que o jogador cadastrado seja igual ao jogador salvo na lista",
+				jogador.getNome(), jogadorSalvo.getNome());
+	}
+
+	@Test
+	public void verificaSeNomeDoJogadorEstaCorreto()
+			throws ObjetoJaExistenteException {
+		Jogador jogador = instanciarJogador();
+		jogador.setNome("jogador_1");
+		jogo.cadastrarJogador(jogador);
+		ArrayList<Jogador> jogadoresCadastrados = jogo.listarJogadores();
+		Jogador jogadorSalvo = jogadoresCadastrados.get(0);
+		Assert.assertEquals(
+				"Esse teste espera que o jogador cadastrado seja igual ao jogador salvo na lista",
+				jogador.getNome(), jogadorSalvo.getNome());
+	}
+
+	@Test(expected = ObjetoJaExistenteException.class)
+	public void cadastrarJogadorJaCadastrado()
+			throws ObjetoJaExistenteException, JogadorNaoLogadoException,
+			LoginInexistenteException {
+		Jogador jogador_1 = instanciarJogador();
+		jogo.cadastrarJogador(jogador_1);
+		jogo.loginJogador(jogador_1);
+
+		Jogador jogador_2 = instanciarJogador();
+		jogo.cadastrarJogador(jogador_2);
+	}
+
+	@Test
+	public void removerJogadorCadastrado() throws ObjetoJaExistenteException,
+			ObjetoInexistenteException {
+		Jogador jogador_1 = this.instanciarJogador();
+		jogo.cadastrarJogador(jogador_1);
+		Assert.assertEquals(
+				"Esse teste espera que a quantidade de jogadores seja igual a 0",
+				1, jogo.getQuantidadeDeJogadoresCadastrados());
+		jogo.removerJogador(jogador_1);
+		Assert.assertEquals(
+				"Esse teste espera que a quantidade de jogadores seja igual a 0",
+				0, jogo.getQuantidadeDeJogadoresCadastrados());
+	}
+
+	@Test(expected = ObjetoInexistenteException.class)
+	public void removerMesmoJogadorDuasVezes()
+			throws ObjetoJaExistenteException, ObjetoInexistenteException {
+		Jogador jogador_1 = this.instanciarJogador();
+		jogo.cadastrarJogador(jogador_1);
+		jogo.removerJogador(jogador_1);
+		jogo.removerJogador(jogador_1);
+	}
+
+	@Test(expected = ObjetoInexistenteException.class)
+	public void removerJogadorInexistente() throws ObjetoJaExistenteException,
+			ObjetoInexistenteException, JogadorNaoLogadoException,
+			LoginInexistenteException {
+		Jogador jogador_1 = instanciarJogador();
+		jogo.loginJogador(jogador_1);
+
+		Jogador jogador_2 = new Jogador();
+		jogador_2.setNome("jogador_2");
+
+		jogo.removerJogador(jogador_2);
+	}
+
+	@Test
+	public void cadastrarProblema() throws ObjetoJaExistenteException,
+			ObjetoInexistenteException, LoginInexistenteException, IOException {
+		Professor professor = instanciarProfessor();
 		jogo.cadastrarProfesssor(professor);
 		jogo.loginProfessor(professor);
 
-		Problema problema_1 = instanciarObjetoProblema();
+		Problema problema = this.instanciarProblema();
+		jogo.cadastrarProblema(problema);
+
+		ArrayList<Problema> problemasCadastrados = jogo.listarProblemas();
+		Assert.assertEquals(
+				"Esse teste espera que possua apenas um problema cadastrado",
+				1, problemasCadastrados.size());
+		Problema problemaSalvo = problemasCadastrados.get(0);
+		Assert.assertEquals(
+				"Esse teste espera que o problema cadastrado seja igual ao problema salvo na lista",
+				problema, problemaSalvo);
+	}
+
+	@Test(expected = ObjetoInexistenteException.class)
+	public void senhaComApenasUmDigitoImpossibilidadeDeAtribuicao()
+			throws ObjetoJaExistenteException, ObjetoInexistenteException, IOException {
+		Professor professor = this.instanciarProfessor();
+		professor.setSenha("1");
+		jogo.cadastrarProfesssor(professor);
+
+	}
+
+	@Test(expected = ObjetoJaExistenteException.class)
+	public void cadastrarProblemaJaCadastrado()
+			throws ObjetoJaExistenteException, ObjetoInexistenteException,
+			LoginInexistenteException, IOException {
+		Professor professor = instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+
+		Problema problema_1 = this.instanciarProblema();
+		jogo.cadastrarProblema(problema_1);
+
+		Problema problema_2 = this.instanciarProblema();
+		jogo.cadastrarProblema(problema_2);
+	}
+
+	@Test
+	public void removerProblemaCadastrado() throws ObjetoJaExistenteException,
+			ObjetoInexistenteException, LoginInexistenteException, IOException {
+		Professor professor = instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+		Problema problema_1 = this.instanciarProblema();
+		jogo.cadastrarProblema(problema_1);
+		Assert.assertEquals(
+				"Esse teste espera que a quantidade de problemas seja igual a 1",
+				1, jogo.getQuantidadeDeProblemasCadastrados());
+		jogo.removerProblema(problema_1);
+		Assert.assertEquals(
+				"Esse teste espera que a quantidade de jogadores seja igual a 0",
+				0, jogo.getQuantidadeDeProblemasCadastrados());
+	}
+
+	@Test
+	public void verificarListaInicialDeProblemas() {
+		Assert.assertEquals(0, jogo.listarProblemas().size());
+	}
+
+	@Test
+	public void verificarNomeDoProblemaCadastrado()
+			throws ObjetoJaExistenteException, ObjetoInexistenteException,
+			LoginInexistenteException, IOException {
+		Professor professor = instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+
+		Problema problema = instanciarProblema();
+		problema.setQuestao("Quanto eh a soma de (3!)?");
+		jogo.cadastrarProblema(problema);
+		ArrayList<Problema> listaProblemas = jogo.listarProblemas();
+		Assert.assertEquals("Quanto eh a soma de (3!)?", listaProblemas.get(0)
+				.getQuestao());
+	}
+
+	@Test
+	public void verificarRespostaDoProblemaCadastrado()
+			throws ObjetoJaExistenteException, ObjetoInexistenteException,
+			LoginInexistenteException, IOException {
+		Professor professor = instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+
+		Problema problema = instanciarProblema();
+		problema.setQuestao("Sendo x = 5, quanto vale x+10?");
+		problema.setResposta(15);
+		jogo.cadastrarProblema(problema);
+		ArrayList<Problema> listaProblemas = jogo.listarProblemas();
+		Assert.assertEquals(15, listaProblemas.get(0).getResposta());
+	}
+
+	@Test(expected = ObjetoInexistenteException.class)
+	public void removerMesmoProblemaDuasVezes()
+			throws ObjetoJaExistenteException, ObjetoInexistenteException,
+			LoginInexistenteException, IOException {
+		Professor professor = instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+
+		Problema problema_1 = this.instanciarProblema();
+		jogo.cadastrarProblema(problema_1);
+		jogo.removerProblema(problema_1);
+		jogo.removerProblema(problema_1);
+	}
+
+	@SuppressWarnings("static-access")
+	@Test
+	public void verificarScoreInicial() throws ObjetoJaExistenteException,
+			JogadorNaoLogadoException, LoginInexistenteException {
+		Jogador jogador = this.instanciarJogador();
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+		Assert.assertEquals(10, jogo.listarJogadores().get(0).getScore());
+	}
+
+	@Test
+	public void verificarIdDoJogadorCadastrado()
+			throws ObjetoJaExistenteException {
+		Jogador jogador = this.instanciarJogador();
+		jogo.cadastrarJogador(jogador);
+
+		ArrayList<Jogador> jogadores = jogo.listarJogadores();
+		Assert.assertEquals(1, jogadores.get(0).getId());
+	}
+
+	@Test
+	public void verificarIdDoProfessorCadastrado()
+			throws ObjetoJaExistenteException, ObjetoInexistenteException, IOException {
+		Professor professor = this.instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+
+		ArrayList<Professor> professores = jogo.listarProfessores();
+		Assert.assertEquals(1, professores.get(0).getId());
+
+	}
+
+	@Test
+	public void inserirJogadorNaFase() throws ObjetoJaExistenteException,
+			FaseNaoDisponivelException, JogadorNaoLogadoException,
+			LoginInexistenteException {
+		Jogador jogador = this.instanciarJogador();
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+		ArrayList<Jogador> jogadores = jogo.listarJogadores();
+
+		Fase fase = instanciarFase();
+		fase.setNivel(0);
+		jogo.inserirJogadorNaFase(jogadores.get(0), fase);
+		ArrayList<Fase> fases = jogo.listarFases();
+		Assert.assertEquals(jogador, fases.get(0).getJogador());
+	}
+
+	@Test(expected = FaseNaoDisponivelException.class)
+	public void FaseIndisponivel() throws ObjetoJaExistenteException,
+			FaseNaoDisponivelException {
+		Jogador jogador = this.instanciarJogador();
+		jogo.cadastrarJogador(jogador);
+		ArrayList<Jogador> jogadores = jogo.listarJogadores();
+
+		Fase fase = instanciarFase();
+		fase.setNivel(1);
+		jogo.inserirJogadorNaFase(jogadores.get(0), fase);
+	}
+
+	@Test
+	public void verificarNumerosDeFasesGeradas()
+			throws ObjetoJaExistenteException, FaseNaoDisponivelException,
+			JogadorNaoLogadoException, LoginInexistenteException {
+		Jogador jogador = instanciarJogador();
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+		ArrayList<Fase> fases = jogo.listarFases();
+		Assert.assertEquals(5, fases.size());
+	}
+
+	@Test
+	public void verificarPosicaoInicialDoCanhao()
+			throws ObjetoJaExistenteException, FaseNaoDisponivelException,
+			JogadorNaoLogadoException, LoginInexistenteException {
+		Jogador jogador = this.instanciarJogador();
+
+		Canhao canhao = new Canhao();
+		jogador.setCanhao(canhao);
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+
+		Fase fase = instanciarFase();
+		fase.setNivel(0);
+		jogo.inserirJogadorNaFase(jogador, fase);
+		ArrayList<Fase> fases = jogo.listarFases();
+
+		Assert.assertEquals(250, fases.get(0).getJogador().getCanhao()
+				.getPosicaoX());
+		Assert.assertEquals(500, fases.get(0).getJogador().getCanhao()
+				.getPosicaoY());
+	}
+
+	@Test
+	public void verificarSeJogadorControlaPosicaoCanhao()
+			throws ObjetoJaExistenteException, FaseNaoDisponivelException,
+			JogadorNaoLogadoException, LoginInexistenteException {
+		Jogador jogador = this.instanciarJogador();
+
+		Canhao canhao = new Canhao();
+		jogador.setCanhao(canhao);
+		jogador.getCanhao().setPosicaoX(100);
+		jogador.getCanhao().setPosicaoY(50);
+
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+
+		Fase fase = instanciarFase();
+		fase.setNivel(0);
+		jogo.inserirJogadorNaFase(jogador, fase);
+		ArrayList<Fase> fases = jogo.listarFases();
+
+		Assert.assertEquals(100, fases.get(0).getJogador().getCanhao()
+				.getPosicaoX());
+		Assert.assertEquals(50, fases.get(0).getJogador().getCanhao()
+				.getPosicaoY());
+	}
+
+	@Test
+	public void verificarSeCanhaoDoJogadorQueNaoAtirouPossuiTodosOsTiros()
+			throws ObjetoJaExistenteException, FaseNaoDisponivelException,
+			JogadorNaoLogadoException, LoginInexistenteException {
+		Jogador jogador = this.instanciarJogador();
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+
+		Canhao canhao = new Canhao();
+		Municao municao = new Municao();
+		canhao.setMunicao(municao);
+		jogador.setCanhao(canhao);
+
+		ArrayList<Jogador> jogadores = jogo.listarJogadores();
+
+		Fase fase = instanciarFase();
+		fase.setNivel(0);
+		jogo.inserirJogadorNaFase(jogadores.get(0), fase);
+		ArrayList<Fase> fases = jogo.listarFases();
+
+		Assert.assertEquals(10, fases.get(0).getJogador().getCanhao()
+				.getMunicao().getQuantidadeDeBalas());
+	}
+
+	@Test
+	public void verificarSeJogadorAtiraComCanhao()
+			throws ObjetoJaExistenteException, BalasEsgotadasException,
+			FaseNaoDisponivelException, JogadorNaoLogadoException,
+			LoginInexistenteException {
+		Jogador jogador = this.instanciarJogador();
+
+		Canhao canhao = new Canhao();
+		Municao municao = new Municao();
+		canhao.setMunicao(municao);
+		jogador.setCanhao(canhao);
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+
+		Fase fase = instanciarFase();
+		fase.setNivel(0);
+		jogo.inserirJogadorNaFase(jogador, fase);
+		ArrayList<Fase> fases = jogo.listarFases();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		Assert.assertEquals(7, fases.get(0).getJogador().getCanhao()
+				.getMunicao().getQuantidadeDeBalas());
+	}
+
+	@Test
+	public void verificarQuantidadeInicialDeMunicao()
+			throws ObjetoJaExistenteException, JogadorNaoLogadoException,
+			LoginInexistenteException {
+		Jogador jogador = this.instanciarJogador();
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+
+		Canhao canhao = new Canhao();
+		Municao municao = new Municao();
+		canhao.setMunicao(municao);
+		jogador.setCanhao(canhao);
+
+		ArrayList<Jogador> listaJogadores = jogo.listarJogadores();
+
+		Assert.assertEquals(10, listaJogadores.get(0).getCanhao().getMunicao()
+				.getQuantidadeDeBalas());
+	}
+
+	@Test(expected = BalasEsgotadasException.class)
+	public void verificarSeQuantidadeDeMunicaoEsgostaram()
+			throws ObjetoJaExistenteException, BalasEsgotadasException,
+			FaseNaoDisponivelException, JogadorNaoLogadoException,
+			LoginInexistenteException {// verifica se balas esgotaram
+		Jogador jogador = this.instanciarJogador();
+
+		Canhao canhao = new Canhao();
+		Municao municao = new Municao();
+		canhao.setMunicao(municao);
+		jogador.setCanhao(canhao);
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+	}
+
+	@Test
+	public void verificarSeJogoAcabou() throws ObjetoJaExistenteException,
+			JogadorNaoLogadoException, LoginInexistenteException,
+			BalasEsgotadasException {
+		Jogador jogador = this.instanciarJogador();
+		Canhao canhao = new Canhao();
+		Municao municao = new Municao();
+		canhao.setMunicao(municao);
+		jogador.setCanhao(canhao);
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+
+		jogo.fimDeJogo(jogador);
+		Assert.assertTrue(jogo.jogoAcabou());
+
+	}
+
+	@Test
+	public void verificarPossivelRespostaCorretaEmBaloes()
+			throws ObjetoJaExistenteException, ObjetoInexistenteException,
+			LoginInexistenteException, IOException {
+		Professor professor = instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+
+		Problema problema_1 = this.instanciarProblema();
+		jogo.cadastrarProblema(problema_1);
+
+		jogo.gerarBalao(problema_1);
+		Assert.assertEquals(true, jogo.verificarSeRespostaEstaEmBaloes(15));
+	}
+
+	@Test(expected = ObjetoInexistenteException.class)
+	public void verificarQuantidadeInicialDeBaloesGerados()
+			throws ObjetoJaExistenteException, ObjetoInexistenteException {
+		jogo.verificarQuantidadeDeBaloesGerados();
+	}
+
+	@Test
+	public void verificarQuantidadeDeBaloesGerados()
+			throws ObjetoJaExistenteException, ObjetoInexistenteException,
+			LoginInexistenteException, IOException {
+		Professor professor = instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+
+		Problema problema_1 = this.instanciarProblema();
+		jogo.cadastrarProblema(problema_1);
+
+		jogo.gerarBalao(problema_1);
+		Assert.assertEquals(10, jogo.verificarQuantidadeDeBaloesGerados());
+	}
+
+	@Test
+	public void verificarSeBalaoEstoura() throws ObjetoJaExistenteException,
+			ObjetoInexistenteException, FaseNaoDisponivelException,
+			JogadorNaoLogadoException, LoginInexistenteException, IOException {
+		Professor professor = instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+
+		Problema problema_1 = this.instanciarProblema();
 		jogo.cadastrarProblema(problema_1);
 
 		jogo.gerarBalao(problema_1);
 
-		Jogador jogador = instanciarObjetoJogador();
+		Jogador jogador = this.instanciarJogador();
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+		Canhao canhao = new Canhao();
+		Municao municao = new Municao();
+		canhao.setMunicao(municao);
+		jogador.setCanhao(canhao);
+
+		Fase fase = instanciarFase();
+		fase.setNivel(0);
+		jogo.inserirJogadorNaFase(jogador, fase);
+
+		jogo.estourarBalao(15);
+		Assert.assertFalse(jogo.verificarSeRespostaEstaEmBaloes(15));
+	}
+
+	@SuppressWarnings("static-access")
+	@Test
+	public void verificarSeJogadorMarcaScoreAoAcertarQuestao()
+			throws ObjetoJaExistenteException, ObjetoInexistenteException,
+			FaseNaoDisponivelException, JogadorNaoLogadoException,
+			LoginInexistenteException, IOException {
+		Professor professor = instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+
+		Problema problema_1 = this.instanciarProblema();
+		jogo.cadastrarProblema(problema_1);
+
+		jogo.gerarBalao(problema_1);
+
+		Jogador jogador = this.instanciarJogador();
 
 		Canhao canhao = new Canhao();
 		Municao municao = new Municao();
@@ -568,7 +622,39 @@ public class JogoTest {
 
 		jogo.cadastrarJogador(jogador);
 		jogo.loginJogador(jogador);
-		Fase fase = instanciarObjetoFase();
+		Fase fase = instanciarFase();
+		fase.setNivel(0);
+		jogo.inserirJogadorNaFase(jogador, fase);
+
+		jogo.estourarBalao(15);
+		Assert.assertEquals(11, jogador.getScore());
+	}
+
+	@SuppressWarnings("static-access")
+	@Test
+	public void verificarSeJogadorPerdeScoreAoErrarQuestao()
+			throws ObjetoJaExistenteException, ObjetoInexistenteException,
+			FaseNaoDisponivelException, JogadorNaoLogadoException,
+			LoginInexistenteException, IOException {
+		Professor professor = instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+
+		Problema problema_1 = this.instanciarProblema();
+		jogo.cadastrarProblema(problema_1);
+
+		jogo.gerarBalao(problema_1);
+
+		Jogador jogador = this.instanciarJogador();
+
+		Canhao canhao = new Canhao();
+		Municao municao = new Municao();
+		canhao.setMunicao(municao);
+		jogador.setCanhao(canhao);
+
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+		Fase fase = instanciarFase();
 		fase.setNivel(0);
 		jogo.inserirJogadorNaFase(jogador, fase);
 
@@ -577,39 +663,40 @@ public class JogoTest {
 	}
 
 	@Test
-	public void verificarSeJogadorPassaDeFaseAoFazer15Pontos()throws Exception {
-		Professor p1 = instanciarObjetoProfessor();
-		p1.setNome("rodrigo");
-		jogo.cadastrarProfesssor(p1);
-		jogo.loginProfessor(p1);
+	public void verificarSeJogadorPassaDeFaseAoFazer15Pontos()
+			throws ObjetoJaExistenteException, ObjetoInexistenteException,
+			FaseNaoDisponivelException, JogadorNaoLogadoException,
+			LoginInexistenteException, IOException {
+		Professor professor = instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
 
-		Problema problema_1 = this.instanciarObjetoProblema();
+		Problema problema_1 = this.instanciarProblema();
 		problema_1.setQuestao("problema_1");
 		problema_1.setResposta(1);
 		jogo.cadastrarProblema(problema_1);
 
-		Problema problema_2 =instanciarObjetoProblema();
+		Problema problema_2 = this.instanciarProblema();
 		problema_2.setQuestao("problema_2");
 		problema_2.setResposta(2);
 		jogo.cadastrarProblema(problema_2);
 
-		Problema problema_3 =instanciarObjetoProblema();
+		Problema problema_3 = this.instanciarProblema();
 		problema_3.setQuestao("problema_3");
 		problema_3.setResposta(3);
 		jogo.cadastrarProblema(problema_3);
 
-		Problema problema_4 = instanciarObjetoProblema();
+		Problema problema_4 = this.instanciarProblema();
 		problema_4.setQuestao("problema_4");
 		problema_4.setResposta(4);
 		jogo.cadastrarProblema(problema_4);
 
-		Problema problema_5 = instanciarObjetoProblema();
+		Problema problema_5 = this.instanciarProblema();
 		problema_5.setQuestao("problema_5");
 		problema_5.setResposta(5);
 		jogo.cadastrarProblema(problema_5);
 
-		Jogador jogador = instanciarObjetoJogador();
-		jogador.setNome("toinho");
+		Jogador jogador = this.instanciarJogador();
 
 		Canhao canhao = new Canhao();
 		Municao municao = new Municao();
@@ -633,41 +720,44 @@ public class JogoTest {
 	}
 
 	@Test(expected = ObjetoInexistenteException.class)
-	public void removerProblemaInexistente() throws Exception {
-		Professor professor = instanciarObjetoProfessor();
+	public void removerProblemaInexistente() throws ObjetoJaExistenteException,
+			ObjetoInexistenteException, LoginInexistenteException, IOException {
+		Professor professor = instanciarProfessor();
 		jogo.cadastrarProfesssor(professor);
 		jogo.loginProfessor(professor);
 
-		Problema problema_1 = this.instanciarObjetoProblema();
+		Problema problema_1 = this.instanciarProblema();
 		jogo.cadastrarProblema(problema_1);
 
-		Problema problema_2 = this.instanciarObjetoProblema();
+		Problema problema_2 = this.instanciarProblema();
 		problema_2.setQuestao("problema_2");
 		problema_2.setResposta(115);
 		jogo.removerProblema(problema_2);
 	}
-	
+
 	@Test
-	public void verificarSePrimeiraFaseEstaDisponivel()throws IOException, Exception {
-		Jogador jogador = instanciarObjetoJogador();
-		jogador.setNome("carlinhos");
+	public void verificarSePrimeiraFaseEstaDisponivel()
+			throws ObjetoJaExistenteException, JogadorNaoLogadoException,
+			LoginInexistenteException {
+		Jogador jogador = instanciarJogador();
 		jogo.cadastrarJogador(jogador);
 		jogo.loginJogador(jogador);
 		Assert.assertEquals(true, jogo.listarFases().get(0).isLiberado());
 	}
-	
+
 	@Test
-	public void verificarQuantidadeDeFases() throws IOException, Exception {
-		Jogador jogador = instanciarObjetoJogador();
-		jogador.setNome("luiz");
+	public void verificarQuantidadeDeFases() throws ObjetoJaExistenteException,
+			JogadorNaoLogadoException, LoginInexistenteException {
+		Jogador jogador = instanciarJogador();
 		jogo.cadastrarJogador(jogador);
 		jogo.loginJogador(jogador);
 		Assert.assertEquals(5, jogo.listarFases().size());
 	}
-	
+
 	@Test
-	public void verificarFasesBloqueadas() throws IOException, Exception {
-		Jogador jogador = instanciarObjetoJogador();
+	public void verificarFasesBloqueadas() throws ObjetoJaExistenteException,
+			JogadorNaoLogadoException, LoginInexistenteException {
+		Jogador jogador = instanciarJogador();
 		jogo.cadastrarJogador(jogador);
 		jogo.loginJogador(jogador);
 		Assert.assertEquals(false, jogo.listarFases().get(1).isLiberado());
@@ -675,248 +765,155 @@ public class JogoTest {
 		Assert.assertEquals(false, jogo.listarFases().get(3).isLiberado());
 		Assert.assertEquals(false, jogo.listarFases().get(4).isLiberado());
 	}
-	
+
 	@Test(expected = FaseNaoDisponivelException.class)
 	public void faseInexisteException() throws FaseNaoDisponivelException {
 		jogo.verificarExistenciaDeFase(6);
 	}
-	
+
 	@Test(expected = LoginInexistenteException.class)
-	public void professorNaoLogado() throws IOException, Exception {
-		Jogador jogador = instanciarObjetoJogador();
+	public void professorNaoLogado() throws ObjetoJaExistenteException,
+			ObjetoInexistenteException, LoginInexistenteException {
+		Jogador jogador = instanciarJogador();
 		jogo.cadastrarJogador(jogador);
-		Problema problema = instanciarObjetoProblema();
+		Problema problema = instanciarProblema();
 		jogo.cadastrarProblema(problema);
 	}
-	
+
 	@Test(expected = LoginInexistenteException.class)
-	public void loginDuploDeProfessor() throws Exception {
-		Professor professor = instanciarObjetoProfessor();
-		professor.setNome("rafael");
+	public void loginDuploDeProfessor() throws ObjetoJaExistenteException,
+			ObjetoInexistenteException, LoginInexistenteException, IOException {
+		Professor professor = instanciarProfessor();
 		jogo.cadastrarProfesssor(professor);
 		jogo.loginProfessor(professor);
 
-		Professor professor_2 = instanciarObjetoProfessor();
+		Professor professor_2 = instanciarProfessor();
 		professor_2.setNome("jonas");
 		jogo.cadastrarProfesssor(professor_2);
 		jogo.loginProfessor(professor_2);
 	}
-	
+
 	@Test(expected = LoginInexistenteException.class)
-	public void loginDuploJogador() throws IOException, Exception {
-		Jogador jogador = instanciarObjetoJogador();
+	public void loginDuploJogador() throws ObjetoJaExistenteException,
+			JogadorNaoLogadoException, LoginInexistenteException {
+		Jogador jogador = instanciarJogador();
 		jogo.cadastrarJogador(jogador);
 		jogo.loginJogador(jogador);
 
-		Jogador jogador_2 = instanciarObjetoJogador();
+		Jogador jogador_2 = instanciarJogador();
 		jogador_2.setNome("Ligeirinho");
 		jogo.cadastrarJogador(jogador_2);
 		jogo.loginJogador(jogador_2);
 
 	}
-	
+
 	@Test
-	public void gameOver() throws Exception {
-		Professor professor = instanciarObjetoProfessor();
-		professor.setNome("juliana");
+	public void verificarSeJogoFoiZerado() throws ObjetoInexistenteException,FaseNaoDisponivelException, LoginInexistenteException,	ObjetoJaExistenteException, JogadorNaoLogadoException, IOException {
+		Professor professor = instanciarProfessor();
 		jogo.cadastrarProfesssor(professor);
 		jogo.loginProfessor(professor);
 
-		Problema problema_1 = this.instanciarObjetoProblema();
+		Problema problema_1 = this.instanciarProblema();
 		problema_1.setQuestao("problema_1");
 		problema_1.setResposta(1);
 		jogo.cadastrarProblema(problema_1);
 
-		Problema problema_2 = this.instanciarObjetoProblema();
+		Problema problema_2 = this.instanciarProblema();
 		problema_2.setQuestao("problema_2");
 		problema_2.setResposta(2);
 		jogo.cadastrarProblema(problema_2);
 
-		Problema problema_3 = this.instanciarObjetoProblema();
+		Problema problema_3 = this.instanciarProblema();
 		problema_3.setQuestao("problema_3");
 		problema_3.setResposta(3);
 		jogo.cadastrarProblema(problema_3);
 
-		Problema problema_4 = this.instanciarObjetoProblema();
+		Problema problema_4 = this.instanciarProblema();
 		problema_4.setQuestao("problema_4");
 		problema_4.setResposta(4);
 		jogo.cadastrarProblema(problema_4);
 
-		Problema problema_5 = this.instanciarObjetoProblema();
+		Problema problema_5 = this.instanciarProblema();
 		problema_5.setQuestao("problema_5");
 		problema_5.setResposta(5);
 		jogo.cadastrarProblema(problema_5);
 		
-		Problema problema_6 = this.instanciarObjetoProblema();
+		Problema problema_6 = this.instanciarProblema();
 		problema_6.setQuestao("problema_6");
 		problema_6.setResposta(6);
 		jogo.cadastrarProblema(problema_6);
 
-		Problema problema_7 = this.instanciarObjetoProblema();
+		Problema problema_7 = this.instanciarProblema();
 		problema_7.setQuestao("problema_7");
 		problema_7.setResposta(7);
 		jogo.cadastrarProblema(problema_7);
 
-		Problema problema_8= this.instanciarObjetoProblema();
+		Problema problema_8= this.instanciarProblema();
 		problema_8.setQuestao("problema_8");
 		problema_8.setResposta(8);
 		jogo.cadastrarProblema(problema_8);
 
-		Problema problema_9 = this.instanciarObjetoProblema();
+		Problema problema_9 = this.instanciarProblema();
 		problema_9.setQuestao("problema_9");
 		problema_9.setResposta(9);
 		jogo.cadastrarProblema(problema_9);
 
-		Problema problema_10 = this.instanciarObjetoProblema();
-		problema_10.setQuestao("problema_10");
-		problema_10.setResposta(10);
-		jogo.cadastrarProblema(problema_10);
-			
-		Jogador jogador = instanciarObjetoJogador();
-		jogador.setNome("rafaela");
-
-		Canhao canhao = new Canhao();
-		Municao municao = new Municao();
-		canhao.setMunicao(municao);
-		jogador.setCanhao(canhao);
-
-		jogo.cadastrarJogador(jogador);
-		jogo.loginJogador(jogador);
-
-		jogo.gerarBalao(problema_5);
-		jogo.estourarBalao(52);
-		jogo.gerarBalao(problema_4);
-		jogo.estourarBalao(23);
-		jogo.gerarBalao(problema_3);
-		jogo.estourarBalao(33);
-		jogo.gerarBalao(problema_2);
-		jogo.estourarBalao(25);
-		jogo.gerarBalao(problema_1);
-		jogo.estourarBalao(16);
-		
-		jogo.gerarBalao(problema_10);
-		jogo.estourarBalao(17);
-		jogo.gerarBalao(problema_9);
-		jogo.estourarBalao(93);
-		jogo.gerarBalao(problema_8);
-		jogo.estourarBalao(81);
-		jogo.gerarBalao(problema_7);
-		jogo.estourarBalao(72);
-		jogo.gerarBalao(problema_6);
-		jogo.estourarBalao(67);
-	
-		Assert.assertTrue(Jogador.isGameOver);
-	}
-
-	@Test
-	public void verificarSeJogoFoiZerado() throws Exception {
-		Professor professor = instanciarObjetoProfessor();
-		professor.setNome("juliana");
-		jogo.cadastrarProfesssor(professor);
-		jogo.loginProfessor(professor);
-
-		Problema problema_1 = this.instanciarObjetoProblema();
-		problema_1.setQuestao("problema_1");
-		problema_1.setResposta(1);
-		jogo.cadastrarProblema(problema_1);
-
-		Problema problema_2 = this.instanciarObjetoProblema();
-		problema_2.setQuestao("problema_2");
-		problema_2.setResposta(2);
-		jogo.cadastrarProblema(problema_2);
-
-		Problema problema_3 = this.instanciarObjetoProblema();
-		problema_3.setQuestao("problema_3");
-		problema_3.setResposta(3);
-		jogo.cadastrarProblema(problema_3);
-
-		Problema problema_4 = this.instanciarObjetoProblema();
-		problema_4.setQuestao("problema_4");
-		problema_4.setResposta(4);
-		jogo.cadastrarProblema(problema_4);
-
-		Problema problema_5 = this.instanciarObjetoProblema();
-		problema_5.setQuestao("problema_5");
-		problema_5.setResposta(5);
-		jogo.cadastrarProblema(problema_5);
-		
-		Problema problema_6 = this.instanciarObjetoProblema();
-		problema_6.setQuestao("problema_6");
-		problema_6.setResposta(6);
-		jogo.cadastrarProblema(problema_6);
-
-		Problema problema_7 = this.instanciarObjetoProblema();
-		problema_7.setQuestao("problema_7");
-		problema_7.setResposta(7);
-		jogo.cadastrarProblema(problema_7);
-
-		Problema problema_8= this.instanciarObjetoProblema();
-		problema_8.setQuestao("problema_8");
-		problema_8.setResposta(8);
-		jogo.cadastrarProblema(problema_8);
-
-		Problema problema_9 = this.instanciarObjetoProblema();
-		problema_9.setQuestao("problema_9");
-		problema_9.setResposta(9);
-		jogo.cadastrarProblema(problema_9);
-
-		Problema problema_10 = this.instanciarObjetoProblema();
+		Problema problema_10 = this.instanciarProblema();
 		problema_10.setQuestao("problema_10");
 		problema_10.setResposta(10);
 		jogo.cadastrarProblema(problema_10);
 		
-		Problema problema_11 = this.instanciarObjetoProblema();
+		Problema problema_11 = this.instanciarProblema();
 		problema_11.setQuestao("problema_11");
 		problema_11.setResposta(11);
 		jogo.cadastrarProblema(problema_11);
 
-		Problema problema_12 = this.instanciarObjetoProblema();
+		Problema problema_12 = this.instanciarProblema();
 		problema_12.setQuestao("problema_12");
 		problema_12.setResposta(12);
 		jogo.cadastrarProblema(problema_12);
 
-		Problema problema_13= this.instanciarObjetoProblema();
+		Problema problema_13= this.instanciarProblema();
 		problema_13.setQuestao("problema_13");
 		problema_13.setResposta(13);
 		jogo.cadastrarProblema(problema_13);
 
-		Problema problema_14 = this.instanciarObjetoProblema();
+		Problema problema_14 = this.instanciarProblema();
 		problema_14.setQuestao("problema_14");
 		problema_14.setResposta(14);
 		jogo.cadastrarProblema(problema_14);
 
-		Problema problema_15 = this.instanciarObjetoProblema();
+		Problema problema_15 = this.instanciarProblema();
 		problema_15.setQuestao("problema_15");
 		problema_15.setResposta(15);
 		jogo.cadastrarProblema(problema_15);
 		
-		Problema problema_16 = this.instanciarObjetoProblema();
+		Problema problema_16 = this.instanciarProblema();
 		problema_16.setQuestao("problema_16");
 		problema_16.setResposta(16);
 		jogo.cadastrarProblema(problema_16);
 
-		Problema problema_17 = this.instanciarObjetoProblema();
+		Problema problema_17 = this.instanciarProblema();
 		problema_17.setQuestao("problema_17");
 		problema_17.setResposta(17);
 		jogo.cadastrarProblema(problema_17);
 
-		Problema problema_18= this.instanciarObjetoProblema();
+		Problema problema_18= this.instanciarProblema();
 		problema_18.setQuestao("problema_18");
 		problema_18.setResposta(18);
 		jogo.cadastrarProblema(problema_18);
 
-		Problema problema_19 = this.instanciarObjetoProblema();
+		Problema problema_19 = this.instanciarProblema();
 		problema_19.setQuestao("problema_19");
 		problema_19.setResposta(19);
 		jogo.cadastrarProblema(problema_19);
 
-		Problema problema_20 = this.instanciarObjetoProblema();
+		Problema problema_20 = this.instanciarProblema();
 		problema_20.setQuestao("problema_20");
 		problema_20.setResposta(20);
 		jogo.cadastrarProblema(problema_20);
 		
-		Jogador jogador = instanciarObjetoJogador();
-		jogador.setNome("rafaela");
+		Jogador jogador = this.instanciarJogador();
 
 		Canhao canhao = new Canhao();
 		Municao municao = new Municao();
@@ -971,15 +968,38 @@ public class JogoTest {
 		jogo.estourarBalao(16);
 		Assert.assertTrue(jogo.listarFases().get(4).isLiberado());
 	}
-
+	
 	@Test
-	public void cadastrarProfessorNoArquivo() throws Exception{
-		Professor professor = instanciarObjetoProfessor();
+	public void cadastrarProfessorNoArquivo() throws ObjetoJaExistenteException, ObjetoInexistenteException, IOException, ClassNotFoundException{
+		Professor professor = instanciarProfessor();
 		professor.setNome("Jonnathann");
 		jogo.cadastrarProfesssor(professor);
-	}
-	
-}
+	}*/
 
-	
-	
+	private Professor instanciarJogador() {
+		Professor jogador = new Professor();
+		jogador.setNome("jonas");
+		return jogador;
+	}
+
+	private Problema instanciarProblema() {
+		Problema problema = new Problema();
+		problema.setQuestao("questao 1");
+		problema.setResposta(15);
+		return problema;
+
+	}
+
+	private Fase instanciarFase() {
+		Fase fase = new Fase();
+		return fase;
+	}
+
+	private Professor instanciarProfessor() {
+		Professor professor = new Professor();
+		professor.setNome("professor_1");
+		professor.setSenha("12344");
+		return professor;
+	}
+
+}

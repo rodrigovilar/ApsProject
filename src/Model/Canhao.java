@@ -1,6 +1,9 @@
 package Model;
 
-public class Canhao {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Canhao implements Serializable{
 	
 	//Atributos 
 	private Municao municao; //Referencia do tipo Tiro(referente a classe Tiro)

@@ -9,7 +9,6 @@ import java.util.Random;
 import Excecao.FaseNaoDisponivelException;
 import Excecao.LoginInexistenteException;
 import Excecao.ObjetoInexistenteException;
-import Excecao.ObjetoJaExistenteException;
 import Model.Balao;
 import Model.Problema;
 import Persistencia.ProblemaDAO;
@@ -41,7 +40,7 @@ public class GerenciadorProblema {
 	public void setIsProfessorLogado(boolean status){
 		isProfessorLogado = status;
 	}
-	
+
 	public void removerProblema(Problema problema) throws IOException, Exception{
 		if(!buscarProblema(problema)){
 			throw new ObjetoInexistenteException("Esse problema não existe");
