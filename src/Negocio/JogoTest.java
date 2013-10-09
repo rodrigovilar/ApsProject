@@ -112,6 +112,17 @@ public class JogoTest {
 		Assert.assertEquals("Esse teste espera que o professor cadastrado seja igual ao professor salvo na lista", p1.getNome(), listaProfessores.get(0).getNome());
 	}
 	
+	@Test(expected = ObjetoInexistenteException.class)
+	public void removerProfessorInexistente() throws Exception {
+		Professor p1= instanciarObjetoProfessor();
+		jogo.cadastrarProfesssor(p1);
+		Jogo novoJogo = new Jogo();
+		Professor p2 = instanciarObjetoProfessor();
+		p2.setNome("Joao");
+		p2.setSenha("01013456");
+		novoJogo.removerProfessor(p2);
+	}
+	
 	
 	
 	
