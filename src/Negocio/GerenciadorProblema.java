@@ -66,4 +66,12 @@ public class GerenciadorProblema {
 		}
 		return false;
 	}
+	
+	public int getQuantidadeDeProblemasCadastrados() throws IOException, Exception{
+		return problemaDAO.selectAll().size();
+	}
+	
+	public ArrayList<Problema> listarProblemas() throws IOException, Exception{
+		return problemaDAO.selectAll();
+	}
 }
