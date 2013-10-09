@@ -69,6 +69,11 @@ public class JogoTest {
 		return f1;
 	}
 	
+	private Canhao instanciarObjetoCanhao(){
+		Canhao c = new Canhao();
+		return c;
+	}
+	
 	
 	
 
