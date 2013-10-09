@@ -101,6 +101,18 @@ public class JogoTest {
 		
 	}
 	
+	@Test
+	public void verificaSeNomeDoProfessorEstaCorreto() throws Exception {
+		Professor p1 = instanciarObjetoProfessor();
+		p1.setNome("Madalena");
+		p1.setSenha("01411023");
+		jogo.cadastrarProfesssor(p1);
+		Jogo novoJogo = new Jogo();
+		ArrayList<Professor> listaProfessores = novoJogo.listarProfessores();
+		Assert.assertEquals("Esse teste espera que o professor cadastrado seja igual ao professor salvo na lista", p1.getNome(), listaProfessores.get(0).getNome());
+	}
+	
+	
 	
 	
 
