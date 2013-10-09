@@ -123,6 +123,18 @@ public class JogoTest {
 		novoJogo.removerProfessor(p2);
 	}
 	
+	@Test(expected = ObjetoInexistenteException.class)
+	public void removerMesmoProfessorDuasVezes() throws Exception{
+		Professor p1 = instanciarObjetoProfessor();
+		jogo.cadastrarProfesssor(p1);
+		Jogo novoJogo = new Jogo();
+		novoJogo.removerProfessor(p1);
+		Jogo maisUmJogo = new Jogo();
+		maisUmJogo.removerProfessor(p1);
+		
+	}
+	
+	
 	
 	
 	
