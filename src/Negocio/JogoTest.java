@@ -422,5 +422,25 @@ public class JogoTest {
 		Assert.assertEquals(7, fases.get(0).getJogador().getCanhao()
 				.getMunicao().getQuantidadeDeBalas());
 	}
+	
+	@Test
+	public void verificarQuantidadeInicialDeMunicao()
+			throws ObjetoJaExistenteException, JogadorNaoLogadoException,
+			LoginInexistenteException {
+		Jogador jogador = this.instanciarJogador();
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+
+		Canhao canhao = new Canhao();
+		Municao municao = new Municao();
+		canhao.setMunicao(municao);
+		jogador.setCanhao(canhao);
+
+		ArrayList<Jogador> listaJogadores = jogo.listarJogadores();
+
+		Assert.assertEquals(10, listaJogadores.get(0).getCanhao().getMunicao()
+				.getQuantidadeDeBalas());
+	}
+
 
 }
