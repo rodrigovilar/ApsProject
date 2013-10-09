@@ -340,4 +340,23 @@ public class JogoTest {
 		Assert.assertEquals("Espera que a posição Y inicial do canhão seja 500", 500, listaFases.get(0).getJogador().getCanhao().getPosicaoY());
 	}
 	
+	@Test
+	public void verificarSeJogadorControlaPosicaoCanhao() throws IOException, Exception{
+		Jogador j1 = instanciarObjetoJogador();
+		jogo.cadastrarJogador(j1);
+		Jogo novoJogo = new Jogo();
+		novoJogo.loginJogador(j1);
+		Fase f1 = instanciarObjetoFase();
+		f1.setNivel(0);
+		ArrayList<Jogador> listarJogadores = novoJogo.listarJogadores();
+		Canhao c = instanciarObjetoCanhao();
+		listarJogadores.get(0).setCanhao(c);
+		listarJogadores.get(0).getCanhao().setPosicaoX(50);
+		listarJogadores.get(0).getCanhao().setPosicaoY(30);;
+		novoJogo.inserirJogadorNaFase(listarJogadores.get(0), f1);
+		ArrayList<Fase> listaFases = novoJogo.listarFases();
+		Assert.assertEquals("Espera que a posição X atual do canhão seja 50", 50, listaFases.get(0).getJogador().getCanhao().getPosicaoX());
+		Assert.assertEquals("Espera que a posição Y atual do canhão seja 30", 30, listaFases.get(0).getJogador().getCanhao().getPosicaoY());
+	}
+	
 	
