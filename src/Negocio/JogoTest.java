@@ -655,6 +655,15 @@ public class JogoTest {
 		jogo.loginJogador(jogador);
 		Assert.assertEquals(true, jogo.listarFases().get(0).isLiberado());
 	}
+	
+	@Test
+	public void verificarQuantidadeDeFases() throws IOException, Exception {
+		Jogador jogador = instanciarObjetoJogador();
+		jogador.setNome("luiz");
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+		Assert.assertEquals(5, jogo.listarFases().size());
+	}
 
 	
 	
