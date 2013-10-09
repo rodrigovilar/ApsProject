@@ -315,5 +315,16 @@ public class JogoTest {
 		fase.setNivel(1);
 		jogo.inserirJogadorNaFase(jogadores.get(0), fase);
 	}
+	
+	@Test
+	public void verificarNumerosDeFasesGeradas()
+			throws ObjetoJaExistenteException, FaseNaoDisponivelException,
+			JogadorNaoLogadoException, LoginInexistenteException {
+		Jogador jogador = instanciarJogador();
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+		ArrayList<Fase> fases = jogo.listarFases();
+		Assert.assertEquals(5, fases.size());
+	}
 
 }
