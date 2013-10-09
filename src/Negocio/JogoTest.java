@@ -159,7 +159,15 @@ public class JogoTest {
 		novoJogo.cadastrarJogador(j1);
 	}
 	
-	
+	@Test
+	public void removerJogador() throws IOException, Exception{
+		Jogador j1 = instanciarObjetoJogador();
+		jogo.cadastrarJogador(j1);
+		Jogo novoJogo = new Jogo();
+		novoJogo.removerJogador(j1);
+		Assert.assertEquals("Esse teste espera que o valor do arquivo de cadastro atualize para 1", 0, novoJogo.getQuantidadeDeJogadoresCadastrados());
+		
+	}
 	
 	
 	
