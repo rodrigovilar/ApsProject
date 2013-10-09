@@ -38,6 +38,12 @@ public class JogoTest {
 		jogo.destruirArquivo();
 	}
 	
+	@Test
+	public void iniciarJogo(){
+		Assert.assertFalse("O jogo já iniciou acabado", jogo.jogoAcabou());
+	}
+	
+	
 	
 
 }
