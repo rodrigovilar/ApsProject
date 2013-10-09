@@ -57,4 +57,13 @@ public class GerenciadorProblema {
 		}
 		
 	}
+	
+	private boolean buscarProblema(Problema problema) throws IOException, Exception {
+		for(Problema p:problemaDAO.selectAll()){
+			if(p.getQuestao().equals(problema.getQuestao())){
+				return true;
+			}
+		}
+		return false;
+	}
 }
