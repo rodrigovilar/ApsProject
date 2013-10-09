@@ -772,6 +772,168 @@ public class JogoTest {
 
 	}
 	
+	@Test
+	public void verificarSeJogoFoiZerado() throws ObjetoInexistenteException,FaseNaoDisponivelException, LoginInexistenteException,	ObjetoJaExistenteException, JogadorNaoLogadoException, IOException {
+		Professor professor = instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+
+		Problema problema_1 = this.instanciarProblema();
+		problema_1.setQuestao("problema_1");
+		problema_1.setResposta(1);
+		jogo.cadastrarProblema(problema_1);
+
+		Problema problema_2 = this.instanciarProblema();
+		problema_2.setQuestao("problema_2");
+		problema_2.setResposta(2);
+		jogo.cadastrarProblema(problema_2);
+
+		Problema problema_3 = this.instanciarProblema();
+		problema_3.setQuestao("problema_3");
+		problema_3.setResposta(3);
+		jogo.cadastrarProblema(problema_3);
+
+		Problema problema_4 = this.instanciarProblema();
+		problema_4.setQuestao("problema_4");
+		problema_4.setResposta(4);
+		jogo.cadastrarProblema(problema_4);
+
+		Problema problema_5 = this.instanciarProblema();
+		problema_5.setQuestao("problema_5");
+		problema_5.setResposta(5);
+		jogo.cadastrarProblema(problema_5);
+		
+		Problema problema_6 = this.instanciarProblema();
+		problema_6.setQuestao("problema_6");
+		problema_6.setResposta(6);
+		jogo.cadastrarProblema(problema_6);
+
+		Problema problema_7 = this.instanciarProblema();
+		problema_7.setQuestao("problema_7");
+		problema_7.setResposta(7);
+		jogo.cadastrarProblema(problema_7);
+
+		Problema problema_8= this.instanciarProblema();
+		problema_8.setQuestao("problema_8");
+		problema_8.setResposta(8);
+		jogo.cadastrarProblema(problema_8);
+
+		Problema problema_9 = this.instanciarProblema();
+		problema_9.setQuestao("problema_9");
+		problema_9.setResposta(9);
+		jogo.cadastrarProblema(problema_9);
+
+		Problema problema_10 = this.instanciarProblema();
+		problema_10.setQuestao("problema_10");
+		problema_10.setResposta(10);
+		jogo.cadastrarProblema(problema_10);
+		
+		Problema problema_11 = this.instanciarProblema();
+		problema_11.setQuestao("problema_11");
+		problema_11.setResposta(11);
+		jogo.cadastrarProblema(problema_11);
+
+		Problema problema_12 = this.instanciarProblema();
+		problema_12.setQuestao("problema_12");
+		problema_12.setResposta(12);
+		jogo.cadastrarProblema(problema_12);
+
+		Problema problema_13= this.instanciarProblema();
+		problema_13.setQuestao("problema_13");
+		problema_13.setResposta(13);
+		jogo.cadastrarProblema(problema_13);
+
+		Problema problema_14 = this.instanciarProblema();
+		problema_14.setQuestao("problema_14");
+		problema_14.setResposta(14);
+		jogo.cadastrarProblema(problema_14);
+
+		Problema problema_15 = this.instanciarProblema();
+		problema_15.setQuestao("problema_15");
+		problema_15.setResposta(15);
+		jogo.cadastrarProblema(problema_15);
+		
+		Problema problema_16 = this.instanciarProblema();
+		problema_16.setQuestao("problema_16");
+		problema_16.setResposta(16);
+		jogo.cadastrarProblema(problema_16);
+
+		Problema problema_17 = this.instanciarProblema();
+		problema_17.setQuestao("problema_17");
+		problema_17.setResposta(17);
+		jogo.cadastrarProblema(problema_17);
+
+		Problema problema_18= this.instanciarProblema();
+		problema_18.setQuestao("problema_18");
+		problema_18.setResposta(18);
+		jogo.cadastrarProblema(problema_18);
+
+		Problema problema_19 = this.instanciarProblema();
+		problema_19.setQuestao("problema_19");
+		problema_19.setResposta(19);
+		jogo.cadastrarProblema(problema_19);
+
+		Problema problema_20 = this.instanciarProblema();
+		problema_20.setQuestao("problema_20");
+		problema_20.setResposta(20);
+		jogo.cadastrarProblema(problema_20);
+		
+		Jogador jogador = this.instanciarJogador();
+
+		Canhao canhao = new Canhao();
+		Municao municao = new Municao();
+		canhao.setMunicao(municao);
+		jogador.setCanhao(canhao);
+
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+
+		jogo.gerarBalao(problema_5);
+		jogo.estourarBalao(5);
+		jogo.gerarBalao(problema_4);
+		jogo.estourarBalao(4);
+		jogo.gerarBalao(problema_3);
+		jogo.estourarBalao(3);
+		jogo.gerarBalao(problema_2);
+		jogo.estourarBalao(2);
+		jogo.gerarBalao(problema_1);
+		jogo.estourarBalao(1);
+		
+		jogo.gerarBalao(problema_10);
+		jogo.estourarBalao(10);
+		jogo.gerarBalao(problema_9);
+		jogo.estourarBalao(9);
+		jogo.gerarBalao(problema_8);
+		jogo.estourarBalao(8);
+		jogo.gerarBalao(problema_7);
+		jogo.estourarBalao(7);
+		jogo.gerarBalao(problema_6);
+		jogo.estourarBalao(6);
+		
+		jogo.gerarBalao(problema_15);
+		jogo.estourarBalao(15);
+		jogo.gerarBalao(problema_14);
+		jogo.estourarBalao(14);
+		jogo.gerarBalao(problema_13);
+		jogo.estourarBalao(13);
+		jogo.gerarBalao(problema_12);
+		jogo.estourarBalao(12);
+		jogo.gerarBalao(problema_11);
+		jogo.estourarBalao(11);
+		
+		jogo.gerarBalao(problema_20);
+		jogo.estourarBalao(20);
+		jogo.gerarBalao(problema_19);
+		jogo.estourarBalao(19);
+		jogo.gerarBalao(problema_18);
+		jogo.estourarBalao(18);
+		jogo.gerarBalao(problema_17);
+		jogo.estourarBalao(17);
+		jogo.gerarBalao(problema_16);
+		jogo.estourarBalao(16);
+		Assert.assertTrue(jogo.listarFases().get(4).isLiberado());
+	}
+	
 
 }
 
