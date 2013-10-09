@@ -701,6 +701,19 @@ public class JogoTest {
 		jogo.cadastrarProfesssor(professor_2);
 		jogo.loginProfessor(professor_2);
 	}
+	
+	@Test(expected = LoginInexistenteException.class)
+	public void loginDuploJogador() throws IOException, Exception {
+		Jogador jogador = instanciarObjetoJogador();
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+
+		Jogador jogador_2 = instanciarObjetoJogador();
+		jogador_2.setNome("Ligeirinho");
+		jogo.cadastrarJogador(jogador_2);
+		jogo.loginJogador(jogador_2);
+
+	}
 
 	
 	
