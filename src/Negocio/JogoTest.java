@@ -190,6 +190,18 @@ public class JogoTest {
 		novoJogo.removerJogador(j2);
 	}
 	
-	
+	@Test
+	public void cadastrarProblema() throws Exception{
+		Professor p1 = instanciarObjetoProfessor();
+		jogo.cadastrarProfesssor(p1);
+		Jogo novoJogo = new Jogo();
+		novoJogo.loginProfessor(p1);
+		Problema pro1 = instanciarObjetoProblema();
+		pro1.setQuestao("Qual a metade de dois mais dois?");
+		pro1.setResposta(3);
+		novoJogo.cadastrarProblema(pro1);
+		Jogo maisUmJogo = new Jogo();
+		Assert.assertEquals("Esse teste espera que o valor da lista de problemas atualize para 1", 1, maisUmJogo.getQuantidadeDeProblemasCadastrados());
+	}
 
 }
