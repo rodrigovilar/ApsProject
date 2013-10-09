@@ -46,4 +46,12 @@ public class GerenciadorJogador {
 		}
 		return false;
 	}
+	
+	public int getQuantidadeDeJogadoresCadastrados() throws IOException, Exception{
+		return jogadorDAO.selectAll().size();
+	}
+	
+	public ArrayList<Jogador> listarJogadores() throws IOException, Exception{
+		return jogadorDAO.selectAll();
+	}
 }
