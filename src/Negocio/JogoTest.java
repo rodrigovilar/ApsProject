@@ -469,5 +469,34 @@ public class JogoTest {
 		jogador.atirar();
 		jogador.atirar();
 	}
+	
+	@Test
+	public void verificarSeJogoAcabou() throws ObjetoJaExistenteException,
+			JogadorNaoLogadoException, LoginInexistenteException,
+			BalasEsgotadasException {
+		Jogador jogador = this.instanciarJogador();
+		Canhao canhao = new Canhao();
+		Municao municao = new Municao();
+		canhao.setMunicao(municao);
+		jogador.setCanhao(canhao);
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+
+		jogo.fimDeJogo(jogador);
+		Assert.assertTrue(jogo.jogoAcabou());
+
+	}
+
 
 }
