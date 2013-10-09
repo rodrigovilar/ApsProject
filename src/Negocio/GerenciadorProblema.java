@@ -109,4 +109,27 @@ public class GerenciadorProblema {
 			return this.baloes.size();
 		}
 	}
+	
+	public void estourarBalao(int resposta) throws ObjetoInexistenteException, FaseNaoDisponivelException{
+		boolean encontrou = false;
+		int cont = 0;
+		System.out.println("Quantidade de baloes: "+baloes.size());
+		for(int i = 0; i < baloes.size(); i++){
+			if(baloes.get(i).getResposta() == resposta && cont == 0){
+				cont++;
+				baloes.remove(baloes.get(i));
+				Jogador.incrementarScore();
+				encontrou = true;
+			}
+		}
+		if(encontrou){
+			for(int i = 0; i < baloes.size(); i++){
+					baloes.remove(baloes.get(i));
+			}
+		}
+		verificarPassagemDeFase();
+		if(encontrou == false){
+			Jogador.decrementarScore();
+		}
+	}
 }
