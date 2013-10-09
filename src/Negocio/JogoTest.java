@@ -219,6 +219,21 @@ public class JogoTest {
 		jogo.cadastrarJogador(j1);
 	}
 	
+	@Test
+	public void removerProblema() throws Exception{
+		Professor p1 = instanciarObjetoProfessor();
+		jogo.cadastrarProfesssor(p1);
+		Jogo novoJogo = new Jogo();
+		novoJogo.loginProfessor(p1);
+		Problema pro1 = instanciarObjetoProblema();
+		pro1.setQuestao("Quanto vale um terço de nove?");
+		pro1.setResposta(3);
+		novoJogo.cadastrarProblema(pro1);
+		Jogo maisUmJogo = new Jogo();
+		maisUmJogo.loginProfessor(p1);
+		maisUmJogo.removerProblema(pro1);
+		Assert.assertEquals("Esse teste espera que a lista de problemas seja atualizada para 0", 0, maisUmJogo.getQuantidadeDeProblemasCadastrados());
+	}
 	
 
 }
