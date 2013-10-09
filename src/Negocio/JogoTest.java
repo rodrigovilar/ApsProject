@@ -518,5 +518,20 @@ public class JogoTest {
 			throws ObjetoJaExistenteException, ObjetoInexistenteException {
 		jogo.verificarQuantidadeDeBaloesGerados();
 	}
+	
+	@Test
+	public void verificarQuantidadeDeBaloesGerados()
+			throws ObjetoJaExistenteException, ObjetoInexistenteException,
+			LoginInexistenteException, IOException {
+		Professor professor = instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+
+		Problema problema_1 = this.instanciarProblema();
+		jogo.cadastrarProblema(problema_1);
+
+		jogo.gerarBalao(problema_1);
+		Assert.assertEquals(10, jogo.verificarQuantidadeDeBaloesGerados());
+	}
 
 }
