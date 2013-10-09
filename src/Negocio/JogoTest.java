@@ -488,4 +488,33 @@ public class JogoTest {
 		Assert.assertEquals("Espera que a quantidade de balões gerados seja igual a 10", 10, maisUmJogo.verificarQuantidadeDeBaloesGerados());
 	}
 	
+	@Test
+	public void verificarSeBalaoEstoura() throws Exception {
+		Professor p1 = instanciarObjetoProfessor();
+		jogo.cadastrarProfesssor(p1);
+		Jogo novoJogo = new Jogo();
+		novoJogo.loginProfessor(p1);
+		Problema pro1 = instanciarObjetoProblema();
+		pro1.setQuestao("4x4?");
+		pro1.setResposta(16);
+		novoJogo.cadastrarProblema(pro1);
+		ArrayList<Problema> listaProblemas = novoJogo.listarProblemas();
+		novoJogo.gerarBalao(listaProblemas.get(0));
+		Jogador j1 = instanciarObjetoJogador();
+		j1.setNome("Jonas");
+		j1.setSenha("81011032");
+		novoJogo.cadastrarJogador(j1);
+		novoJogo.loginJogador(j1);
+		Canhao c = new Canhao();
+		Municao m = new Municao();
+		c.setMunicao(m);
+		ArrayList<Jogador> listaJogadores = novoJogo.listarJogadores();
+		listaJogadores.get(0).setCanhao(c);
+		Fase f1 = instanciarObjetoFase();
+		f1.setNivel(0);
+		novoJogo.inserirJogadorNaFase(listaJogadores.get(0), f1);
+		novoJogo.estourarBalao(16);
+		Assert.assertFalse(novoJogo.verificarSeRespostaEstaEmBaloes(16));
+	}
+	
 	
