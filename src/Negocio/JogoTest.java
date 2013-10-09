@@ -646,6 +646,15 @@ public class JogoTest {
 		problema_2.setResposta(115);
 		jogo.removerProblema(problema_2);
 	}
+	
+	@Test
+	public void verificarSePrimeiraFaseEstaDisponivel()throws IOException, Exception {
+		Jogador jogador = instanciarObjetoJogador();
+		jogador.setNome("carlinhos");
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+		Assert.assertEquals(true, jogo.listarFases().get(0).isLiberado());
+	}
 
 	
 	
