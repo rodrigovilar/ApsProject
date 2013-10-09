@@ -235,5 +235,20 @@ public class JogoTest {
 		Assert.assertEquals("Esse teste espera que a lista de problemas seja atualizada para 0", 0, maisUmJogo.getQuantidadeDeProblemasCadastrados());
 	}
 	
+	@Test
+	public void verificaQuestaoDoProblemaCadastradoSeCadastrouCorretamente() throws Exception{
+		Professor p1 = instanciarObjetoProfessor();
+		jogo.cadastrarProfesssor(p1);
+		Jogo novoJogo = new Jogo();
+		novoJogo.loginProfessor(p1);
+		Problema pro1 = instanciarObjetoProblema();
+		pro1.setQuestao("Qual o valor do quadrado de 1/2?");
+		pro1.setResposta((int)0.25);
+		novoJogo.cadastrarProblema(pro1);
+		Jogo maisUmJogo = new Jogo();
+		ArrayList<Problema> listaProblemas = maisUmJogo.listarProblemas();
+		Assert.assertEquals("Esse teste espera que o valor da questão cadastrada seja a mesma que está no arquivo", pro1.getQuestao(), listaProblemas.get(0).getQuestao());
+	}
+	
 
 }
