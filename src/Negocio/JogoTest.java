@@ -323,4 +323,21 @@ public class JogoTest {
 		Assert.assertEquals("Esse teste espera que a quantidade de fases sejam igual a 5", 5, listaFases.size());
 	}
 	
+	@Test
+	public void verificarPosicaoInicialDoCanhao() throws IOException, Exception{
+		Jogador j1 = instanciarObjetoJogador();
+		jogo.cadastrarJogador(j1);
+		Jogo novoJogo = new Jogo();
+		novoJogo.loginJogador(j1);
+		Fase f1 = instanciarObjetoFase();
+		f1.setNivel(0);
+		ArrayList<Jogador> listarJogadores = novoJogo.listarJogadores();
+		Canhao c = instanciarObjetoCanhao();
+		listarJogadores.get(0).setCanhao(c);
+		novoJogo.inserirJogadorNaFase(listarJogadores.get(0), f1);
+		ArrayList<Fase> listaFases = novoJogo.listarFases();
+		Assert.assertEquals("Espera que a posição X inicial do canhão seja 250", 250, listaFases.get(0).getJogador().getCanhao().getPosicaoX());
+		Assert.assertEquals("Espera que a posição Y inicial do canhão seja 500", 500, listaFases.get(0).getJogador().getCanhao().getPosicaoY());
+	}
+	
 	
