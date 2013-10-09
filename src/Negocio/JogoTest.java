@@ -303,5 +303,17 @@ public class JogoTest {
 		ArrayList<Fase> fases = jogo.listarFases();
 		Assert.assertEquals(jogador, fases.get(0).getJogador());
 	}
+	
+	@Test(expected = FaseNaoDisponivelException.class)
+	public void FaseIndisponivel() throws ObjetoJaExistenteException,
+			FaseNaoDisponivelException {
+		Jogador jogador = this.instanciarJogador();
+		jogo.cadastrarJogador(jogador);
+		ArrayList<Jogador> jogadores = jogo.listarJogadores();
+
+		Fase fase = instanciarFase();
+		fase.setNivel(1);
+		jogo.inserirJogadorNaFase(jogadores.get(0), fase);
+	}
 
 }
