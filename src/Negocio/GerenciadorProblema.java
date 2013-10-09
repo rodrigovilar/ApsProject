@@ -2,6 +2,7 @@ package Negocio;
 
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -39,5 +40,21 @@ public class GerenciadorProblema {
 	
 	public void setIsProfessorLogado(boolean status){
 		isProfessorLogado = status;
+	}
+	
+	public void removerProblema(Problema problema) throws IOException, Exception{
+		if(!buscarProblema(problema)){
+			throw new ObjetoInexistenteException("Esse problema não existe");
+		}
+		if(!isProfessorLogado){
+			throw new LoginInexistenteException("Você não tem permissão para cadastrar o problema!");
+		}
+		for(Problema p:problemaDAO.selectAll()){
+			if(p.getQuestao().equals(problema.getQuestao())){
+				problemas.remove(problema);
+				problemaDAO.insert(problemas);
+			}
+		}
+		
 	}
 }
