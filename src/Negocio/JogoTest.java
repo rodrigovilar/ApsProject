@@ -92,6 +92,15 @@ public class JogoTest {
 		
 	}
 	
+	@Test(expected=ObjetoJaExistenteException.class)
+	public void cadastrarMesmoProfessorDuasVezes() throws Exception{
+		Professor p1 = instanciarObjetoProfessor();
+		jogo.cadastrarProfesssor(p1);
+		Jogo novoJogo = new Jogo();
+		novoJogo.cadastrarProfesssor(p1);
+		
+	}
+	
 	
 	
 
