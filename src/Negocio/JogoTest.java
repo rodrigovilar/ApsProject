@@ -714,6 +714,100 @@ public class JogoTest {
 		jogo.loginJogador(jogador_2);
 
 	}
+	
+	@Test
+	public void gameOver() throws Exception {
+		Professor professor = instanciarObjetoProfessor();
+		professor.setNome("juliana");
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+
+		Problema problema_1 = this.instanciarObjetoProblema();
+		problema_1.setQuestao("problema_1");
+		problema_1.setResposta(1);
+		jogo.cadastrarProblema(problema_1);
+
+		Problema problema_2 = this.instanciarObjetoProblema();
+		problema_2.setQuestao("problema_2");
+		problema_2.setResposta(2);
+		jogo.cadastrarProblema(problema_2);
+
+		Problema problema_3 = this.instanciarObjetoProblema();
+		problema_3.setQuestao("problema_3");
+		problema_3.setResposta(3);
+		jogo.cadastrarProblema(problema_3);
+
+		Problema problema_4 = this.instanciarObjetoProblema();
+		problema_4.setQuestao("problema_4");
+		problema_4.setResposta(4);
+		jogo.cadastrarProblema(problema_4);
+
+		Problema problema_5 = this.instanciarObjetoProblema();
+		problema_5.setQuestao("problema_5");
+		problema_5.setResposta(5);
+		jogo.cadastrarProblema(problema_5);
+		
+		Problema problema_6 = this.instanciarObjetoProblema();
+		problema_6.setQuestao("problema_6");
+		problema_6.setResposta(6);
+		jogo.cadastrarProblema(problema_6);
+
+		Problema problema_7 = this.instanciarObjetoProblema();
+		problema_7.setQuestao("problema_7");
+		problema_7.setResposta(7);
+		jogo.cadastrarProblema(problema_7);
+
+		Problema problema_8= this.instanciarObjetoProblema();
+		problema_8.setQuestao("problema_8");
+		problema_8.setResposta(8);
+		jogo.cadastrarProblema(problema_8);
+
+		Problema problema_9 = this.instanciarObjetoProblema();
+		problema_9.setQuestao("problema_9");
+		problema_9.setResposta(9);
+		jogo.cadastrarProblema(problema_9);
+
+		Problema problema_10 = this.instanciarObjetoProblema();
+		problema_10.setQuestao("problema_10");
+		problema_10.setResposta(10);
+		jogo.cadastrarProblema(problema_10);
+			
+		Jogador jogador = instanciarObjetoJogador();
+		jogador.setNome("rafaela");
+
+		Canhao canhao = new Canhao();
+		Municao municao = new Municao();
+		canhao.setMunicao(municao);
+		jogador.setCanhao(canhao);
+
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+
+		jogo.gerarBalao(problema_5);
+		jogo.estourarBalao(52);
+		jogo.gerarBalao(problema_4);
+		jogo.estourarBalao(23);
+		jogo.gerarBalao(problema_3);
+		jogo.estourarBalao(33);
+		jogo.gerarBalao(problema_2);
+		jogo.estourarBalao(25);
+		jogo.gerarBalao(problema_1);
+		jogo.estourarBalao(16);
+		
+		jogo.gerarBalao(problema_10);
+		jogo.estourarBalao(17);
+		jogo.gerarBalao(problema_9);
+		jogo.estourarBalao(93);
+		jogo.gerarBalao(problema_8);
+		jogo.estourarBalao(81);
+		jogo.gerarBalao(problema_7);
+		jogo.estourarBalao(72);
+		jogo.gerarBalao(problema_6);
+		jogo.estourarBalao(67);
+	
+		Assert.assertTrue(Jogador.isGameOver);
+	}
+
 
 	
 	
