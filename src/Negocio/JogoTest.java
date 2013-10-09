@@ -287,5 +287,21 @@ public class JogoTest {
 		ArrayList<Professor> listaProfessores = novoJogo.listarProfessores();
 		Assert.assertEquals("Esse teste espera que o Id do professsor cadastrado seja igual a 1", 1, listaProfessores.get(0).getId());
 	}
+	
+	@Test
+	public void inserirJogadorNaFase() throws ObjetoJaExistenteException,
+			FaseNaoDisponivelException, JogadorNaoLogadoException,
+			LoginInexistenteException {
+		Jogador jogador = this.instanciarJogador();
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+		ArrayList<Jogador> jogadores = jogo.listarJogadores();
+
+		Fase fase = instanciarFase();
+		fase.setNivel(0);
+		jogo.inserirJogadorNaFase(jogadores.get(0), fase);
+		ArrayList<Fase> fases = jogo.listarFases();
+		Assert.assertEquals(jogador, fases.get(0).getJogador());
+	}
 
 }
