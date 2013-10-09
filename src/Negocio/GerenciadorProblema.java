@@ -100,4 +100,13 @@ public class GerenciadorProblema {
 			}
 		}
 	}
+	
+	public int getQuantidadeDeBaloesGerados() throws ObjetoInexistenteException{
+		if(this.baloes.size() == 0){
+			throw new ObjetoInexistenteException("Não existe nenhum balão!");
+		}
+		else{
+			return this.baloes.size();
+		}
+	}
 }
