@@ -25,4 +25,16 @@ public class GerenciadorJogador {
 		jogadores.add(jogador);
 		jogadorDAO.insert(jogadores);
 	}
+	
+	public void removerJogador(Jogador jogador) throws Exception{
+		if(!buscarJogador(jogador)){
+			throw new ObjetoInexistenteException("Esse jogador não existe!");
+		}
+		for(Jogador j:jogadorDAO.selectAll()){
+			if(j.getNome().equals(jogador.getNome())){
+				jogadores.remove(jogador);
+				jogadorDAO.insert(jogadores);
+			}
+		}
+	}
 }
