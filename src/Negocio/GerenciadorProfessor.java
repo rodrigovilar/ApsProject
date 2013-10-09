@@ -16,4 +16,19 @@ public class GerenciadorProfessor {
 	public boolean loginProfessor(Professor professor) throws Exception{
 		return buscarProfessor(professor);
 	}
+	
+	public GerenciadorProblema getGerenciadorProblema(){
+		return gerenciadorProblema;
+	}
+	
+	public void cadastrarProfessor(Professor professor) throws Exception {
+		if(buscarProfessor(professor)){
+			throw new ObjetoJaExistenteException("Não é possível cadastrar o mesmo professor duas vezes");
+		}
+		if(professor.getSenha().length() <= 4){
+			throw new ObjetoInexistenteException("A senha tem que ter mais do que 4 caracteres!");
+		}
+		professores.add(professor);
+		professorDAO.insert(professores);
+	}
 }
