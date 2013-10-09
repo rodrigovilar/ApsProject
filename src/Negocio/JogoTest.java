@@ -517,4 +517,33 @@ public class JogoTest {
 		Assert.assertFalse(novoJogo.verificarSeRespostaEstaEmBaloes(16));
 	}
 	
+	@Test
+	public void verificarSeJogadorMarcaScoreAoAcertarQuestao()throws Exception {
+		Professor p1 = instanciarObjetoProfessor();
+		jogo.cadastrarProfesssor(p1);
+		Jogo novoJogo = new Jogo();
+		novoJogo.loginProfessor(p1);
+		Problema pro1 = instanciarObjetoProblema();
+		pro1.setQuestao("2+5?");
+		pro1.setResposta(7);
+		novoJogo.cadastrarProblema(pro1);
+		ArrayList<Problema> listaProblemas = novoJogo.listarProblemas();
+		novoJogo.gerarBalao(listaProblemas.get(0));
+		Jogador j1 = instanciarObjetoJogador();
+		j1.setNome("kvasak");
+		j1.setSenha("812383");
+		novoJogo.cadastrarJogador(j1);
+		novoJogo.loginJogador(j1);
+		Canhao c = new Canhao();
+		Municao m = new Municao();
+		c.setMunicao(m);
+		ArrayList<Jogador> listaJogadores = novoJogo.listarJogadores();
+		listaJogadores.get(0).setCanhao(c);
+		Fase f1 = instanciarObjetoFase();
+		f1.setNivel(0);
+		novoJogo.inserirJogadorNaFase(listaJogadores.get(0), f1);
+		novoJogo.estourarBalao(7);
+		Assert.assertEquals(11, Jogador.getScore());
+	}
+	
 	
