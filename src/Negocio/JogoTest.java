@@ -43,6 +43,13 @@ public class JogoTest {
 		Assert.assertFalse("O jogo já iniciou acabado", jogo.jogoAcabou());
 	}
 	
+	private Professor instanciarObjetoProfessor(){
+		Professor p1 = new Professor();
+		p1.setNome("Antônio");
+		p1.setSenha("81011054");
+		return p1;
+	}
+	
 	
 	
 
