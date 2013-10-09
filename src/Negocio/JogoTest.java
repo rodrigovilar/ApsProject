@@ -142,6 +142,15 @@ public class JogoTest {
 		Assert.assertEquals("Esse teste espera que a quantidade de jogadores cadastrados seja igual a 1", 1, novoJogo.getQuantidadeDeJogadoresCadastrados());
 	}
 	
+	@Test
+	public void verificarSeNomeDoJogadorEstaCorreto() throws IOException, Exception{
+		Jogador j1 = instanciarObjetoJogador();
+		jogo.cadastrarJogador(j1);
+		Jogo novoJogo = new Jogo();
+		ArrayList<Jogador> listaJogadores = novoJogo.listarJogadores();
+		Assert.assertEquals("Esse teste verifica se o nome do jogador foi cadastrado corretamente", j1.getNome(), listaJogadores.get(0).getNome());
+	}
+	
 	
 	
 	
