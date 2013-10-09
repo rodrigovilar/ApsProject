@@ -132,4 +132,12 @@ public class GerenciadorProblema {
 			Jogador.decrementarScore();
 		}
 	}
+	
+	private void verificarPassagemDeFase() throws FaseNaoDisponivelException{
+		if(Jogador.getScore() == 15){
+			gerenciadorFase.passarDeFase();
+			Jogador.setScoreInicial();
+		}
+		System.out.println(Jogador.getScore());
+	}
 }
