@@ -279,5 +279,13 @@ public class JogoTest {
 		Assert.assertEquals("Esse teste espera que o Id do jogador cadastrado seja igual a 1", 1, listaJogadores.get(0).getId());
 	}
 	
+	@Test
+	public void verificarIDdoProfessorCadastrado() throws Exception{
+		Professor p1 = instanciarObjetoProfessor();
+		jogo.cadastrarProfesssor(p1);
+		Jogo novoJogo = new Jogo();
+		ArrayList<Professor> listaProfessores = novoJogo.listarProfessores();
+		Assert.assertEquals("Esse teste espera que o Id do professsor cadastrado seja igual a 1", 1, listaProfessores.get(0).getId());
+	}
 
 }
