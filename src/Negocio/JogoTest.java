@@ -595,5 +595,37 @@ public class JogoTest {
 		Assert.assertEquals(11, jogador.getScore());
 	}
 
+	@SuppressWarnings("static-access")
+	@Test
+	public void verificarSeJogadorPerdeScoreAoErrarQuestao()
+			throws ObjetoJaExistenteException, ObjetoInexistenteException,
+			FaseNaoDisponivelException, JogadorNaoLogadoException,
+			LoginInexistenteException, IOException {
+		Professor professor = instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+
+		Problema problema_1 = this.instanciarProblema();
+		jogo.cadastrarProblema(problema_1);
+
+		jogo.gerarBalao(problema_1);
+
+		Jogador jogador = this.instanciarJogador();
+
+		Canhao canhao = new Canhao();
+		Municao municao = new Municao();
+		canhao.setMunicao(municao);
+		jogador.setCanhao(canhao);
+
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+		Fase fase = instanciarFase();
+		fase.setNivel(0);
+		jogo.inserirJogadorNaFase(jogador, fase);
+
+		jogo.estourarBalao(52);
+		Assert.assertEquals(9, jogador.getScore());
+	}
+
 
 }
