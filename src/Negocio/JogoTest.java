@@ -134,6 +134,14 @@ public class JogoTest {
 		
 	}
 	
+	@Test
+	public void cadastrarJogador() throws Exception{
+		Jogador j1 = instanciarObjetoJogador();
+		jogo.cadastrarJogador(j1);
+		Jogo novoJogo = new Jogo();
+		Assert.assertEquals("Esse teste espera que a quantidade de jogadores cadastrados seja igual a 1", 1, novoJogo.getQuantidadeDeJogadoresCadastrados());
+	}
+	
 	
 	
 	
