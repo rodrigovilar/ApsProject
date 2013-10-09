@@ -31,4 +31,8 @@ private static File fileProblema  = new File("ProblemaPersistência.ser");;
 		objIn.close();
 		return listaAux;
 	}
+	
+	public static void deletarFileProblema(){
+		fileProblema.delete();
+	}
 }
