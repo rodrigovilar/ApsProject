@@ -265,22 +265,18 @@ public class JogoTest {
 		Assert.assertEquals("Esse teste espera que a resposta da questão cadastrada seja a mesma que está no arquivo", pro1.getResposta(), listaProblemas.get(0).getResposta());
 	}
 	
-	@Test(expected = ObjetoInexistenteException.class)
-	public void removerMesmoProblemaDuasVezes() throws Exception{
-		Professor p1 = instanciarObjetoProfessor();
-		jogo.cadastrarProfesssor(p1);
+	@Test
+	public void verificarScoreInicialDoJogador() {
+		Assert.assertEquals("Esse teste espera que a quantidade de score inicial do jogador seja igual a 10", 10, Jogador.getScore());
+	}
+	
+	@Test
+	public void verificarIDdoJogadorCadastrado() throws IOException, Exception{
+		Jogador j1 = instanciarObjetoJogador();
+		jogo.cadastrarJogador(j1);
 		Jogo novoJogo = new Jogo();
-		novoJogo.loginProfessor(p1);
-		Problema pro1 = instanciarObjetoProblema();
-		pro1.setQuestao("Qual o calor específico da água em condições normais de temperatura e pressão?");
-		pro1.setResposta(1);
-		novoJogo.cadastrarProblema(pro1);
-		Jogo maisUmJogo = new Jogo();
-		maisUmJogo.loginProfessor(p1);
-		maisUmJogo.removerProblema(pro1);
-		Jogo maisUmNovoJogo = new Jogo();
-		maisUmNovoJogo.loginProfessor(p1);
-		maisUmNovoJogo.removerProblema(pro1);
+		ArrayList<Jogador> listaJogadores = novoJogo.listarJogadores();
+		Assert.assertEquals("Esse teste espera que o Id do jogador cadastrado seja igual a 1", 1, listaJogadores.get(0).getId());
 	}
 	
 
