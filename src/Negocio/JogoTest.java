@@ -179,6 +179,17 @@ public class JogoTest {
 		maisUmJogo.removerJogador(j1);
 	}
 	
+	@Test(expected=ObjetoInexistenteException.class)
+	public void removerJogadorInexistente() throws IOException, Exception{
+		Jogador j1 = instanciarObjetoJogador();
+		jogo.cadastrarJogador(j1);
+		Jogador j2 = instanciarObjetoJogador();
+		j2.setNome("Wandemberg");
+		j2.setSenha("atecubanos");
+		Jogo novoJogo = new Jogo();
+		novoJogo.removerJogador(j2);
+	}
+	
 	
 
 }
