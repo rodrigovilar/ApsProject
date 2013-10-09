@@ -498,5 +498,20 @@ public class JogoTest {
 
 	}
 
+	@Test
+	public void verificarPossivelRespostaCorretaEmBaloes()
+			throws ObjetoJaExistenteException, ObjetoInexistenteException,
+			LoginInexistenteException, IOException {
+		Professor professor = instanciarProfessor();
+		jogo.cadastrarProfesssor(professor);
+		jogo.loginProfessor(professor);
+
+		Problema problema_1 = this.instanciarProblema();
+		jogo.cadastrarProblema(problema_1);
+
+		jogo.gerarBalao(problema_1);
+		Assert.assertEquals(true, jogo.verificarSeRespostaEstaEmBaloes(15));
+	}
+
 
 }
