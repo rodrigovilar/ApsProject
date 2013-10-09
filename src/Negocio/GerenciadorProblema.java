@@ -74,4 +74,13 @@ public class GerenciadorProblema {
 	public ArrayList<Problema> listarProblemas() throws IOException, Exception{
 		return problemaDAO.selectAll();
 	}
+	
+	public boolean verificarSeRespostaCorretaEmBalao(int resposta){
+		for(Balao b: baloes){
+			if(b.getResposta() == resposta){
+				return true;
+			}
+		}
+		return false;
+	}
 }
