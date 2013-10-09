@@ -38,4 +38,12 @@ private ArrayList<Fase> fases = new ArrayList<Fase>();
 		}
 		return false;
 	}
+	
+	public void atualizarFase(int indice) throws FaseNaoDisponivelException{
+		if(indice <= 0 || indice > 5){
+			throw new FaseNaoDisponivelException("Fase inexistente");
+		}
+		fases.get(indice).setLiberado(true);
+		fases.add(indice, fases.get(indice));
+	}
 }
