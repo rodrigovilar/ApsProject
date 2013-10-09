@@ -1,8 +1,10 @@
 package Persistencia;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
@@ -18,5 +20,15 @@ private static File fileProblema  = new File("ProblemaPersistência.ser");;
 		objOut.writeObject(problemas);
 		objOut.close();
 		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Problema> selectAll() throws IOException, Exception{
+		ArrayList<Problema> listaAux;
+		FileInputStream fileIn = new FileInputStream(fileProblema);
+		ObjectInputStream objIn = new ObjectInputStream(fileIn);
+		listaAux = (ArrayList<Problema>) objIn.readObject();
+		objIn.close();
+		return listaAux;
 	}
 }
