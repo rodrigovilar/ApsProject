@@ -288,4 +288,18 @@ public class JogoTest {
 		Assert.assertEquals("Esse teste espera que o Id do professsor cadastrado seja igual a 1", 1, listaProfessores.get(0).getId());
 	}
 	
+	@Test
+	public void inserirJogadorNaFase() throws IOException, Exception{
+		Jogador j1 = instanciarObjetoJogador();
+		jogo.cadastrarJogador(j1);
+		Jogo novoJogo = new Jogo();
+		novoJogo.loginJogador(j1);
+		ArrayList<Jogador> listaJogadores = novoJogo.listarJogadores();
+		Fase f1 = instanciarObjetoFase();
+		f1.setNivel(0);
+		novoJogo.inserirJogadorNaFase(listaJogadores.get(0), f1);
+		ArrayList<Fase> listaFases = novoJogo.listarFases();
+		Assert.assertEquals("Esse teste espera que o jogador cadastrado seja inserido na fase", listaJogadores.get(0), listaFases.get(0).getJogador());
+	}
+	
 	
