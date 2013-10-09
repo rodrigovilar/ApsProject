@@ -169,6 +169,15 @@ public class JogoTest {
 		
 	}
 	
+	@Test(expected=ObjetoInexistenteException.class)
+	public void removerMesmoJogadorDuasVezes() throws IOException, Exception{
+		Jogador j1 = instanciarObjetoJogador();
+		jogo.cadastrarJogador(j1);
+		Jogo novoJogo = new Jogo();
+		novoJogo.removerJogador(j1);
+		Jogo maisUmJogo = new Jogo();
+		maisUmJogo.removerJogador(j1);
+	}
 	
 	
 
