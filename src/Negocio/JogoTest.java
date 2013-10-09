@@ -449,4 +449,23 @@ public class JogoTest {
 		Assert.assertTrue(novoJogo.jogoAcabou());
 	}
 	
+	@Test
+	public void verificarPossivelRespostaCorretaEmBaloes()throws Exception {
+		Professor p1 = instanciarObjetoProfessor();
+		jogo.cadastrarProfesssor(p1);
+		Jogo novoJogo = new Jogo();
+		novoJogo.loginProfessor(p1);
+		Problema pro1 = instanciarObjetoProblema();
+		pro1.setQuestao("2x3?");
+		pro1.setResposta(6);
+		Jogo maisUmNovoJogo = new Jogo();
+		maisUmNovoJogo.loginProfessor(p1);
+		maisUmNovoJogo.cadastrarProblema(pro1);
+		ArrayList<Problema> listaProblemas = maisUmNovoJogo.listarProblemas();
+		System.out.println(listaProblemas.get(0).getResposta());
+		maisUmNovoJogo.gerarBalao(listaProblemas.get(0));
+		Assert.assertTrue(maisUmNovoJogo.verificarSeRespostaEstaEmBaloes(6));
+	}
+	
+	
 	
