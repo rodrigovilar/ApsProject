@@ -30,4 +30,12 @@ private ArrayList<Fase> fases = new ArrayList<Fase>();
 		}
 		return false;
 	}
+	
+	public boolean isVerificarJogadorNaFaseDisponivel(Jogador jogador){
+		for(Fase f: fases){
+			if(f.getJogador().equals(jogador))
+				return true;
+		}
+		return false;
+	}
 }
