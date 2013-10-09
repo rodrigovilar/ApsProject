@@ -43,4 +43,21 @@ public class GerenciadorProfessor {
 			}
 		}
 	}
+	
+	private boolean buscarProfessor(Professor professor) throws Exception {
+		for(Professor p:professorDAO.selectAll()){
+			if(p.getNome().equals(professor.getNome())){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public int getQuantidadeDeProfessoresCadastrados() throws Exception{
+		return professorDAO.selectAll().size();
+	}
+	
+	public ArrayList<Professor> listarProfessores() throws Exception{
+		return professorDAO.selectAll();
+	}
 }
