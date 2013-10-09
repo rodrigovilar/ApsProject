@@ -28,4 +28,8 @@ public class GerenciadorProblema {
 		problemaDAO.insert(problemas);
 		
 	}
+	
+	public GerenciadorFase getGerenciadorFase(){
+		return gerenciadorFase;
+	}
 }
