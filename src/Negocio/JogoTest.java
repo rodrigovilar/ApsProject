@@ -348,5 +348,79 @@ public class JogoTest {
 		Assert.assertEquals(500, fases.get(0).getJogador().getCanhao()
 				.getPosicaoY());
 	}
+	
+	@Test
+	public void verificarSeJogadorControlaPosicaoCanhao()
+			throws ObjetoJaExistenteException, FaseNaoDisponivelException,
+			JogadorNaoLogadoException, LoginInexistenteException {
+		Jogador jogador = this.instanciarJogador();
+
+		Canhao canhao = new Canhao();
+		jogador.setCanhao(canhao);
+		jogador.getCanhao().setPosicaoX(100);
+		jogador.getCanhao().setPosicaoY(50);
+
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+
+		Fase fase = instanciarFase();
+		fase.setNivel(0);
+		jogo.inserirJogadorNaFase(jogador, fase);
+		ArrayList<Fase> fases = jogo.listarFases();
+
+		Assert.assertEquals(100, fases.get(0).getJogador().getCanhao()
+				.getPosicaoX());
+		Assert.assertEquals(50, fases.get(0).getJogador().getCanhao()
+				.getPosicaoY());
+	}
+	
+	@Test
+	public void verificarSeCanhaoDoJogadorQueNaoAtirouPossuiTodosOsTiros()
+			throws ObjetoJaExistenteException, FaseNaoDisponivelException,
+			JogadorNaoLogadoException, LoginInexistenteException {
+		Jogador jogador = this.instanciarJogador();
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+
+		Canhao canhao = new Canhao();
+		Municao municao = new Municao();
+		canhao.setMunicao(municao);
+		jogador.setCanhao(canhao);
+
+		ArrayList<Jogador> jogadores = jogo.listarJogadores();
+
+		Fase fase = instanciarFase();
+		fase.setNivel(0);
+		jogo.inserirJogadorNaFase(jogadores.get(0), fase);
+		ArrayList<Fase> fases = jogo.listarFases();
+
+		Assert.assertEquals(10, fases.get(0).getJogador().getCanhao()
+				.getMunicao().getQuantidadeDeBalas());
+	}
+	
+	@Test
+	public void verificarSeJogadorAtiraComCanhao()
+			throws ObjetoJaExistenteException, BalasEsgotadasException,
+			FaseNaoDisponivelException, JogadorNaoLogadoException,
+			LoginInexistenteException {
+		Jogador jogador = this.instanciarJogador();
+
+		Canhao canhao = new Canhao();
+		Municao municao = new Municao();
+		canhao.setMunicao(municao);
+		jogador.setCanhao(canhao);
+		jogo.cadastrarJogador(jogador);
+		jogo.loginJogador(jogador);
+
+		Fase fase = instanciarFase();
+		fase.setNivel(0);
+		jogo.inserirJogadorNaFase(jogador, fase);
+		ArrayList<Fase> fases = jogo.listarFases();
+		jogador.atirar();
+		jogador.atirar();
+		jogador.atirar();
+		Assert.assertEquals(7, fases.get(0).getJogador().getCanhao()
+				.getMunicao().getQuantidadeDeBalas());
+	}
 
 }
