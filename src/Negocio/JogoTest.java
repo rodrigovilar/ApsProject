@@ -680,6 +680,14 @@ public class JogoTest {
 	public void faseInexisteException() throws FaseNaoDisponivelException {
 		jogo.verificarExistenciaDeFase(6);
 	}
+	
+	@Test(expected = LoginInexistenteException.class)
+	public void professorNaoLogado() throws IOException, Exception {
+		Jogador jogador = instanciarObjetoJogador();
+		jogo.cadastrarJogador(jogador);
+		Problema problema = instanciarObjetoProblema();
+		jogo.cadastrarProblema(problema);
+	}
 
 	
 	
