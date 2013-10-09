@@ -32,4 +32,8 @@ public class GerenciadorProblema {
 	public GerenciadorFase getGerenciadorFase(){
 		return gerenciadorFase;
 	}
+	
+	public boolean getIsLogado(){
+		return isProfessorLogado;
+	}
 }
