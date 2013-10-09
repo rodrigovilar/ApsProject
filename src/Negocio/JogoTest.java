@@ -57,6 +57,13 @@ public class JogoTest {
 		return j1;
 	}
 	
+	private Problema instanciarObjetoProblema(){
+		Problema pro1 = new Problema();
+		pro1.setQuestao("Qual o resultado da operação (3x3)²?");
+		pro1.setResposta(81);
+		return pro1;
+	}
+	
 	
 	
 
