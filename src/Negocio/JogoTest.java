@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import junit.framework.Assert;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,6 +32,12 @@ public class JogoTest {
 		jogo = new Jogo();
 		jogo.iniciandoDAO();
 	}
+	
+	@After
+	public void destruirArquivo(){
+		jogo.destruirArquivo();
+	}
+	
 	
 
 }
