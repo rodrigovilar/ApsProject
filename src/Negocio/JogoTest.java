@@ -151,6 +151,14 @@ public class JogoTest {
 		Assert.assertEquals("Esse teste verifica se o nome do jogador foi cadastrado corretamente", j1.getNome(), listaJogadores.get(0).getNome());
 	}
 	
+	@Test(expected=ObjetoJaExistenteException.class)
+	public void cadastrarJogadorJaCadastrado() throws IOException, Exception{
+		Jogador j1 = instanciarObjetoJogador();
+		jogo.cadastrarJogador(j1);
+		Jogo novoJogo = new Jogo();
+		novoJogo.cadastrarJogador(j1);
+	}
+	
 	
 	
 	
